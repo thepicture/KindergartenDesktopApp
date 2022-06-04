@@ -4,28 +4,40 @@
         <SolidColorBrush.Color>
             <Color R="218"
                    G="224"
-                   B="230" />
+                   B="230"
+                   A="255" />
         </SolidColorBrush.Color>
     </SolidColorBrush>
     <SolidColorBrush x:Key="SecondaryBackgroundColor">
         <SolidColorBrush.Color>
             <Color R="255"
                    G="69"
-                   B="0" />
+                   B="0"
+                   A="255" />
         </SolidColorBrush.Color>
     </SolidColorBrush>
     <SolidColorBrush x:Key="AccentColor">
         <SolidColorBrush.Color>
             <Color R="0"
                    G="121"
-                   B="211" />
+                   B="211"
+                   A="255" />
         </SolidColorBrush.Color>
     </SolidColorBrush>
     <SolidColorBrush x:Key="ButtonContentColor">
         <SolidColorBrush.Color>
             <Color R="255"
                    G="255"
-                   B="255" />
+                   B="255"
+                   A="255" />
+        </SolidColorBrush.Color>
+    </SolidColorBrush>
+    <SolidColorBrush x:Key="ValidationMessageColor">
+        <SolidColorBrush.Color>
+            <Color R="245"
+                   G="106"
+                   B="56"
+                   A="255" />
         </SolidColorBrush.Color>
     </SolidColorBrush>
 </ResourceDictionary>

@@ -5,9 +5,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:KindergartenDesktopApp.Views.Pages"
              xmlns:viewmodels="clr-namespace:KindergartenDesktopApp.ViewModels"
+             xmlns:controls="clr-namespace:KindergartenDesktopApp.Controls"
              d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
              mc:Ignorable="d">
-    <Grid  Background="{StaticResource PrimaryBackgroundColor}">
-        <TextBlock Text="Логин"/>
+    <Grid Background="{StaticResource PrimaryBackgroundColor}">
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <controls:Header Text="Авторизация" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Логин"
+                           Style="{StaticResource CommonBlock}" />
+                <controls:BindablePasswordBox BindableText="{Binding User.Login, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Пароль"
+                           Style="{StaticResource CommonBlock}" />
+                <controls:BindablePasswordBox BindableText="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <controls:ValidationMessage ValidationText="Неверный логин или пароль"
+                                        IsHasError="{Binding IsIncorrectLoginOrPassword}"
+                                        HorizontalAlignment="Center" />
+            <Button Command="{Binding LoginCommand}"
+                    Content="Войти"
+                    HorizontalAlignment="Right"
+                    Margin="5,20,5,5" />
+        </StackPanel>
     </Grid>
 </UserControl>
