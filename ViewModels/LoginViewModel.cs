@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using KindergartenDesktopApp.Models.Entities;
+using System;
 using System.Data.Entity;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace KindergartenDesktopApp.ViewModels
@@ -9,6 +11,7 @@ namespace KindergartenDesktopApp.ViewModels
     {
         public LoginViewModel()
         {
+            Title = "Окно авторизации";
             User = new User();
         }
 
@@ -33,6 +36,9 @@ namespace KindergartenDesktopApp.ViewModels
 
         private async void LoginAsync()
         {
+            IsIncorrectLoginOrPassword = false;
+            await Task.Delay(
+                TimeSpan.FromSeconds(1));
             using (var context = Context.GetInstance())
             {
                 if (await context.Users
@@ -41,7 +47,14 @@ namespace KindergartenDesktopApp.ViewModels
                         is User loggedInUser)
                 {
                     Session.Login(loggedInUser);
-                    IsIncorrectLoginOrPassword = false;
+                    if (loggedInUser.IsAdmin)
+                    {
+                        Navigator.Go<UsersManagementViewModel>();
+                    }
+                    else
+                    {
+
+                    }
                 }
                 else
                 {

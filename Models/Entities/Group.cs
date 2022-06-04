@@ -12,20 +12,18 @@ namespace KindergartenDesktopApp.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Group
     {
-        public int Id { get; set; }
-        public string FullName { get; set; }
-        public Nullable<int> GroupId { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public int RoleId { get; set; }
-        public byte[] Image { get; set; }
-        public Nullable<int> GenderId { get; set; }
-        public Nullable<int> Age { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Group()
+        {
+            this.Users = new HashSet<User>();
+        }
     
-        public virtual Gender Gender { get; set; }
-        public virtual Group Group { get; set; }
-        public virtual UserRole UserRole { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

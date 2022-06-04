@@ -15,7 +15,8 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Логин"
                            Style="{StaticResource CommonBlock}" />
-                <controls:BindablePasswordBox BindableText="{Binding User.Login, UpdateSourceTrigger=PropertyChanged}" />
+                <controls:BindablePasswordBox BindableText="{Binding User.Login, UpdateSourceTrigger=PropertyChanged}"
+                                              x:Name="Login"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Пароль"
@@ -27,6 +28,7 @@
                                         HorizontalAlignment="Center" />
             <Button Command="{Binding LoginCommand}"
                     Content="Войти"
+                    IsDefault="True"
                     HorizontalAlignment="Right"
                     Margin="5,20,5,5" />
         </StackPanel>

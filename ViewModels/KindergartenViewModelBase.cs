@@ -5,7 +5,9 @@ namespace KindergartenDesktopApp.ViewModels
 {
     public class KindergartenViewModelBase : ViewModelBase
     {
+        public string Title { get; set; }
         public IContextFactoryService Context => Ioc.Instance.GetService<IContextFactoryService>();
-        public ISession Session => Ioc.Instance.GetService<ISession>();
+        public ISessionService Session => Ioc.Instance.GetService<ISessionService>();
+        public INavigationService Navigator => Ioc.Instance.GetService<INavigationService>();
     }
 }

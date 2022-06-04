@@ -4,9 +4,9 @@
     {
         bool IsCanGoBack { get; }
 
-        void GoBack();
-        void GoToRoot();
-        void Navigate<T, TParam>(TParam param);
-        void Navigate<T>();
+        void Back();
+        void ToRoot();
+        void Go<T, TParam>(TParam param);
+        void Go<T>();
     }
 }

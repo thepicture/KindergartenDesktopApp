@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:KindergartenDesktopApp.Converters"
              mc:Ignorable="d"
              Name="Control">
-    <TextBlock Text="{Binding ValidationText, ElementName=Control}"
+    <TextBlock Text="{Binding ValidationText, ElementName=Control, FallbackValue=ValidationMessage}"
                Foreground="{StaticResource ValidationMessageColor}"
                FontWeight="Bold"
                Opacity="{Binding IsHasError, ElementName=Control}" />

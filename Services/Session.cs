@@ -2,7 +2,7 @@
 
 namespace KindergartenDesktopApp.Services
 {
-    public class Session : ISession
+    public class SessionService : ISessionService
     {
         public User UserSession { get; private set; }
 

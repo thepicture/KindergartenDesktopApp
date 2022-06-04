@@ -2,7 +2,7 @@
 
 namespace KindergartenDesktopApp.Services
 {
-    public interface ISession
+    public interface ISessionService
     {
         User UserSession { get; }
         void Login(User user);

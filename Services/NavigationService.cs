@@ -7,7 +7,7 @@ namespace KindergartenDesktopApp.Services
     {
         public bool IsCanGoBack => throw new NotImplementedException();
 
-        public void Navigate<T>()
+        public void Go<T>()
         {
             ((NavigationView)Application.Current.MainWindow).NavigationFrame
                 .Navigate(
@@ -15,12 +15,12 @@ namespace KindergartenDesktopApp.Services
                         typeof(T)));
         }
 
-        public void GoBack()
+        public void Back()
         {
             ((NavigationView)Application.Current.MainWindow).NavigationFrame.GoBack();
         }
 
-        public void GoToRoot()
+        public void ToRoot()
         {
             while (((NavigationView)Application.Current.MainWindow).NavigationFrame.CanGoBack)
             {
@@ -28,7 +28,7 @@ namespace KindergartenDesktopApp.Services
             }
         }
 
-        public void Navigate<T, TParam>(TParam param)
+        public void Go<T, TParam>(TParam param)
         {
             ((NavigationView)Application.Current.MainWindow).NavigationFrame
                 .Navigate(

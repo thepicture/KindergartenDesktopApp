@@ -53,7 +53,7 @@ namespace KindergartenDesktopApp
             window.Show();
             Ioc.Instance
                 .GetService<INavigationService>()
-                .Navigate<TWhere>();
+                .Go<TWhere>();
         }
 
         private void ConfigureTemplates()
