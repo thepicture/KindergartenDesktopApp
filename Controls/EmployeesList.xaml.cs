@@ -13,8 +13,6 @@ namespace KindergartenDesktopApp.Controls
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public partial class EmployeesList : UserControl
     {
-
-
         public bool IsHasItem
         {
             get { return (bool)GetValue(IsHasItemProperty); }
@@ -24,8 +22,6 @@ namespace KindergartenDesktopApp.Controls
         public static readonly DependencyProperty IsHasItemProperty =
             DependencyProperty.Register("IsHasItem", typeof(bool), typeof(EmployeesList), new PropertyMetadata(default));
 
-
-
         public RelayCommand<User> EditEmployeeCommand
         {
             get { return (RelayCommand<User>)GetValue(EditEmployeeCommandProperty); }
@@ -34,7 +30,6 @@ namespace KindergartenDesktopApp.Controls
 
         public static readonly DependencyProperty EditEmployeeCommandProperty =
             DependencyProperty.Register("EditEmployeeCommand", typeof(RelayCommand<User>), typeof(EmployeesList), new PropertyMetadata(default));
-
 
         public ObservableCollection<User> Employees
         {
@@ -47,8 +42,6 @@ namespace KindergartenDesktopApp.Controls
                                         typeof(ObservableCollection<User>),
                                         typeof(EmployeesList),
                                         new PropertyMetadata(default));
-
-
 
         public User SelectedEmployee
         {

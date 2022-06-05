@@ -58,7 +58,7 @@ namespace KindergartenDesktopApp.ViewModels
                     }
                     else
                     {
-
+                        Navigator.Go<ChildrenManagementViewModel>();
                     }
                 }
                 else

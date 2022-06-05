@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="KindergartenDesktopApp.Controls.ChildrenList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:models="clr-namespace:KindergartenDesktopApp.Models.Entities"
+             xmlns:local="clr-namespace:KindergartenDesktopApp.Controls"
+             mc:Ignorable="d"
+             Name="Control">
+    <ListView ItemsSource="{Binding Children, ElementName=Control}"
+              SelectionMode="Single"
+              SelectedItem="{Binding ElementName=Control, Path=SelectedChild}"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+              Background="Transparent">
+        <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+        <ListView.ItemTemplate>
+            <DataTemplate DataType="{x:Type models:Child}">
+                <Grid>
+                    <local:PersonTemplate Id="{Binding Id}"
+                                          FullName="{Binding FullName}"
+                                          Image="{Binding Image}"
+                                          EditPersonCommand="{Binding EditChildCommand, ElementName=Control}" />
+                    <Image Width="310"
+                           Height="200"
+                           VerticalAlignment="Top"
+                           Margin="20"
+                           Stretch="UniformToFill">
+                        <Image.Source>
+                            <Binding Path="Image">
+                                <Binding.TargetNullValue>
+                                    <ImageSource>
+                                        /Resources/noImage.png
+                                    </ImageSource>
+                                </Binding.TargetNullValue>
+                            </Binding>
+                        </Image.Source>
+                    </Image>
+                </Grid>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</UserControl>

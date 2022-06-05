@@ -12,21 +12,27 @@ namespace KindergartenDesktopApp.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Group
+    public partial class Child
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Group()
+        public Child()
         {
-            this.Children = new HashSet<Child>();
-            this.Users = new HashSet<User>();
+            this.ChildDocuments = new HashSet<ChildDocument>();
         }
     
         public int Id { get; set; }
-        public string Title { get; set; }
+        public string FullName { get; set; }
+        public int GenderId { get; set; }
+        public int GroupId { get; set; }
+        public string FatherFullName { get; set; }
+        public string MotherFullName { get; set; }
+        public string Notes { get; set; }
+        public Nullable<System.DateTime> BirthDate { get; set; }
+        public byte[] Image { get; set; }
     
+        public virtual Gender Gender { get; set; }
+        public virtual Group Group { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Child> Children { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<ChildDocument> ChildDocuments { get; set; }
     }
 }

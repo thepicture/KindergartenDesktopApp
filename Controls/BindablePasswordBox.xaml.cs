@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace KindergartenDesktopApp.Controls
 {
@@ -8,6 +9,18 @@ namespace KindergartenDesktopApp.Controls
     /// </summary>
     public partial class BindablePasswordBox : UserControl
     {
+
+
+        public bool IsShouldFocus
+        {
+            get { return (bool)GetValue(IsShouldFocusProperty); }
+            set { SetValue(IsShouldFocusProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsShouldFocusProperty =
+            DependencyProperty.Register("IsShouldFocus", typeof(bool), typeof(BindablePasswordBox), new PropertyMetadata(default));
+
+
         public ControlTemplate ErrorTemplate
         {
             get { return (ControlTemplate)GetValue(ErrorTemplateProperty); }
@@ -66,6 +79,10 @@ namespace KindergartenDesktopApp.Controls
         private void OnPasswordLoaded(object sender, RoutedEventArgs e)
         {
             BindablePassword.Password = BindableText;
+            if (IsShouldFocus)
+            {
+                Keyboard.Focus(BindablePassword);
+            }
         }
     }
 }

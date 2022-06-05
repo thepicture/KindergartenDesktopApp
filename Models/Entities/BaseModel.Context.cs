@@ -25,6 +25,8 @@ namespace KindergartenDesktopApp.Models.Entities
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Child> Children { get; set; }
+        public virtual DbSet<ChildDocument> ChildDocuments { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<User> Users { get; set; }

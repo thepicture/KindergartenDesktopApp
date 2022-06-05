@@ -16,7 +16,7 @@
                 <TextBlock Text="Логин"
                            Style="{StaticResource CommonBlock}" />
                 <controls:BindablePasswordBox BindableText="{Binding User.Login, UpdateSourceTrigger=PropertyChanged}"
-                                              x:Name="Login"/>
+                                              IsShouldFocus="True" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Пароль"

@@ -223,6 +223,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ChildrenList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\EmployeesList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -259,7 +263,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\AddEditChildView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\AddEditUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\ChildrenManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -284,6 +296,9 @@
     </Compile>
     <Compile Include="Controls\BindablePasswordBox.xaml.cs">
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ChildrenList.xaml.cs">
+      <DependentUpon>ChildrenList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\EmployeesList.xaml.cs">
       <DependentUpon>EmployeesList.xaml</DependentUpon>
@@ -320,6 +335,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BaseModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Child.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\ChildDocument.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Gender.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
@@ -345,13 +366,21 @@
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\OpenFileDialogService.cs" />
     <Compile Include="Services\Session.cs" />
+    <Compile Include="ViewModels\AddEditChildViewModel.cs" />
     <Compile Include="ViewModels\AddEditUserViewModel.cs" />
+    <Compile Include="ViewModels\ChildrenManagementViewModel.cs" />
     <Compile Include="ViewModels\KindergartenViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\UsersManagementViewModel.cs" />
+    <Compile Include="Views\Pages\AddEditChildView.xaml.cs">
+      <DependentUpon>AddEditChildView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\AddEditUserView.xaml.cs">
       <DependentUpon>AddEditUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\ChildrenManagementView.xaml.cs">
+      <DependentUpon>ChildrenManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
