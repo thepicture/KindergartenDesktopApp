@@ -20,6 +20,7 @@
                                    OpenFiltersCommand="{Binding OpenFiltersCommand}"
                                    SearchText="{Binding EmployeeSearchText}" />
         <controls:EmployeesList Employees="{Binding Employees}"
+                                EditEmployeeCommand="{Binding EditEmployeeCommand}"
                                 Grid.Row="1" />
         <controls:FilterControl Age="{Binding Age}"
                                 Groups="{Binding Groups}"

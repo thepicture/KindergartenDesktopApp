@@ -23,7 +23,8 @@
                 <Grid>
                     <local:PersonTemplate Id="{Binding Id}"
                                           FullName="{Binding FullName}"
-                                          Image="{Binding Image}" />
+                                          Image="{Binding Image}"
+                                          EditPersonCommand="{Binding EditEmployeeCommand, ElementName=Control}"/>
                     <Image Width="310"
                            Height="200"
                            VerticalAlignment="Top"

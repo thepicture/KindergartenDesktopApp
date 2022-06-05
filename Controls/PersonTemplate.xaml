@@ -28,8 +28,7 @@
                                        Width="310"
                                        Height="170"
                                        HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Opacity="{Binding IsImageDoesNotExist, ElementName=Control}" />
+                                       VerticalAlignment="Center" />
             <TextBlock Text="{Binding FullName, ElementName=Control}"
                        TextWrapping="Wrap"
                        Width="330"
@@ -42,7 +41,9 @@
                          Columns="2"
                          Margin="30,5">
                 <Button Content="Обзор" />
-                <Button Content="Редактировать" />
+                <Button Command="{Binding ElementName=Control, Path=EditPersonCommand}"
+                        CommandParameter="{Binding .}"
+                        Content="Редактировать" />
             </UniformGrid>
         </Grid>
     </Grid>

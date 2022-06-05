@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace KindergartenDesktopApp.Controls
@@ -16,7 +15,10 @@ namespace KindergartenDesktopApp.Controls
         }
 
         public static readonly DependencyProperty ErrorTemplateProperty =
-            DependencyProperty.Register("ErrorTemplate", typeof(ControlTemplate), typeof(BindablePasswordBox), new PropertyMetadata(default, OnErrorTemplateChanged));
+            DependencyProperty.Register("ErrorTemplate",
+                                        typeof(ControlTemplate),
+                                        typeof(BindablePasswordBox),
+                                        new PropertyMetadata(default, OnErrorTemplateChanged));
 
         private static void OnErrorTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -50,18 +52,20 @@ namespace KindergartenDesktopApp.Controls
                                         typeof(BindablePasswordBox),
                                         new FrameworkPropertyMetadata(default(string),
                                                                       FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public BindablePasswordBox()
         {
             InitializeComponent();
-            if (ErrorTemplate != null)
-            {
-                BindablePassword.SetValue(Validation.ErrorTemplateProperty, ErrorTemplate);
-            }
         }
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             BindableText = (sender as PasswordBox).Password;
+        }
+
+        private void OnPasswordLoaded(object sender, RoutedEventArgs e)
+        {
+            BindablePassword.Password = BindableText;
         }
     }
 }

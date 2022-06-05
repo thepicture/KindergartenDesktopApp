@@ -28,6 +28,8 @@ namespace KindergartenDesktopApp.ViewModels
         public void OnAppearing()
         {
             _ = LoadEmployeesAsync();
+            SelectedGender = Genders?.First();
+            SelectedGroup = Groups?.First();
         }
 
         private async Task LoadGendersAsync()
@@ -59,6 +61,7 @@ namespace KindergartenDesktopApp.ViewModels
             using (var context = ContextFactory.GetInstance())
             {
                 IEnumerable<User> currentEmployees = await context.Users
+                    .Include(u => u.Group)
                     .Where(u => u.RoleId == UserRoles.EmployeeId)
                     .ToListAsync();
                 if (!string.IsNullOrWhiteSpace(EmployeeSearchText))
@@ -133,6 +136,7 @@ namespace KindergartenDesktopApp.ViewModels
 
         private void Add()
         {
+            IsFilterOpened = false;
             Navigator.Go<AddEditUserViewModel>();
         }
 
@@ -193,5 +197,26 @@ namespace KindergartenDesktopApp.ViewModels
         }
 
         public string Age { get; set; }
+
+        private RelayCommand<User> editEmployeeCommand;
+
+        public RelayCommand<User> EditEmployeeCommand
+        {
+            get
+            {
+                if (editEmployeeCommand == null)
+                {
+                    editEmployeeCommand = new RelayCommand<User>(EditEmployee);
+                }
+
+                return editEmployeeCommand;
+            }
+        }
+
+        private void EditEmployee(User employee)
+        {
+            IsFilterOpened = false;
+            Navigator.Go<AddEditUserViewModel, User>(employee);
+        }
     }
 }

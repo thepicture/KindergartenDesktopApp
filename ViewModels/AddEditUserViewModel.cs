@@ -34,13 +34,32 @@ namespace KindergartenDesktopApp.ViewModels
             LoadGroupsAsync();
         }
 
+        public AddEditUserViewModel(User inputEmployee)
+        {
+            Title = "Редактировать пользователя";
+            User = inputEmployee;
+            User.PropertyChanged += (_, __) =>
+            {
+                RaisePropertyChanged(
+                    nameof(IsCanSaveChanges));
+            };
+            LoadGroupsAsync();
+        }
+
         private async void LoadGroupsAsync()
         {
             using (var context = ContextFactory.GetInstance())
             {
                 List<Group> currentGroups = await context.Groups.ToListAsync();
                 Groups = new ObservableCollection<Group>(currentGroups);
-                SelectedGroup = Groups.FirstOrDefault();
+                if (User.IsNew())
+                {
+                    SelectedGroup = Groups.FirstOrDefault();
+                }
+                else
+                {
+                    User.Group = Groups.First(g => g.Id == User.GroupId);
+                }
             }
         }
 

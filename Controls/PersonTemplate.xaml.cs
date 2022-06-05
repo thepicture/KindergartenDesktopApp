@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace KindergartenDesktopApp.Controls
 {
@@ -9,8 +10,17 @@ namespace KindergartenDesktopApp.Controls
     /// </summary>
     public partial class PersonTemplate : UserControl
     {
-        public bool IsImageExists => Image != null;
-        public bool IsImageDoesNotExist => !IsImageExists;
+
+
+        public ICommand EditPersonCommand
+        {
+            get { return (ICommand)GetValue(EditPersonCommandProperty); }
+            set { SetValue(EditPersonCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty EditPersonCommandProperty =
+            DependencyProperty.Register("EditPersonCommand", typeof(ICommand), typeof(PersonTemplate), new PropertyMetadata(default));
+
         public IList<byte> Image
         {
             get { return (IList<byte>)GetValue(ImageProperty); }
