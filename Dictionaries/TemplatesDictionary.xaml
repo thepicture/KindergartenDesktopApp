@@ -12,6 +12,18 @@
             <AdornedElementPlaceholder />
         </Grid>
     </ControlTemplate>
+    <ControlTemplate x:Key="ComboBoxErrorTemplate">
+        <Grid>
+            <TextBlock Text="Данные не указаны"
+                       Foreground="{StaticResource ValidationMessageColor}"
+                       Style="{StaticResource CommonBlock}"
+                       Margin="10,5,5,5"
+                       Width="auto"
+                       FontWeight="Bold"
+                       IsHitTestVisible="False" />
+            <AdornedElementPlaceholder />
+        </Grid>
+    </ControlTemplate>
     <ControlTemplate x:Key="PasswordBoxErrorTemplate">
         <Grid>
             <TextBlock Text="Данные не введены"

@@ -1,6 +1,6 @@
 ﻿namespace KindergartenDesktopApp.Services
 {
-    public interface IExceptionFeedbacker
+    public interface IExceptionInformerService
     {
         void Inform(object information);
     }

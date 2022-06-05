@@ -58,6 +58,8 @@
                 Value="150" />
         <Setter Property="Padding"
                 Value="5" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
     </Style>
     <Style TargetType="PasswordBox"
            BasedOn="{StaticResource {x:Type FrameworkElement}}">

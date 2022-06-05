@@ -3,8 +3,7 @@ using System.ComponentModel;
 
 namespace KindergartenDesktopApp.Models.Entities
 {
-    [PropertyChanged.AddINotifyPropertyChangedInterface]
-    public partial class User : ObservableObject, IDataErrorInfo
+    public partial class Child : ObservableObject, IDataErrorInfo
     {
         public string this[string columnName]
         {
@@ -18,20 +17,13 @@ namespace KindergartenDesktopApp.Models.Entities
                 {
                     return "Выберите группу";
                 }
-                if (columnName == nameof(Login) && string.IsNullOrWhiteSpace(Login))
+                if (columnName == nameof(Gender) && Gender == null)
                 {
-                    return "Введите логин";
-                }
-                if (columnName == nameof(Password) && string.IsNullOrWhiteSpace(Password))
-                {
-                    return "Введите пароль";
+                    return "Выберите пол";
                 }
                 return null;
             }
         }
-
-        public bool IsAdmin => RoleId == 1;
-        public bool IsEmployee => RoleId == 2;
 
         /// <summary>
         /// Do not use, use this[string columnName] instead. 

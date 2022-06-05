@@ -25,7 +25,8 @@
                     <TextBlock Text="Группа:"
                                Style="{StaticResource CommonBlock}" />
                     <ComboBox ItemsSource="{Binding Groups}"
-                              SelectedItem="{Binding User.Group}"
+                              SelectedItem="{Binding User.Group, ValidatesOnDataErrors=True}"
+                              Validation.ErrorTemplate="{StaticResource ComboBoxErrorTemplate}"
                               DisplayMemberPath="Title"
                               Width="200" />
                 </StackPanel>

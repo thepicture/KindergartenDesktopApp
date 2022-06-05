@@ -234,7 +234,7 @@ namespace KindergartenDesktopApp.ViewModels
             }
             catch (Exception ex)
             {
-                ExceptionFeedbacker.Inform(ex);
+                ExceptionInformerService.Inform(ex);
             }
         }
 

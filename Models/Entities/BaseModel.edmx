@@ -88,7 +88,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChildDocument_Child">
-          <End Role="Child" Type="Self.Child" Multiplicity="1" />
+          <End Role="Child" Type="Self.Child" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ChildDocument" Type="Self.ChildDocument" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Child">
@@ -298,7 +300,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChildDocument_Child">
-          <End Type="KindergartenBaseModel.Child" Role="Child" Multiplicity="1" />
+          <End Type="KindergartenBaseModel.Child" Role="Child" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="KindergartenBaseModel.ChildDocument" Role="ChildDocument" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Child">

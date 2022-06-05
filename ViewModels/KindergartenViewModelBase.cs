@@ -9,6 +9,7 @@ namespace KindergartenDesktopApp.ViewModels
         public IContextFactoryService ContextFactory => Ioc.Instance.GetService<IContextFactoryService>();
         public ISessionService Session => Ioc.Instance.GetService<ISessionService>();
         public INavigationService Navigator => Ioc.Instance.GetService<INavigationService>();
-        public IExceptionFeedbacker ExceptionFeedbacker => Ioc.Instance.GetService<IExceptionFeedbacker>();
+        public IExceptionInformerService ExceptionInformerService => Ioc.Instance.GetService<IExceptionInformerService>();
+        public IChildDocumentsService DocumentsService => Ioc.Instance.GetService<IChildDocumentsService>();
     }
 }
