@@ -16,10 +16,13 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <controls:ManagementHeader AddCommand="{Binding AddCommand}"
-                                   DeleteCommand="{Binding DeleteCommand}"
+                                   IsCanDelete="{Binding IsCanDelete, Mode=OneWay}"
+                                   DeleteCommand="{Binding OpenDeletePromptCommand}"
                                    OpenFiltersCommand="{Binding OpenFiltersCommand}"
                                    SearchText="{Binding EmployeeSearchText}" />
         <controls:EmployeesList Employees="{Binding Employees}"
+                                IsHasItem="{Binding IsCanDelete, Mode=OneWayToSource}"
+                                SelectedEmployee="{Binding SelectedEmployee}"
                                 EditEmployeeCommand="{Binding EditEmployeeCommand}"
                                 Grid.Row="1" />
         <controls:FilterControl Age="{Binding Age}"
@@ -39,5 +42,19 @@
                 </Binding>
             </controls:FilterControl.Visibility>
         </controls:FilterControl>
+
+        <controls:AskControl QuestionText="Удалить сотрудника"
+                             YesCommand="{Binding DeleteEmployeeCommand}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Grid.RowSpan="2">
+            <controls:AskControl.Visibility>
+                <Binding Path="IsAskControlOpened" Mode="TwoWay">
+                    <Binding.Converter>
+                        <BooleanToVisibilityConverter />
+                    </Binding.Converter>
+                </Binding>
+            </controls:AskControl.Visibility>
+        </controls:AskControl>
     </Grid>
 </UserControl>

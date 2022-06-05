@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using KindergartenDesktopApp.Models.Entities;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,8 +10,22 @@ namespace KindergartenDesktopApp.Controls
     /// <summary>
     /// Interaction logic for EmployeesList.xaml
     /// </summary>
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public partial class EmployeesList : UserControl
     {
+
+
+        public bool IsHasItem
+        {
+            get { return (bool)GetValue(IsHasItemProperty); }
+            set { SetValue(IsHasItemProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsHasItemProperty =
+            DependencyProperty.Register("IsHasItem", typeof(bool), typeof(EmployeesList), new PropertyMetadata(default));
+
+
+
         public RelayCommand<User> EditEmployeeCommand
         {
             get { return (RelayCommand<User>)GetValue(EditEmployeeCommandProperty); }
@@ -34,6 +49,26 @@ namespace KindergartenDesktopApp.Controls
                                         new PropertyMetadata(default));
 
 
+
+        public User SelectedEmployee
+        {
+            get { return (User)GetValue(SelectedEmployeeProperty); }
+            set { SetValue(SelectedEmployeeProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedEmployeeProperty =
+            DependencyProperty.Register("SelectedEmployee",
+                                        typeof(User),
+                                        typeof(EmployeesList),
+                                        new FrameworkPropertyMetadata(default,
+                                                                      FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                                                                      OnSelectedEmployee));
+
+        private static void OnSelectedEmployee(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            EmployeesList employeesList = (EmployeesList)d;
+            employeesList.IsHasItem = e.NewValue != null;
+        }
 
         public EmployeesList()
         {

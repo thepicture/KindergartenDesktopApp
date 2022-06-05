@@ -11,6 +11,17 @@ namespace KindergartenDesktopApp.Controls
     {
 
 
+        public bool IsCanDelete
+        {
+            get { return (bool)GetValue(IsCanDeleteProperty); }
+            set { SetValue(IsCanDeleteProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsCanDeleteProperty =
+            DependencyProperty.Register("IsCanDelete", typeof(bool), typeof(ManagementHeader), new PropertyMetadata(default));
+
+
+
         public string SearchText
         {
             get { return (string)GetValue(SearchTextProperty); }

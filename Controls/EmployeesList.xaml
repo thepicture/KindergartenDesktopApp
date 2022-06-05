@@ -10,6 +10,8 @@
              mc:Ignorable="d"
              Name="Control">
     <ListView ItemsSource="{Binding Employees, ElementName=Control}"
+              SelectionMode="Single"
+              SelectedItem="{Binding ElementName=Control, Path=SelectedEmployee}"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
               Background="Transparent">
         <ListView.ItemsPanel>

@@ -31,6 +31,7 @@
                 </Button.ContentTemplate>
             </Button>
             <Button Command="{Binding DeleteCommand, ElementName=Control}"
+                    IsEnabled="{Binding IsCanDelete,ElementName=Control}"
                     FontWeight="Bold">
                 <Button.ContentTemplate>
                     <DataTemplate>
@@ -73,20 +74,21 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
-            
-                    <Grid VerticalAlignment="Center" Margin="5">
-                        <iconpacks:PackIconMaterial Kind="CircleOutline"
-                                                    Height="30"
-                                                    Width="30" 
-                                                    Foreground="White"/>
-                        <Viewbox>
-                            <iconpacks:PackIconControl Kind="{x:Static iconpacks:PackIconMaterialKind.HumanMaleFemaleChild}"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       Foreground="White"
-                                                       Padding="3" />
-                        </Viewbox>
-                    </Grid>
+
+            <Grid VerticalAlignment="Center"
+                  Margin="5">
+                <iconpacks:PackIconMaterial Kind="CircleOutline"
+                                            Height="30"
+                                            Width="30"
+                                            Foreground="White" />
+                <Viewbox>
+                    <iconpacks:PackIconControl Kind="{x:Static iconpacks:PackIconMaterialKind.HumanMaleFemaleChild}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Foreground="White"
+                                               Padding="3" />
+                </Viewbox>
+            </Grid>
         </StackPanel>
     </Grid>
 </UserControl>

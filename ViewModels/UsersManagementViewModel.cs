@@ -100,25 +100,6 @@ namespace KindergartenDesktopApp.ViewModels
 
         public ObservableCollection<User> Employees { get; set; }
 
-        private RelayCommand deleteCommand;
-
-        public ICommand DeleteCommand
-        {
-            get
-            {
-                if (deleteCommand == null)
-                {
-                    deleteCommand = new RelayCommand(Delete);
-                }
-
-                return deleteCommand;
-            }
-        }
-
-        private void Delete()
-        {
-        }
-
         private RelayCommand addCommand;
 
         public ICommand AddCommand
@@ -157,6 +138,7 @@ namespace KindergartenDesktopApp.ViewModels
 
         private void OpenFilters()
         {
+            IsAskControlOpened = false;
             IsFilterOpened = !IsFilterOpened;
         }
 
@@ -192,6 +174,7 @@ namespace KindergartenDesktopApp.ViewModels
 
         private void FilterCollection()
         {
+            IsAskControlOpened = false;
             IsFilterOpened = false;
             _ = LoadEmployeesAsync();
         }
@@ -215,8 +198,70 @@ namespace KindergartenDesktopApp.ViewModels
 
         private void EditEmployee(User employee)
         {
+            IsAskControlOpened = false;
             IsFilterOpened = false;
             Navigator.Go<AddEditUserViewModel, User>(employee);
         }
+
+        private ICommand deleteEmployeeCommand;
+
+        public ICommand DeleteEmployeeCommand
+        {
+            get
+            {
+                if (deleteEmployeeCommand == null)
+                {
+                    deleteEmployeeCommand = new RelayCommand(DeleteEmployeeAsync);
+                }
+
+                return deleteEmployeeCommand;
+            }
+        }
+
+        private async void DeleteEmployeeAsync()
+        {
+            try
+            {
+                using (var context = ContextFactory.GetInstance())
+                {
+                    var userToDelete = await context.Users.FindAsync(SelectedEmployee.Id);
+                    context.Users.Remove(userToDelete);
+                    await context.SaveChangesAsync();
+                    IsAskControlOpened = false;
+                    await LoadEmployeesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionFeedbacker.Inform(ex);
+            }
+        }
+
+        public bool IsAskControlOpened { get; set; }
+
+        private RelayCommand openDeletePromptCommand;
+
+        public ICommand OpenDeletePromptCommand
+        {
+            get
+            {
+                if (openDeletePromptCommand == null)
+                {
+                    openDeletePromptCommand = new RelayCommand(OpenDeletePrompt);
+                }
+
+                return openDeletePromptCommand;
+            }
+        }
+
+        private void OpenDeletePrompt()
+        {
+            IsFilterOpened = false;
+            IsAskControlOpened = true;
+        }
+
+        public bool IsCanDelete { get; set; }
+
+        public User SelectedEmployee { get; set; }
     }
 }
