@@ -37,7 +37,7 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
@@ -94,7 +94,7 @@
                              Grid.Column="4" />
                     <Image Width="100"
                            Grid.ColumnSpan="2"
-                           Height="auto"
+                           Height="100"
                            Margin="10"
                            Stretch="UniformToFill"
                            Grid.Row="5">
@@ -159,5 +159,19 @@
                 </Button>
             </Grid>
         </Grid>
+        <controls:AskControl QuestionText="{Binding QuestionText}"
+                             YesCommand="{Binding ConfirmAddChildCommand}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Grid.RowSpan="2">
+            <controls:AskControl.Visibility>
+                <Binding Path="IsAskControlOpened"
+                         Mode="TwoWay">
+                    <Binding.Converter>
+                        <BooleanToVisibilityConverter />
+                    </Binding.Converter>
+                </Binding>
+            </controls:AskControl.Visibility>
+        </controls:AskControl>
     </Grid>
 </UserControl>

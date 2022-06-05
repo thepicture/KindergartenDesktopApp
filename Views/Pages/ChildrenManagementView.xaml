@@ -23,6 +23,7 @@
         <controls:ChildrenList Children="{Binding Children}"
                                IsHasItem="{Binding IsCanDelete, Mode=OneWayToSource}"
                                SelectedChild="{Binding SelectedChild}"
+                               ReviewChildCommand="{Binding ReviewChildCommand}"
                                EditChildCommand="{Binding EditChildCommand}"
                                Grid.Row="1" />
         <controls:FilterControl Age="{Binding Age}"

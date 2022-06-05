@@ -276,6 +276,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\ChildView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -363,16 +367,19 @@
     <Compile Include="Services\ExceptionInformerService.cs" />
     <Compile Include="Services\IChildDocumentsService.cs" />
     <Compile Include="Services\IExceptionInformerService.cs" />
+    <Compile Include="Services\IMessageBoxService.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\Ioc.cs" />
     <Compile Include="Services\IOpenFileDialogService.cs" />
     <Compile Include="Services\ISession.cs" />
+    <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\OpenFileDialogService.cs" />
     <Compile Include="Services\Session.cs" />
     <Compile Include="ViewModels\AddEditChildViewModel.cs" />
     <Compile Include="ViewModels\AddEditUserViewModel.cs" />
     <Compile Include="ViewModels\ChildrenManagementViewModel.cs" />
+    <Compile Include="ViewModels\ChildViewModel.cs" />
     <Compile Include="ViewModels\KindergartenViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
@@ -385,6 +392,9 @@
     </Compile>
     <Compile Include="Views\Pages\ChildrenManagementView.xaml.cs">
       <DependentUpon>ChildrenManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\ChildView.xaml.cs">
+      <DependentUpon>ChildView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>

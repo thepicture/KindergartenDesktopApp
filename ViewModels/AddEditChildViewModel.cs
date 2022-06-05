@@ -105,54 +105,7 @@ namespace KindergartenDesktopApp.ViewModels
 
         private async void SaveChangesAsync()
         {
-            try
-            {
-                using (var context = ContextFactory.GetInstance())
-                {
-                    if (Child.Group != null)
-                    {
-                        Child.GroupId = Child.Group.Id;
-                        Child.Group = null;
-                    }
-                    if (Child.Gender != null)
-                    {
-                        Child.GenderId = Child.Gender.Id;
-                        Child.Gender = null;
-                    }
-                    if (Child.IsNew())
-                    {
-                        context.Children.Add(Child);
-                    }
-                    else
-                    {
-                        Child existingChild = context.Children
-                            .Include(c => c.ChildDocuments)
-                            .First(c => c.Id == Child.Id);
-                        existingChild.ChildDocuments
-                            .ToList()
-                            .ForEach(d => context.Entry(d).State = EntityState.Deleted);
-                        await context.SaveChangesAsync();
-                        existingChild.ChildDocuments.Clear();
-                        foreach (var document in Child.ChildDocuments)
-                        {
-                            existingChild.ChildDocuments.Add(new ChildDocument
-                            {
-                                FileName = document.FileName,
-                                FileBytes = document.FileBytes,
-                            });
-                        }
-                        context
-                            .Entry(existingChild).CurrentValues
-                            .SetValues(Child);
-                    }
-                    await context.SaveChangesAsync();
-                    Navigator.Back();
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionInformerService.Inform(ex);
-            }
+            IsAskControlOpened = true;
         }
 
         private RelayCommand addImageCommand;
@@ -226,5 +179,76 @@ namespace KindergartenDesktopApp.ViewModels
                 ExceptionInformerService.Inform(ex);
             }
         }
+
+        private RelayCommand confirmAddChildCommand;
+
+        public ICommand ConfirmAddChildCommand
+        {
+            get
+            {
+                if (confirmAddChildCommand == null)
+                {
+                    confirmAddChildCommand = new RelayCommand(ConfirmAddChildAsync);
+                }
+
+                return confirmAddChildCommand;
+            }
+        }
+
+        private async void ConfirmAddChildAsync()
+        {
+            try
+            {
+                using (var context = ContextFactory.GetInstance())
+                {
+                    if (Child.Group != null)
+                    {
+                        Child.GroupId = Child.Group.Id;
+                        Child.Group = null;
+                    }
+                    if (Child.Gender != null)
+                    {
+                        Child.GenderId = Child.Gender.Id;
+                        Child.Gender = null;
+                    }
+                    if (Child.IsNew())
+                    {
+                        context.Children.Add(Child);
+                    }
+                    else
+                    {
+                        Child existingChild = context.Children
+                            .Include(c => c.ChildDocuments)
+                            .First(c => c.Id == Child.Id);
+                        existingChild.ChildDocuments
+                            .ToList()
+                            .ForEach(d => context.Entry(d).State = EntityState.Deleted);
+                        await context.SaveChangesAsync();
+                        existingChild.ChildDocuments.Clear();
+                        foreach (var document in Child.ChildDocuments)
+                        {
+                            existingChild.ChildDocuments.Add(new ChildDocument
+                            {
+                                FileName = document.FileName,
+                                FileBytes = document.FileBytes,
+                            });
+                        }
+                        context
+                            .Entry(existingChild).CurrentValues
+                            .SetValues(Child);
+                    }
+                    IsAskControlOpened = false;
+                    await context.SaveChangesAsync();
+                    Navigator.Back();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionInformerService.Inform(ex);
+            }
+        }
+
+        public bool IsAskControlOpened { get; set; }
+        public string QuestionText => Title;
     }
 }

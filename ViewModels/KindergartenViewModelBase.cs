@@ -11,5 +11,6 @@ namespace KindergartenDesktopApp.ViewModels
         public INavigationService Navigator => Ioc.Instance.GetService<INavigationService>();
         public IExceptionInformerService ExceptionInformerService => Ioc.Instance.GetService<IExceptionInformerService>();
         public IChildDocumentsService DocumentsService => Ioc.Instance.GetService<IChildDocumentsService>();
+        public IMessageBoxService MessageBox => Ioc.Instance.GetService<IMessageBoxService>();
     }
 }

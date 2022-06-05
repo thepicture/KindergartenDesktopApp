@@ -73,5 +73,19 @@
                         Margin="5" />
             </StackPanel>
         </Grid>
+        <controls:AskControl QuestionText="{Binding QuestionText}"
+                             YesCommand="{Binding ConfirmAddEmployeeCommand}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Grid.RowSpan="2">
+            <controls:AskControl.Visibility>
+                <Binding Path="IsAskControlOpened"
+                         Mode="TwoWay">
+                    <Binding.Converter>
+                        <BooleanToVisibilityConverter />
+                    </Binding.Converter>
+                </Binding>
+            </controls:AskControl.Visibility>
+        </controls:AskControl>
     </Grid>
 </UserControl>

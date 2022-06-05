@@ -264,5 +264,25 @@ namespace KindergartenDesktopApp.ViewModels
         public bool IsCanDelete { get; set; }
 
         public Child SelectedChild { get; set; }
+
+        private RelayCommand<Child> reviewChildCommand;
+
+        public RelayCommand<Child> ReviewChildCommand
+        {
+            get
+            {
+                if (reviewChildCommand == null)
+                {
+                    reviewChildCommand = new RelayCommand<Child>(ReviewChild);
+                }
+
+                return reviewChildCommand;
+            }
+        }
+
+        private void ReviewChild(Child child)
+        {
+            Navigator.Go<ChildViewModel, Child>(child);
+        }
     }
 }

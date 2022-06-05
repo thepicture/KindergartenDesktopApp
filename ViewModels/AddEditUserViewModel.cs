@@ -22,6 +22,7 @@ namespace KindergartenDesktopApp.ViewModels
         public AddEditUserViewModel()
         {
             Title = "Добавить пользователя";
+            QuestionText = "Добавить сотрудника";
             User = new User
             {
                 RoleId = UserRoles.EmployeeId
@@ -37,6 +38,7 @@ namespace KindergartenDesktopApp.ViewModels
         public AddEditUserViewModel(User inputEmployee)
         {
             Title = "Редактировать пользователя";
+            QuestionText = "Редактировать сотрудника";
             User = inputEmployee;
             User.PropertyChanged += (_, __) =>
             {
@@ -73,7 +75,7 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 if (saveChangesCommand == null)
                 {
-                    saveChangesCommand = new RelayCommand(SaveChangesAsync);
+                    saveChangesCommand = new RelayCommand(SaveChanges);
                 }
 
                 return saveChangesCommand;
@@ -85,36 +87,9 @@ namespace KindergartenDesktopApp.ViewModels
                                         && !string.IsNullOrWhiteSpace(User.Password)
                                         && User.Group != null;
 
-        private async void SaveChangesAsync()
+        private void SaveChanges()
         {
-            try
-            {
-                using (var context = ContextFactory.GetInstance())
-                {
-                    if (User.Group != null)
-                    {
-                        User.GroupId = User.Group.Id;
-                        User.Group = null;
-                    }
-                    if (User.IsNew())
-                    {
-                        context.Users.Add(User);
-                    }
-                    else
-                    {
-                        User existingEmployee = context.Users.Find(User.Id);
-                        context
-                            .Entry(existingEmployee).CurrentValues
-                            .SetValues(User);
-                    }
-                    await context.SaveChangesAsync();
-                    Navigator.Back();
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionInformerService.Inform(ex);
-            }
+            IsAskControlOpened = true;
         }
 
         private RelayCommand addImageCommand;
@@ -142,5 +117,55 @@ namespace KindergartenDesktopApp.ViewModels
                 User.Image = file;
             }
         }
+
+        private RelayCommand confirmAddEmployeeCommand;
+
+        public ICommand ConfirmAddEmployeeCommand
+        {
+            get
+            {
+                if (confirmAddEmployeeCommand == null)
+                {
+                    confirmAddEmployeeCommand = new RelayCommand(ConfirmAddEmployeeAsync);
+                }
+
+                return confirmAddEmployeeCommand;
+            }
+        }
+
+        private async void ConfirmAddEmployeeAsync()
+        {
+            try
+            {
+                using (var context = ContextFactory.GetInstance())
+                {
+                    if (User.Group != null)
+                    {
+                        User.GroupId = User.Group.Id;
+                        User.Group = null;
+                    }
+                    if (User.IsNew())
+                    {
+                        context.Users.Add(User);
+                    }
+                    else
+                    {
+                        User existingEmployee = context.Users.Find(User.Id);
+                        context
+                            .Entry(existingEmployee).CurrentValues
+                            .SetValues(User);
+                    }
+                    IsAskControlOpened = false;
+                    await context.SaveChangesAsync();
+                    Navigator.Back();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionInformerService.Inform(ex);
+            }
+        }
+        public bool IsAskControlOpened { get; set; }
+        public string QuestionText { get; set; }
     }
 }

@@ -17,11 +17,7 @@ namespace KindergartenDesktopApp.Services
         {
             if (Directory.Exists(_folder))
             {
-                foreach (var file in Directory.GetFiles(_folder))
-                {
-                    File.Delete(file);
-                }
-                Directory.Delete(_folder);
+                Directory.Delete(_folder, recursive: true);
             }
             _documents = null;
             _synchronizedDocuments = null;
@@ -61,10 +57,11 @@ namespace KindergartenDesktopApp.Services
             _documents = documents;
             _synchronizedDocuments = new List<ChildDocument>();
             _folder = Path.Combine(Environment.CurrentDirectory, "Документы");
-            if (!Directory.Exists(_folder))
+            if (Directory.Exists(_folder))
             {
-                Directory.CreateDirectory(_folder);
+                Directory.Delete(_folder, recursive: true);
             }
+            Directory.CreateDirectory(_folder);
             foreach (var document in documents)
             {
                 using (var documentStream = File.Create(

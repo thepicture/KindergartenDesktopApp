@@ -40,9 +40,11 @@
             <UniformGrid Grid.Row="2"
                          Columns="2"
                          Margin="30,5">
-                <Button Content="Обзор" />
-                <Button Command="{Binding ElementName=Control, Path=EditPersonCommand}"
-                        CommandParameter="{Binding .}"
+                <Button CommandParameter="{Binding .}"
+                        Command="{Binding ElementName=Control, Path=ReviewChildCommand}"
+                        Content="Обзор" />
+                <Button CommandParameter="{Binding .}"
+                        Command="{Binding ElementName=Control, Path=EditPersonCommand}"
                         Content="Редактировать" />
             </UniformGrid>
         </Grid>

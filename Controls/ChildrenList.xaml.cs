@@ -11,6 +11,15 @@ namespace KindergartenDesktopApp.Controls
     /// </summary>
     public partial class ChildrenList : UserControl
     {
+        public RelayCommand<Child> ReviewChildCommand
+        {
+            get { return (RelayCommand<Child>)GetValue(ReviewChildCommandProperty); }
+            set { SetValue(ReviewChildCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ReviewChildCommandProperty =
+            DependencyProperty.Register("ReviewChildCommand", typeof(RelayCommand<Child>), typeof(ChildrenList), new PropertyMetadata(default));
+
         public bool IsHasItem
         {
             get { return (bool)GetValue(IsHasItemProperty); }
