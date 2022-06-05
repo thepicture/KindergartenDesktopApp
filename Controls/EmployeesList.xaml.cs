@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace KindergartenDesktopApp.Controls
 {
@@ -13,6 +14,18 @@ namespace KindergartenDesktopApp.Controls
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public partial class EmployeesList : UserControl
     {
+
+
+        public ICommand ReviewEmployeeCommand
+        {
+            get { return (ICommand)GetValue(ReviewEmployeeCommandProperty); }
+            set { SetValue(ReviewEmployeeCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ReviewEmployeeCommandProperty =
+            DependencyProperty.Register("ReviewEmployeeCommand", typeof(ICommand), typeof(EmployeesList), new PropertyMetadata(default));
+
+
         public bool IsHasItem
         {
             get { return (bool)GetValue(IsHasItemProperty); }

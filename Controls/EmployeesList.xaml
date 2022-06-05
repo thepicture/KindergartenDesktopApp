@@ -26,7 +26,8 @@
                     <local:PersonTemplate Id="{Binding Id}"
                                           FullName="{Binding FullName}"
                                           Image="{Binding Image}"
-                                          EditPersonCommand="{Binding EditEmployeeCommand, ElementName=Control}"/>
+                                          EditPersonCommand="{Binding EditEmployeeCommand, ElementName=Control}"
+                                          ReviewPersonCommand="{Binding ElementName=Control, Path=ReviewEmployeeCommand}"/>
                     <Image Width="310"
                            Height="200"
                            VerticalAlignment="Top"

@@ -10,14 +10,14 @@ namespace KindergartenDesktopApp.Controls
     /// </summary>
     public partial class PersonTemplate : UserControl
     {
-        public ICommand ReviewChildCommand
+        public ICommand ReviewPersonCommand
         {
-            get { return (ICommand)GetValue(ReviewChildCommandProperty); }
-            set { SetValue(ReviewChildCommandProperty, value); }
+            get { return (ICommand)GetValue(ReviewPersonCommandProperty); }
+            set { SetValue(ReviewPersonCommandProperty, value); }
         }
 
-        public static readonly DependencyProperty ReviewChildCommandProperty =
-            DependencyProperty.Register("ReviewChildCommand", typeof(ICommand), typeof(PersonTemplate), new PropertyMetadata(default));
+        public static readonly DependencyProperty ReviewPersonCommandProperty =
+            DependencyProperty.Register("ReviewPersonCommand", typeof(ICommand), typeof(PersonTemplate), new PropertyMetadata(default));
 
 
         public ICommand EditPersonCommand

@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using KindergartenDesktopApp.Models.Entities;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
 using System.Windows.Input;
 
 namespace KindergartenDesktopApp.ViewModels
@@ -67,6 +69,35 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 ExceptionInformerService.Inform(ex);
             }
+        }
+
+        private RelayCommand loadSamplesCommand;
+
+        public ICommand LoadSamplesCommand
+        {
+            get
+            {
+                if (loadSamplesCommand == null)
+                {
+                    loadSamplesCommand = new RelayCommand(LoadSamples);
+                }
+
+                return loadSamplesCommand;
+            }
+        }
+
+        private void LoadSamples()
+        {
+            DocumentsService.CreateFolder(Child.ChildDocuments);
+            string samplesZipFilePath = Path.Combine(Environment.CurrentDirectory, "ОбразцыДокументов.zip");
+            if (File.Exists(samplesZipFilePath))
+            {
+                File.Delete(samplesZipFilePath);
+            }
+            ZipFile.CreateFromDirectory(DocumentsService.GetFolderPath(),
+                                        samplesZipFilePath);
+            DocumentsService.Close();
+            Process.Start(samplesZipFilePath);
         }
     }
 }

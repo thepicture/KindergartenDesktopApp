@@ -64,7 +64,8 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right">
-            <Button FontWeight="Bold">
+            <Button Command="{Binding ElementName=Control, Path=MenuCommand}"
+                    FontWeight="Bold">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <Viewbox Height="20">

@@ -21,8 +21,14 @@ namespace KindergartenDesktopApp.ViewModels
         {
             Title = "Управление пользователями";
             LoadEmployeesAsync()
-                .ContinueWith(t => LoadGroupsAsync())
-                .ContinueWith(t => LoadGendersAsync());
+                .ContinueWith(t =>
+                {
+                    return LoadGroupsAsync();
+                })
+                .ContinueWith(t =>
+                {
+                    return LoadGendersAsync();
+                });
         }
 
         public void OnAppearing()
@@ -62,6 +68,7 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 IEnumerable<User> currentEmployees = await context.Users
                     .Include(u => u.Group)
+                    .Include(u => u.Gender)
                     .Where(u => u.RoleId == UserRoles.EmployeeId)
                     .ToListAsync();
                 if (!string.IsNullOrWhiteSpace(EmployeeSearchText))
@@ -263,5 +270,25 @@ namespace KindergartenDesktopApp.ViewModels
         public bool IsCanDelete { get; set; }
 
         public User SelectedEmployee { get; set; }
+
+        private RelayCommand<User> reviewEmployeeCommand;
+
+        public RelayCommand<User> ReviewEmployeeCommand
+        {
+            get
+            {
+                if (reviewEmployeeCommand == null)
+                {
+                    reviewEmployeeCommand = new RelayCommand<User>(ReviewEmployee);
+                }
+
+                return reviewEmployeeCommand;
+            }
+        }
+
+        private void ReviewEmployee(User employee)
+        {
+            Navigator.Go<UserViewModel, User>(employee);
+        }
     }
 }

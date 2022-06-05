@@ -41,7 +41,7 @@
                          Columns="2"
                          Margin="30,5">
                 <Button CommandParameter="{Binding .}"
-                        Command="{Binding ElementName=Control, Path=ReviewChildCommand}"
+                        Command="{Binding ElementName=Control, Path=ReviewPersonCommand}"
                         Content="Обзор" />
                 <Button CommandParameter="{Binding .}"
                         Command="{Binding ElementName=Control, Path=EditPersonCommand}"

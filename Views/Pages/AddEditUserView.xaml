@@ -71,6 +71,12 @@
                         IsDefault="True"
                         HorizontalAlignment="Left"
                         Margin="5" />
+                <Button Command="{Binding GoBackCommand}"
+                        Content="Назад"
+                        Width="130"
+                        HorizontalAlignment="Left"
+                        Grid.Row="8"
+                        Grid.ColumnSpan="2" />
             </StackPanel>
         </Grid>
         <controls:AskControl QuestionText="{Binding QuestionText}"

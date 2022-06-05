@@ -10,6 +10,16 @@ namespace KindergartenDesktopApp.Controls
     public partial class ManagementHeader : UserControl
     {
 
+        public ICommand MenuCommand
+        {
+            get { return (ICommand)GetValue(MenuCommandProperty); }
+            set { SetValue(MenuCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty MenuCommandProperty =
+            DependencyProperty.Register("MenuCommand", typeof(ICommand), typeof(ManagementHeader), new PropertyMetadata(default));
+
+
 
         public bool IsCanDelete
         {

@@ -40,6 +40,7 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" />
@@ -117,6 +118,10 @@
                             IsDefault="True"
                             Margin="5"
                             Grid.Row="7"
+                            Grid.ColumnSpan="2" />
+                    <Button Command="{Binding GoBackCommand}"
+                            Content="Назад"
+                            Grid.Row="8"
                             Grid.ColumnSpan="2" />
                 </Grid>
             </Grid>

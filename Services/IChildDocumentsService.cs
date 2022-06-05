@@ -8,6 +8,8 @@ namespace KindergartenDesktopApp.Services
     /// </summary>
     public interface IChildDocumentsService
     {
+        string GetFolderPath();
+        void CreateFolder(IEnumerable<ChildDocument> documents);
         void Open(IEnumerable<ChildDocument> documents);
         void Close();
         bool IsShouldSynchronize();

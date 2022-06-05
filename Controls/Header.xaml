@@ -5,8 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:KindergartenDesktopApp.Controls"
              mc:Ignorable="d"
+             d:DesignWidth="800"
              Name="Control">
-    <TextBlock Text="{Binding Text, ElementName=Control}"
-               FontSize="20"
-               Margin="5,5,5,30"/>
+    <Grid>
+        <TextBlock Text="{Binding Text, ElementName=Control}"
+                   FontSize="20"
+                   Margin="5,5,5,30" />
+        <Button Command="{Binding ElementName=Control, Path=GoBackCommand}"
+                Content="Назад"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center">
+            <Button.Visibility>
+                <Binding Path="IsCanGoBack"
+                         ElementName="Control">
+                    <Binding.Converter>
+                        <BooleanToVisibilityConverter />
+                    </Binding.Converter>
+                </Binding>
+            </Button.Visibility>
+        </Button>
+    </Grid>
 </UserControl>

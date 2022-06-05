@@ -24,6 +24,33 @@ namespace KindergartenDesktopApp.Services
             _folder = null;
         }
 
+        public void CreateFolder(IEnumerable<ChildDocument> documents)
+        {
+            _documents = documents;
+            _synchronizedDocuments = new List<ChildDocument>();
+            _folder = Path.Combine(Environment.CurrentDirectory, "Документы");
+            if (Directory.Exists(_folder))
+            {
+                Directory.Delete(_folder, recursive: true);
+            }
+            Directory.CreateDirectory(_folder);
+            foreach (var document in documents)
+            {
+                using (var documentStream = File.Create(
+                    Path.Combine(_folder, document.FileName)))
+                {
+                    documentStream.Write(array: document.FileBytes,
+                                         offset: 0,
+                                         count: document.FileBytes.Length);
+                }
+            }
+        }
+
+        public string GetFolderPath()
+        {
+            return _folder;
+        }
+
         public IEnumerable<ChildDocument> GetSynchronizedDocuments()
         {
             return _synchronizedDocuments;
@@ -54,24 +81,7 @@ namespace KindergartenDesktopApp.Services
 
         public void Open(IEnumerable<ChildDocument> documents)
         {
-            _documents = documents;
-            _synchronizedDocuments = new List<ChildDocument>();
-            _folder = Path.Combine(Environment.CurrentDirectory, "Документы");
-            if (Directory.Exists(_folder))
-            {
-                Directory.Delete(_folder, recursive: true);
-            }
-            Directory.CreateDirectory(_folder);
-            foreach (var document in documents)
-            {
-                using (var documentStream = File.Create(
-                    Path.Combine(_folder, document.FileName)))
-                {
-                    documentStream.Write(array: document.FileBytes,
-                                         offset: 0,
-                                         count: document.FileBytes.Length);
-                }
-            }
+            CreateFolder(documents);
             OpenFileDialog openDocumentDialog = new OpenFileDialog
             {
                 Title = "Просмотр документов",

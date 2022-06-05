@@ -179,6 +179,8 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -252,6 +254,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\VerticalMenuItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionaries\ColorsDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -261,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionaries\TemplatesDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\AccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -285,6 +295,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\UsersManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\UserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -322,6 +336,9 @@
     </Compile>
     <Compile Include="Controls\ValidationMessage.xaml.cs">
       <DependentUpon>ValidationMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VerticalMenuItemControl.xaml.cs">
+      <DependentUpon>VerticalMenuItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\InvertBooleanConverter.cs" />
     <Compile Include="Extensions\EntitiesExtensions.cs" />
@@ -376,6 +393,7 @@
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\OpenFileDialogService.cs" />
     <Compile Include="Services\Session.cs" />
+    <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\AddEditChildViewModel.cs" />
     <Compile Include="ViewModels\AddEditUserViewModel.cs" />
     <Compile Include="ViewModels\ChildrenManagementViewModel.cs" />
@@ -384,6 +402,10 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\UsersManagementViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="Views\Pages\AccountView.xaml.cs">
+      <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\AddEditChildView.xaml.cs">
       <DependentUpon>AddEditChildView.xaml</DependentUpon>
     </Compile>
@@ -401,6 +423,9 @@
     </Compile>
     <Compile Include="Views\Pages\UsersManagementView.xaml.cs">
       <DependentUpon>UsersManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
