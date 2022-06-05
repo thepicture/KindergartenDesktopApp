@@ -3,11 +3,11 @@
 namespace KindergartenDesktopApp.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for UsersManagementView.xaml
+    /// Interaction logic for AddEditUserView.xaml
     /// </summary>
-    public partial class UsersManagementView : UserControl
+    public partial class AddEditUserView : UserControl
     {
-        public UsersManagementView()
+        public AddEditUserView()
         {
             InitializeComponent();
         }

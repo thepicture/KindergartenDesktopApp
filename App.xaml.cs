@@ -70,12 +70,22 @@ namespace KindergartenDesktopApp
                 var viewModel = ResourceAssembly
                     .GetTypes()
                     .First(t => t.Name == view.Name + "Model");
+                FrameworkElementFactory viewFactory = new FrameworkElementFactory(view);
+                viewFactory.AddHandler(FrameworkElement.LoadedEvent, new RoutedEventHandler(OnLoaded));
                 DataTemplate viewModelTemplate = new DataTemplate(viewModel)
                 {
-                    VisualTree = new FrameworkElementFactory(view),
+                    VisualTree = viewFactory,
                     DataType = viewModel
                 };
                 Resources.Add(new DataTemplateKey(viewModel), viewModelTemplate);
+            }
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (((FrameworkElement)sender).DataContext != null)
+            {
+                ((dynamic)sender).DataContext.OnAppearing();
             }
         }
     }

@@ -251,6 +251,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\TemplatesDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\AddEditUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -289,6 +297,7 @@
       <DependentUpon>ValidationMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\InvertBooleanConverter.cs" />
+    <Compile Include="Extensions\EntitiesExtensions.cs" />
     <Compile Include="Models\Entities\BaseModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -320,15 +329,23 @@
     <Compile Include="Models\Partial\PartialUser.cs" />
     <Compile Include="Services\ContextFactoryService.cs" />
     <Compile Include="Services\IContextFactoryService.cs" />
+    <Compile Include="Services\ExceptionFeedbacker.cs" />
+    <Compile Include="Services\IExceptionFeedbacker.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\Ioc.cs" />
+    <Compile Include="Services\IOpenFileDialogService.cs" />
     <Compile Include="Services\ISession.cs" />
     <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\OpenFileDialogService.cs" />
     <Compile Include="Services\Session.cs" />
+    <Compile Include="ViewModels\AddEditUserViewModel.cs" />
     <Compile Include="ViewModels\KindergartenViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\UsersManagementViewModel.cs" />
+    <Compile Include="Views\Pages\AddEditUserView.xaml.cs">
+      <DependentUpon>AddEditUserView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>

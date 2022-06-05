@@ -25,9 +25,14 @@ namespace KindergartenDesktopApp.ViewModels
                 .ContinueWith(t => LoadGendersAsync());
         }
 
+        public void OnAppearing()
+        {
+            _ = LoadEmployeesAsync();
+        }
+
         private async Task LoadGendersAsync()
         {
-            using (var context = Context.GetInstance())
+            using (var context = ContextFactory.GetInstance())
             {
                 List<Gender> currentGenders = await context.Genders.ToListAsync();
                 currentGenders.Insert(0, new Gender { Title = "Любой" });
@@ -38,7 +43,7 @@ namespace KindergartenDesktopApp.ViewModels
 
         private async Task LoadGroupsAsync()
         {
-            using (var context = Context.GetInstance())
+            using (var context = ContextFactory.GetInstance())
             {
                 List<Group> currentGroups = await context.Groups.ToListAsync();
                 currentGroups.Insert(0, new Group { Title = "Любая" });
@@ -51,7 +56,7 @@ namespace KindergartenDesktopApp.ViewModels
 
         private async Task LoadEmployeesAsync()
         {
-            using (var context = Context.GetInstance())
+            using (var context = ContextFactory.GetInstance())
             {
                 IEnumerable<User> currentEmployees = await context.Users
                     .Where(u => u.RoleId == UserRoles.EmployeeId)
@@ -128,6 +133,7 @@ namespace KindergartenDesktopApp.ViewModels
 
         private void Add()
         {
+            Navigator.Go<AddEditUserViewModel>();
         }
 
         private RelayCommand openFiltersCommand;

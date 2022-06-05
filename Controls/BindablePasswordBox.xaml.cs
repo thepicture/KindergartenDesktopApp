@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace KindergartenDesktopApp.Controls
@@ -8,6 +9,33 @@ namespace KindergartenDesktopApp.Controls
     /// </summary>
     public partial class BindablePasswordBox : UserControl
     {
+        public ControlTemplate ErrorTemplate
+        {
+            get { return (ControlTemplate)GetValue(ErrorTemplateProperty); }
+            set { SetValue(ErrorTemplateProperty, value); }
+        }
+
+        public static readonly DependencyProperty ErrorTemplateProperty =
+            DependencyProperty.Register("ErrorTemplate", typeof(ControlTemplate), typeof(BindablePasswordBox), new PropertyMetadata(default, OnErrorTemplateChanged));
+
+        private static void OnErrorTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e == null)
+            {
+                return;
+            }
+            BindablePasswordBox bindablePasswordBox = (BindablePasswordBox)d;
+            bindablePasswordBox.BindablePassword.SetValue(Validation.ErrorTemplateProperty, e.NewValue);
+        }
+
+        public int RequestWidth
+        {
+            get { return (int)GetValue(RequestWidthProperty); }
+            set { SetValue(RequestWidthProperty, value); }
+        }
+
+        public static readonly DependencyProperty RequestWidthProperty =
+            DependencyProperty.Register("RequestWidth", typeof(int), typeof(BindablePasswordBox), new PropertyMetadata(150));
 
 
         public string BindableText
@@ -22,11 +50,13 @@ namespace KindergartenDesktopApp.Controls
                                         typeof(BindablePasswordBox),
                                         new FrameworkPropertyMetadata(default(string),
                                                                       FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
-
         public BindablePasswordBox()
         {
             InitializeComponent();
+            if (ErrorTemplate != null)
+            {
+                BindablePassword.SetValue(Validation.ErrorTemplateProperty, ErrorTemplate);
+            }
         }
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)

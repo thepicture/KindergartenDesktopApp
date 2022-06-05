@@ -9,6 +9,11 @@ namespace KindergartenDesktopApp.ViewModels
 {
     public class LoginViewModel : KindergartenViewModelBase
     {
+        public void OnAppearing()
+        {
+
+        }
+
         public LoginViewModel()
         {
             Title = "Окно авторизации";
@@ -39,7 +44,7 @@ namespace KindergartenDesktopApp.ViewModels
             IsIncorrectLoginOrPassword = false;
             await Task.Delay(
                 TimeSpan.FromSeconds(1));
-            using (var context = Context.GetInstance())
+            using (var context = ContextFactory.GetInstance())
             {
                 if (await context.Users
                         .FirstOrDefaultAsync(u =>

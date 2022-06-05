@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTemplate x:Key="TextBoxErrorTemplate">
+        <Grid>
+            <TextBlock Text="Данные не введены"
+                       Foreground="{StaticResource ValidationMessageColor}"
+                       Style="{StaticResource CommonBlock}"
+                       Margin="10,5,5,5"
+                       Width="auto"
+                       FontWeight="Bold"
+                       IsHitTestVisible="False" />
+            <AdornedElementPlaceholder />
+        </Grid>
+    </ControlTemplate>
+    <ControlTemplate x:Key="PasswordBoxErrorTemplate">
+        <Grid>
+            <TextBlock Text="Данные не введены"
+                       Foreground="{StaticResource ValidationMessageColor}"
+                       Style="{StaticResource CommonBlock}"
+                       Width="auto"
+                       FontWeight="Bold"
+                       IsHitTestVisible="False">
+                <TextBlock.RenderTransform>
+                    <TranslateTransform X="10" />
+                </TextBlock.RenderTransform>
+            </TextBlock>
+            <AdornedElementPlaceholder />
+        </Grid>
+    </ControlTemplate>
+</ResourceDictionary>
