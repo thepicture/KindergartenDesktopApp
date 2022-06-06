@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace KindergartenDesktopApp.Models.Entities
@@ -11,14 +12,25 @@ namespace KindergartenDesktopApp.Models.Entities
         {
             get
             {
+                if (columnName == nameof(Passport))
+                    if (string.IsNullOrWhiteSpace(Passport)
+                        || Passport.Count(c =>
+                        {
+                            return char.IsDigit(c);
+                        }) != 10)
+                        return nameof(Passport);
+                if (columnName == nameof(PhoneNumber))
+                    if (string.IsNullOrWhiteSpace(PhoneNumber)
+                        || PhoneNumber.Count(n => char.IsDigit(n)) != 11)
+                        return nameof(PhoneNumber);
+                if (columnName == nameof(Address))
+                    if (string.IsNullOrWhiteSpace(Address))
+                        return nameof(Address);
+                if (columnName == nameof(Gender))
+                    if (Gender == null)
+                        return "Выберите пол";
                 if (columnName == nameof(FullName) && string.IsNullOrWhiteSpace(FullName))
                     return "Введите ФИО";
-                if (columnName == nameof(Age) && Age <= 18)
-                    return "Введите корректный возраст от 18 лет";
-                if (RoleId == UserRoles.EmployeeId && columnName == nameof(Groups) && Groups == null)
-                    return "Выберите группу";
-                if (columnName == nameof(Gender) && Gender == null)
-                    return "Выберите пол";
                 if (columnName == nameof(Login) && string.IsNullOrWhiteSpace(Login))
                     return "Введите логин";
                 if (columnName == nameof(Password) && string.IsNullOrWhiteSpace(Password))

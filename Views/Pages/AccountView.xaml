@@ -6,8 +6,10 @@
              xmlns:local="clr-namespace:KindergartenDesktopApp.Views.Pages"
              xmlns:viewmodels="clr-namespace:KindergartenDesktopApp.ViewModels"
              xmlns:controls="clr-namespace:KindergartenDesktopApp.Controls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              d:DataContext="{d:DesignInstance Type=viewmodels:AccountViewModel}"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             d:DesignWidth="800">
     <Grid Background="{StaticResource PrimaryBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -18,7 +20,7 @@
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Visible"
                       Grid.Row="1">
-            <Grid>
+            <Grid VerticalAlignment="Center">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -36,15 +38,103 @@
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <TextBlock Text="Серия и номер паспорта:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="0" />
+                        <xctk:MaskedTextBox Text="{Binding Me.Passport, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                            Mask="#### ######"
+                                            Width="auto"
+                                            Grid.Row="0"
+                                            Grid.Column="1" />
+                        <TextBlock Text="Номер:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="1" />
+                        <xctk:MaskedTextBox Text="{Binding Me.PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                            Mask="+7 (###) ###-##-##"
+                                            Width="auto"
+                                            Grid.Row="1"
+                                            Grid.Column="1" />
+                        <TextBlock Text="Адрес:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="2" />
+                        <TextBox Text="{Binding Me.Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Width="auto"
+                                 Grid.Row="2"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Пол:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="3" />
+                        <ComboBox ItemsSource="{Binding Genders}"
+                                  SelectedItem="{Binding Me.Gender, ValidatesOnDataErrors=True}"
+                                  DisplayMemberPath="Title"
+                                  Width="auto"
+                                  Grid.Row="3"
+                                  Grid.Column="1" />
+                        <TextBlock Text="ФИО:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="4" />
+                        <TextBox Text="{Binding Me.FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Width="auto"
+                                 Grid.Row="4"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Должность:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="5" />
+                        <TextBox Text="{Binding Me.UserRole.Title, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 IsEnabled="False"
+                                 Width="auto"
+                                 Grid.Row="5"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Дата начала работы:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="6" />
+                        <DatePicker SelectedDate="{Binding Me.WorkStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                    IsEnabled="False"
+                                    Width="auto"
+                                    Grid.Row="6"
+                                    Grid.Column="1" />
+                        <TextBlock Text="Логин:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="7" />
+                        <TextBox Text="{Binding Me.Login, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Grid.Row="7"
+                                 HorizontalAlignment="Left"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Пароль:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="8" />
+                        <controls:BindablePasswordBox BindableText="{Binding Me.Password, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                      Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
+                                                      HorizontalAlignment="Left"
+                                                      Grid.Row="8"
+                                                      Grid.Column="1" />
                         <Image Grid.ColumnSpan="2"
                                Margin="10"
                                Stretch="UniformToFill"
-                               Grid.Row="0">
+                               Grid.Row="9"
+                               Height="100"
+                               Width="100">
                             <Image.Source>
                                 <Binding Path="Me.Image">
                                     <Binding.TargetNullValue>
@@ -55,74 +145,16 @@
                         </Image>
                         <Button Command="{Binding ChangeImageCommand}"
                                 Content="Изменить фото"
-                                Grid.Row="1"
+                                Grid.Row="10"
                                 Grid.ColumnSpan="2" />
-                        <TextBlock Text="ФИО:"
-                                   Width="auto"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="2" />
-                        <TextBox Text="{Binding Me.FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
-                                 Width="auto"
-                                 Grid.Row="2"
-                                 Grid.Column="1" />
-                        <TextBlock Text="Логин:"
-                                   Width="auto"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="3" />
-                        <TextBox Text="{Binding Me.Login, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
-                                 Width="auto"
-                                 Grid.Row="3"
-                                 Grid.Column="1" />
-                        <TextBlock Text="Пароль:"
-                                   Width="auto"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="4" />
-                        <controls:BindablePasswordBox BindableText="{Binding Me.Password, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                      Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
-                                                      RequestWidth="-1"
-                                                      Grid.Row="4"
-                                                      Grid.Column="1" />
-                        <TextBlock Text="Возраст:"
-                                   Width="auto"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="5" />
-                        <TextBox Text="{Binding Me.Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Width="auto"
-                                 Grid.Row="5"
-                                 Grid.Column="1" />
-                        <TextBlock Text="Пол:"
-                                   Width="auto"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="6" />
-                        <ComboBox ItemsSource="{Binding Genders}"
-                                  SelectedItem="{Binding Me.Gender, ValidatesOnDataErrors=True}"
-                                  DisplayMemberPath="Title"
-                                  Width="auto"
-                                  Grid.Row="6"
-                                  Grid.Column="1" />
-                        <TextBlock Text="Группа:"
-                                   Width="auto"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="7"
-                                   Visibility="{Binding Me.IsEmployee, Converter={StaticResource BooleanToVisibility}}" />
-                        <ComboBox ItemsSource="{Binding Groups}"
-                                  SelectedItem="{Binding SelectedGroup, ValidatesOnDataErrors=True}"
-                                  DisplayMemberPath="Title"
-                                  Grid.Row="7"
-                                  Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
-                                  Grid.Column="1"
-                                  Width="auto"
-                                  Visibility="{Binding Me.IsEmployee, Converter={StaticResource BooleanToVisibility}}" />
                         <Button Command="{Binding SaveChangesCommand}"
                                 IsEnabled="{Binding IsCanUpdateAccount}"
                                 Content="Обновить профиль"
-                                Grid.Row="8"
+                                Grid.Row="11"
                                 Grid.ColumnSpan="2" />
                         <Button Command="{Binding GoBackCommand}"
                                 Content="Назад"
-                                Grid.Row="9"
+                                Grid.Row="12"
                                 Grid.ColumnSpan="2" />
                     </Grid>
                 </Grid>

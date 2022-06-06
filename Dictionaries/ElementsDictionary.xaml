@@ -62,6 +62,11 @@
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
     </Style>
+    <Style TargetType="DatePicker"
+           BasedOn="{StaticResource {x:Type FrameworkElement}}">
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+    </Style>
     <Style TargetType="CheckBox"
            BasedOn="{StaticResource {x:Type FrameworkElement}}">
         <Setter Property="Width"
