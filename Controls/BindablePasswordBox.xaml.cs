@@ -43,14 +43,14 @@ namespace KindergartenDesktopApp.Controls
             bindablePasswordBox.BindablePassword.SetValue(Validation.ErrorTemplateProperty, e.NewValue);
         }
 
-        public int RequestWidth
+        public double RequestWidth
         {
-            get { return (int)GetValue(RequestWidthProperty); }
+            get { return (double)GetValue(RequestWidthProperty); }
             set { SetValue(RequestWidthProperty, value); }
         }
 
         public static readonly DependencyProperty RequestWidthProperty =
-            DependencyProperty.Register("RequestWidth", typeof(int), typeof(BindablePasswordBox), new PropertyMetadata(150));
+            DependencyProperty.Register("RequestWidth", typeof(double), typeof(BindablePasswordBox), new PropertyMetadata(150d));
 
 
         public string BindableText

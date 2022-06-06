@@ -12,7 +12,6 @@
         <StackPanel Orientation="Horizontal">
             <TextBox Text="{Binding SearchText, ElementName=Control, UpdateSourceTrigger=PropertyChanged}"
                      Width="200"
-                     Margin="10"
                      VerticalContentAlignment="Center"
                      FontSize="15" />
             <Button Command="{Binding AddCommand, ElementName=Control}"

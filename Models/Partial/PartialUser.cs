@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
+using System.Text;
 
 namespace KindergartenDesktopApp.Models.Entities
 {
@@ -14,9 +15,17 @@ namespace KindergartenDesktopApp.Models.Entities
                 {
                     return "Введите ФИО";
                 }
-                if (columnName == nameof(Group) && Group == null)
+                if (columnName == nameof(Age) && Age <= 18)
+                {
+                    return "Введите корректный возраст от 18 лет";
+                }
+                if (RoleId == UserRoles.EmployeeId && columnName == nameof(Group) && Group == null)
                 {
                     return "Выберите группу";
+                }
+                if (columnName == nameof(Gender) && Gender == null)
+                {
+                    return "Выберите пол";
                 }
                 if (columnName == nameof(Login) && string.IsNullOrWhiteSpace(Login))
                 {
@@ -33,10 +42,21 @@ namespace KindergartenDesktopApp.Models.Entities
         public bool IsAdmin => RoleId == 1;
         public bool IsEmployee => RoleId == 2;
 
-        /// <summary>
-        /// Do not use, use this[string columnName] instead. 
-        /// Will throw not implemented exception.
-        /// </summary>
-        public string Error => throw new System.NotImplementedException();
+        public string Error
+        {
+            get
+            {
+                StringBuilder errorsBuilder = new StringBuilder();
+                foreach (var property in GetType()
+                    .GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
+                {
+                    if (this[property.Name] != null)
+                    {
+                        errorsBuilder.AppendLine(property.Name + ": " + this[property.Name]);
+                    }
+                }
+                return errorsBuilder.ToString();
+            }
+        }
     }
 }

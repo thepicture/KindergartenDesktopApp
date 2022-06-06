@@ -91,14 +91,7 @@ namespace KindergartenDesktopApp.ViewModels
                 {
                     currentEmployees = currentEmployees.Where(e =>
                     {
-                        if (e.Age.HasValue)
-                        {
-                            return Math.Abs(e.Age.Value - parsedAge) < MaxAgeDifference;
-                        }
-                        else
-                        {
-                            return false;
-                        }
+                        return Math.Abs(e.Age - parsedAge) < MaxAgeDifference;
                     });
                 }
                 Employees = new ObservableCollection<User>(currentEmployees);
@@ -289,6 +282,64 @@ namespace KindergartenDesktopApp.ViewModels
         private void ReviewEmployee(User employee)
         {
             Navigator.Go<UserViewModel, User>(employee);
+        }
+
+        private RelayCommand goToAccountCommand;
+
+        public ICommand GoToAccountCommand
+        {
+            get
+            {
+                if (goToAccountCommand == null)
+                {
+                    goToAccountCommand = new RelayCommand(GoToAccount);
+                }
+
+                return goToAccountCommand;
+            }
+        }
+
+        private void GoToAccount()
+        {
+            Navigator.Go<AccountViewModel>();
+        }
+
+        private RelayCommand goToMessagesCommand;
+
+        public ICommand GoToMessagesCommand
+        {
+            get
+            {
+                if (goToMessagesCommand == null)
+                {
+                    goToMessagesCommand = new RelayCommand(GoToMessages);
+                }
+
+                return goToMessagesCommand;
+            }
+        }
+
+        private void GoToMessages()
+        {
+        }
+
+        private RelayCommand goToSettingsCommand;
+
+        public ICommand GoToSettingsCommand
+        {
+            get
+            {
+                if (goToSettingsCommand == null)
+                {
+                    goToSettingsCommand = new RelayCommand(GoToSettings);
+                }
+
+                return goToSettingsCommand;
+            }
+        }
+
+        private void GoToSettings()
+        {
         }
     }
 }

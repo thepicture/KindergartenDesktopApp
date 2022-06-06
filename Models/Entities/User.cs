@@ -22,7 +22,7 @@ namespace KindergartenDesktopApp.Models.Entities
         public int RoleId { get; set; }
         public byte[] Image { get; set; }
         public Nullable<int> GenderId { get; set; }
-        public Nullable<int> Age { get; set; }
+        public int Age { get; set; }
     
         public virtual Gender Gender { get; set; }
         public virtual Group Group { get; set; }

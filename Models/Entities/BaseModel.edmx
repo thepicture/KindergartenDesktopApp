@@ -262,7 +262,7 @@
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="GenderId" Type="Int32" />
-          <Property Name="Age" Type="Int32" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Gender" Relationship="KindergartenBaseModel.FK_User_Gender" FromRole="User" ToRole="Gender" />
           <NavigationProperty Name="Group" Relationship="KindergartenBaseModel.FK_User_Group" FromRole="User" ToRole="Group" />
           <NavigationProperty Name="UserRole" Relationship="KindergartenBaseModel.FK_User_UserRole" FromRole="User" ToRole="UserRole" />

@@ -92,7 +92,7 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 if (saveChangesCommand == null)
                 {
-                    saveChangesCommand = new RelayCommand(SaveChangesAsync);
+                    saveChangesCommand = new RelayCommand(SaveChanges);
                 }
 
                 return saveChangesCommand;
@@ -103,7 +103,7 @@ namespace KindergartenDesktopApp.ViewModels
                                         && Child.Group != null
                                         && Child.Gender != null;
 
-        private async void SaveChangesAsync()
+        private void SaveChanges()
         {
             IsAskControlOpened = true;
         }

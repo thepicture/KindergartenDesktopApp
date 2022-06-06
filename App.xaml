@@ -8,6 +8,7 @@
                 <ResourceDictionary Source="/Dictionaries/ColorsDictionary.xaml" />
                 <ResourceDictionary Source="/Dictionaries/ElementsDictionary.xaml" />
                 <ResourceDictionary Source="/Dictionaries/TemplatesDictionary.xaml" />
+                <ResourceDictionary Source="/Dictionaries/ConvertersDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
