@@ -21,8 +21,29 @@ namespace KindergartenDesktopApp.ViewModels
         {
             Title = "Управление детьми";
             LoadChildrenAsync()
-                .ContinueWith(t => LoadGroupsAsync())
-                .ContinueWith(t => LoadGendersAsync());
+                .ContinueWith(t =>
+                {
+                    return LoadGroupsAsync();
+                })
+                .ContinueWith(t =>
+                {
+                    return LoadUpbringersAsync();
+                })
+                .ContinueWith(t =>
+                {
+                    return LoadGendersAsync();
+                });
+        }
+
+        private async Task LoadUpbringersAsync()
+        {
+            using (var context = ContextFactory.GetInstance())
+            {
+                List<User> currentUpbringers = await context.Users.ToListAsync();
+                currentUpbringers.Insert(0, new User { FullName = "Любой" });
+                Upbringers = new ObservableCollection<User>(currentUpbringers);
+                SelectedUpbringer = Upbringers.First();
+            }
         }
 
         public void OnAppearing()
@@ -84,7 +105,12 @@ namespace KindergartenDesktopApp.ViewModels
                 {
                     currentChildren = currentChildren.Where(e => e.GroupId == group.Id);
                 }
-                if (int.TryParse(Age, out int parsedAge))
+                if (SelectedUpbringer is User upbringer && upbringer.Id > -0)
+                {
+                    currentChildren = currentChildren.Where(e => e.Group.UpbringerId == upbringer.Id);
+                }
+                currentChildren = currentChildren.Where(e => e.IsDisabled == IsHasDisability);
+                if (int.TryParse(Year, out int parsedAge))
                 {
                     currentChildren = currentChildren.Where(e =>
                     {
@@ -96,6 +122,8 @@ namespace KindergartenDesktopApp.ViewModels
         }
 
         public ObservableCollection<Child> Children { get; set; }
+        public ObservableCollection<User> Upbringers { get; set; }
+        public User SelectedUpbringer { get; set; }
 
         private RelayCommand addCommand;
 
@@ -176,7 +204,7 @@ namespace KindergartenDesktopApp.ViewModels
             _ = LoadChildrenAsync();
         }
 
-        public string Age { get; set; }
+        public string Year { get; set; }
 
         private RelayCommand<Child> editChildCommand;
 
@@ -280,5 +308,7 @@ namespace KindergartenDesktopApp.ViewModels
         {
             Navigator.Go<ChildViewModel, Child>(child);
         }
+
+        public bool IsHasDisability { get; set; }
     }
 }

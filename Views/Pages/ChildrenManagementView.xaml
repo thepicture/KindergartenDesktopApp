@@ -27,23 +27,26 @@
                                ReviewPersonCommand="{Binding ReviewChildCommand}"
                                EditChildCommand="{Binding EditChildCommand}"
                                Grid.Row="1" />
-        <controls:FilterControl Age="{Binding Age}"
-                                Groups="{Binding Groups}"
-                                SelectedGroup="{Binding SelectedGroup}"
-                                Genders="{Binding Genders}"
-                                SelectedGender="{Binding SelectedGender}"
-                                FilterCollectionCommand="{Binding FilterCollectionCommand}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Grid.RowSpan="2">
-            <controls:FilterControl.Visibility>
+        <controls:ChildFilter Year="{Binding Year}"
+                              Groups="{Binding Groups}"
+                              SelectedGroup="{Binding SelectedGroup}"
+                              Genders="{Binding Genders}"
+                              SelectedGender="{Binding SelectedGender}"
+                              Upbringers="{Binding Upbringers}"
+                              SelectedUpbringer="{Binding SelectedUpbringer}"
+                              IsHasDisability="{Binding IsHasDisability}"
+                              FilterCollectionCommand="{Binding FilterCollectionCommand}"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Grid.RowSpan="2">
+            <controls:ChildFilter.Visibility>
                 <Binding Path="IsFilterOpened">
                     <Binding.Converter>
                         <BooleanToVisibilityConverter />
                     </Binding.Converter>
                 </Binding>
-            </controls:FilterControl.Visibility>
-        </controls:FilterControl>
+            </controls:ChildFilter.Visibility>
+        </controls:ChildFilter>
 
         <controls:AskControl QuestionText="Удалить ребенка"
                              YesCommand="{Binding DeleteChildCommand}"
