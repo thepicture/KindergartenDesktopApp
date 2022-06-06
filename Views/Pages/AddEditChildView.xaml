@@ -9,7 +9,8 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              d:DataContext="{d:DesignInstance Type=viewmodels:AddEditChildViewModel}"
              d:DesignWidth="1600"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             Name="Control">
     <Grid Background="{StaticResource PrimaryBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -158,62 +159,55 @@
                                  Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
                                  Grid.Row="9"
                                  Grid.Column="1" />
-                        <TextBlock Text="ФИО матери:"
-                                   Width="auto"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="10" />
-                        <TextBox Text="{Binding Child.RelativeList[0].FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
-                                 Width="auto"
-                                 Grid.Row="10"
-                                 Grid.Column="1" />
-                        <TextBlock Text="Год:"
-                                   Width="auto"
-                                   Margin="40,5,5,5"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="11" />
-                        <TextBox Text="{Binding Child.RelativeList[0].Year, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Width="auto"
-                                 Grid.Row="11"
-                                 Grid.Column="1" />
-                        <TextBlock Text="Телефон:"
-                                   Width="auto"
-                                   Margin="40,5,5,5"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="12" />
-                        <xctk:MaskedTextBox Text="{Binding Child.RelativeList[0].PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                            Mask="+7 (###) ###-##-##"
-                                            Width="auto"
-                                            Grid.Row="12"
-                                            Grid.Column="1" />
-                        <TextBlock Text="ФИО отца:"
-                                   Width="auto"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="13" />
-                        <TextBox Text="{Binding Child.RelativeList[1].FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
-                                 Width="auto"
-                                 Grid.Row="13"
-                                 Grid.Column="1" />
-                        <TextBlock Text="Год:"
-                                   Width="auto"
-                                   Margin="40,5,5,5"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="14" />
-                        <TextBox Text="{Binding Child.RelativeList[1].Year, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Width="auto"
-                                 Grid.Row="14"
-                                 Grid.Column="1" />
-                        <TextBlock Text="Телефон:"
-                                   Width="auto"
-                                   Margin="40,5,5,5"
-                                   Style="{StaticResource CommonBlock}"
-                                   Grid.Row="15" />
-                        <xctk:MaskedTextBox Text="{Binding Child.RelativeList[1].PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                            Mask="+7 (###) ###-##-##"
-                                            Width="auto"
-                                            Grid.Row="15"
-                                            Grid.Column="1" />
+                        <Grid   Grid.Row="16"
+                                Grid.ColumnSpan="2"
+                                Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Родственники" />
+                            <DataGrid ItemsSource="{Binding Child.RelativeList}"
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="False"
+                                      ColumnWidth="*"
+                                      Grid.Row="1">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ФИО"
+                                                        Binding="{Binding FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}" />
+                                    <DataGridTextColumn Header="Год"
+                                                        Binding="{Binding Year, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                    <DataGridTemplateColumn Header="Тел.">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <xctk:MaskedTextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                                    Mask="+7 (###) ###-##-##"
+                                                                    Width="auto"
+                                                                    Grid.Row="15"
+                                                                    Grid.Column="1" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ComboBox ItemsSource="{Binding RolesProvider}"
+                                                          SelectedItem="{Binding RelativeRole, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                          DisplayMemberPath="Title"
+                                                          Width="auto"
+                                                          IsEnabled="{Binding IsNotSealed}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button Command="{Binding AddRelativeCommand}"
+                                    Content="Добавить"
+                                    Grid.Row="2"
+                                    Width="auto" />
+                        </Grid>
                         <!--<Image Width="100"
                            Grid.ColumnSpan="2"
                            Height="100"

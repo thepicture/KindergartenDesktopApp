@@ -406,7 +406,6 @@
     <Compile Include="Models\Enums\RelativeRoles.cs" />
     <Compile Include="Models\Enums\UserRoles.cs" />
     <Compile Include="Models\Partial\PartialChild.cs" />
-    <Compile Include="Models\Partial\PartialChildDocument.cs" />
     <Compile Include="Models\Partial\PartialUser.cs" />
     <Compile Include="Models\Partial\ParticalChildRelative.cs" />
     <Compile Include="Services\ContextFactoryService.cs" />

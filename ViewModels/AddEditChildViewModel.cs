@@ -28,11 +28,13 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 new ChildRelative
                 {
-                    RelativeRoleId = RelativeRoles.Mother
+                    RelativeRoleId = RelativeRoles.Mother,
+                    IsNotSealed = false
                 },
                 new ChildRelative
                 {
-                    RelativeRoleId = RelativeRoles.Father
+                    RelativeRoleId = RelativeRoles.Father,
+                    IsNotSealed = false
                 },
             };
             foreach (var relative in childRelatives)
@@ -56,7 +58,20 @@ namespace KindergartenDesktopApp.ViewModels
                       .ContinueWith(t =>
                       {
                           LoadGroupsAsync();
+                      })
+                      .ContinueWith(t =>
+                      {
+                          LoadRolesAsync();
                       });
+        }
+
+        private async void LoadRolesAsync()
+        {
+            using (var context = ContextFactory.GetInstance())
+            {
+                List<RelativeRole> currentRoles = await context.RelativeRoles.ToListAsync();
+                Roles = new ObservableCollection<RelativeRole>(currentRoles);
+            }
         }
 
         public AddEditChildViewModel(Child inputChild)
@@ -72,6 +87,9 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 relative.PropertyChanged += (_, __) =>
                 {
+                    relative.IsNotSealed =
+                        relative.RelativeRoleId != RelativeRoles.Mother
+                        && relative.RelativeRoleId != RelativeRoles.Father;
                     RaisePropertyChanged(nameof(IsCanSaveChanges));
                 };
             }
@@ -194,40 +212,11 @@ namespace KindergartenDesktopApp.ViewModels
                     if (DocumentsService.IsShouldSynchronize())
                     {
                         var synchronizedDocuments = DocumentsService.GetSynchronizedDocuments();
-                        foreach (var document in Child.ChildDocuments)
-                        {
-                            if (!synchronizedDocuments.Any(d =>
-                            {
-                                return d.FileName == document.FileName && Enumerable.SequenceEqual(d.FileBytes, document.FileBytes);
-                            }))
-                            {
-                                Child.ChildDocuments.First(d =>
-                                {
-                                    return d.FileName == document.FileName && Enumerable.SequenceEqual(d.FileBytes, document.FileBytes);
-                                }).IsDeleted = true;
-                            }
-                            else
-                            {
-                                if (synchronizedDocuments.FirstOrDefault(d => d.FileName == document.FileName) is ChildDocument foundDocument)
-                                {
-                                    if (!Enumerable.SequenceEqual(document.FileBytes, foundDocument.FileBytes))
-                                    {
-                                        document.FileBytes = foundDocument.FileBytes;
-                                        document.IsModified = true;
-                                    }
-                                }
-                            }
-                        }
+                        Child.ChildDocuments.Clear();
                         foreach (var document in synchronizedDocuments)
                         {
-                            if (!Child.ChildDocuments.Any(d =>
-                            {
-                                return d.FileName == document.FileName && Enumerable.SequenceEqual(d.FileBytes, document.FileBytes);
-                            }))
-                            {
-                                document.IsAdded = true;
-                                Child.ChildDocuments.Add(document);
-                            }
+                            document.ChildId = Child.Id;
+                            Child.ChildDocuments.Add(document);
                         }
                     }
                     DocumentsService.Close();
@@ -258,6 +247,58 @@ namespace KindergartenDesktopApp.ViewModels
         {
             try
             {
+                foreach (var relative in Child.ChildRelatives)
+                {
+                    if (relative.RelativeRole != null)
+                    {
+                        relative.RelativeRoleId = relative.RelativeRole.Id;
+                        relative.RelativeRole = null;
+                    }
+                }
+
+                if (!Child.IsNew())
+                {
+                    using (var context = ContextFactory.GetInstance())
+                    {
+                        var relatives = context.ChildRelatives.Where(r => r.ChildId == Child.Id);
+                        context.ChildRelatives.RemoveRange(relatives);
+                        await context.SaveChangesAsync();
+
+                        var childFromDb = await context.Children.FirstAsync(c => c.Id == Child.Id);
+                        foreach (var relative in Child.ChildRelatives)
+                        {
+                            childFromDb.ChildRelatives.Add(new ChildRelative
+                            {
+                                ChildId = childFromDb.Id,
+                                RelativeRoleId = relative.RelativeRoleId,
+                                FullName = relative.FullName,
+                                PhoneNumber = relative.PhoneNumber,
+                                Year = relative.Year
+                            });
+                        }
+                        await context.SaveChangesAsync();
+                    }
+
+                    using (var context = ContextFactory.GetInstance())
+                    {
+                        var documents = context.ChildDocuments.Where(d => d.ChildId == Child.Id);
+                        context.ChildDocuments.RemoveRange(documents);
+                        await context.SaveChangesAsync();
+
+                        var childFromDb = await context.Children.FirstAsync(c => c.Id == Child.Id);
+                        foreach (var document in Child.ChildDocuments)
+                        {
+                            childFromDb.ChildDocuments.Add(new ChildDocument
+                            {
+                                ChildId = childFromDb.Id,
+                                FileName = document.FileName,
+                                FileBytes = document.FileBytes,
+                            });
+                        }
+                        await context.SaveChangesAsync();
+                    }
+                }
+
                 using (var context = ContextFactory.GetInstance())
                 {
                     if (Child.Group != null)
@@ -276,28 +317,7 @@ namespace KindergartenDesktopApp.ViewModels
                     }
                     else
                     {
-                        foreach (var relative in Child.ChildRelatives)
-                        {
-                            if (relative.Id != 0)
-                            {
-                                context.Entry(relative).State = EntityState.Modified;
-                            }
-                        }
-                        foreach (var document in Child.ChildDocuments)
-                        {
-                            if (document.IsDeleted)
-                            {
-                                context.Entry(document).State = EntityState.Deleted;
-                            }
-                            else if (document.IsModified)
-                            {
-                                context.Entry(document).State = EntityState.Modified;
-                            }
-                            else if (document.IsAdded)
-                            {
-                                context.Entry(document).State = EntityState.Added;
-                            }
-                        }
+                        Child.ChildDocuments.Clear();
                         context.Entry(Child).State = EntityState.Modified;
                     }
                     IsAskControlOpened = false;
@@ -313,5 +333,36 @@ namespace KindergartenDesktopApp.ViewModels
 
         public bool IsAskControlOpened { get; set; }
         public string QuestionText => Title;
+
+        private RelayCommand addRelativeCommand;
+
+        public ICommand AddRelativeCommand
+        {
+            get
+            {
+                if (addRelativeCommand == null)
+                    addRelativeCommand = new RelayCommand(AddRelative);
+
+                return addRelativeCommand;
+            }
+        }
+
+        public ObservableCollection<RelativeRole> Roles { get; set; }
+
+        private void AddRelative()
+        {
+            ChildRelative relative = new ChildRelative
+            {
+                RelativeRoleId = RelativeRoles.Brother,
+                ChildId = Child.Id,
+                IsNotSealed = true
+            };
+            relative.PropertyChanged += (_, __) =>
+            {
+                RaisePropertyChanged(nameof(IsCanSaveChanges));
+            };
+            Child.ChildRelatives.Add(relative);
+            Child.RelativeList = new ObservableCollection<ChildRelative>(Child.ChildRelatives);
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using KindergartenDesktopApp.Services;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,8 @@ namespace KindergartenDesktopApp.Models.Entities
 {
     public partial class ChildRelative : ObservableObject, IDataErrorInfo
     {
+        public bool IsNotSealed { get; set; }
+
         public string this[string columnName]
         {
             get
@@ -43,6 +47,22 @@ namespace KindergartenDesktopApp.Models.Entities
                     }
                 }
                 return errorsBuilder.ToString();
+            }
+        }
+
+        public ObservableCollection<RelativeRole> RolesProvider
+        {
+            get
+            {
+                using (var context = Ioc.Instance.GetService<IContextFactoryService>().GetInstance())
+                {
+                    var roles = context.RelativeRoles.ToList();
+                    if (RelativeRoleId > 0)
+                    {
+                        RelativeRole = roles.First(r => r.Id == RelativeRoleId);
+                    }
+                    return new ObservableCollection<RelativeRole>(roles);
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -64,6 +64,19 @@ namespace KindergartenDesktopApp.Models.Entities
             }
         }
 
-        public List<ChildRelative> RelativeList => ChildRelatives?.ToList();
+        private ObservableCollection<ChildRelative> relativeList;
+
+        public ObservableCollection<ChildRelative> RelativeList
+        {
+            get
+            {
+                if (relativeList == null)
+                {
+                    relativeList = new ObservableCollection<ChildRelative>(ChildRelatives);
+                }
+                return relativeList;
+            }
+            set => relativeList = value;
+        }
     }
 }
