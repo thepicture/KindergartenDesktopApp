@@ -19,6 +19,7 @@
                                    IsCanDelete="{Binding IsCanDelete, Mode=OneWay}"
                                    DeleteCommand="{Binding OpenDeletePromptCommand}"
                                    OpenFiltersCommand="{Binding OpenFiltersCommand}"
+                                   MenuCommand="{Binding ToggleMenuDesiredWidthCommand}"
                                    SearchText="{Binding ChildrenSearchText}" />
         <controls:ChildrenList Children="{Binding Children}"
                                IsHasItem="{Binding IsCanDelete, Mode=OneWayToSource}"
@@ -58,5 +59,18 @@
                 </Binding>
             </controls:AskControl.Visibility>
         </controls:AskControl>
+        <StackPanel HorizontalAlignment="Right"
+                    Width="{Binding MenuDesiredWidth}"
+                    Grid.Row="1"
+                    Background="{StaticResource SecondaryBackgroundColor}">
+            <controls:VerticalMenuItemControl Command="{Binding GoToAccountCommand}"
+                                              Text="Личный кабинет" />
+            <controls:VerticalMenuItemControl Command="{Binding GoToMessagesCommand}"
+                                              Text="Сообщения" />
+            <controls:VerticalMenuItemControl Command="{Binding GoToSettingsCommand}"
+                                              Text="Настройки" />
+            <controls:VerticalMenuItemControl Command="{Binding ExitCommand}"
+                                              Text="Выход" />
+        </StackPanel>
     </Grid>
 </UserControl>

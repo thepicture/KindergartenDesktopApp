@@ -109,6 +109,7 @@
                                    Visibility="{Binding Me.IsEmployee, Converter={StaticResource BooleanToVisibility}}" />
                         <ComboBox ItemsSource="{Binding Groups}"
                                   SelectedItem="{Binding Me.Group, ValidatesOnDataErrors=True}"
+                                  DisplayMemberPath="Title"
                                   Grid.Row="7"
                                   Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
                                   Grid.Column="1"

@@ -284,26 +284,6 @@ namespace KindergartenDesktopApp.ViewModels
             Navigator.Go<UserViewModel, User>(employee);
         }
 
-        private RelayCommand goToAccountCommand;
-
-        public ICommand GoToAccountCommand
-        {
-            get
-            {
-                if (goToAccountCommand == null)
-                {
-                    goToAccountCommand = new RelayCommand(GoToAccount);
-                }
-
-                return goToAccountCommand;
-            }
-        }
-
-        private void GoToAccount()
-        {
-            Navigator.Go<AccountViewModel>();
-        }
-
         private RelayCommand goToMessagesCommand;
 
         public ICommand GoToMessagesCommand

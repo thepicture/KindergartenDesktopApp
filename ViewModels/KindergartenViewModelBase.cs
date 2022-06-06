@@ -80,5 +80,26 @@ namespace KindergartenDesktopApp.ViewModels
         {
             Navigator.ToRoot();
         }
+
+
+        private RelayCommand goToAccountCommand;
+
+        public ICommand GoToAccountCommand
+        {
+            get
+            {
+                if (goToAccountCommand == null)
+                {
+                    goToAccountCommand = new RelayCommand(GoToAccount);
+                }
+
+                return goToAccountCommand;
+            }
+        }
+
+        private void GoToAccount()
+        {
+            Navigator.Go<AccountViewModel>();
+        }
     }
 }
