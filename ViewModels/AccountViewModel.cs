@@ -54,7 +54,7 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 List<Group> currentGroups = await context.Groups.ToListAsync();
                 Groups = new ObservableCollection<Group>(currentGroups);
-                Me.Group = Groups.First(g => g.Id == Me.GroupId);
+                SelectedGroup = Me.Groups.First();
             }
         }
 
@@ -75,6 +75,8 @@ namespace KindergartenDesktopApp.ViewModels
             }
         }
 
+        public Group SelectedGroup { get; set; }
+
         private void SaveChanges()
         {
             try
@@ -83,7 +85,8 @@ namespace KindergartenDesktopApp.ViewModels
                 {
                     _lastPassword = Me.Password;
                     Me.GenderId = Me.Gender.Id;
-                    Me.GroupId = Me.Group?.Id;
+                    Me.Groups.Clear();
+                    Me.Groups.Add(SelectedGroup);
                     context.Entry(Me).State = EntityState.Modified;
                     context.SaveChangesAsync();
                     Session.Login(Me);

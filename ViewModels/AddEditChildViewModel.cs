@@ -23,17 +23,40 @@ namespace KindergartenDesktopApp.ViewModels
         public AddEditChildViewModel()
         {
             Title = "Добавить ребенка";
-            Child = new Child();
-            Child.PropertyChanged += (_, __) =>
+
+            var childRelatives = new List<ChildRelative>
             {
-                RaisePropertyChanged(
-                    nameof(IsCanSaveChanges));
+                new ChildRelative
+                {
+                    RelativeRoleId = RelativeRoles.Mother
+                },
+                new ChildRelative
+                {
+                    RelativeRoleId = RelativeRoles.Father
+                },
             };
+            foreach (var relative in childRelatives)
+            {
+                relative.PropertyChanged += (_, __) =>
+                {
+                    RaisePropertyChanged(nameof(IsCanSaveChanges));
+                };
+            }
+
+            Child = new Child
+            {
+                ChildRelatives = childRelatives
+            };
+            Child.PropertyChanged += (_, __) =>
+                {
+                    RaisePropertyChanged(
+                        nameof(IsCanSaveChanges));
+                };
             LoadGendersAsync()
-              .ContinueWith(t =>
-              {
-                  LoadGroupsAsync();
-              });
+                      .ContinueWith(t =>
+                      {
+                          LoadGroupsAsync();
+                      });
         }
 
         public AddEditChildViewModel(Child inputChild)
@@ -45,6 +68,14 @@ namespace KindergartenDesktopApp.ViewModels
                 RaisePropertyChanged(
                     nameof(IsCanSaveChanges));
             };
+            foreach (var relative in inputChild.ChildRelatives)
+            {
+                relative.PropertyChanged += (_, __) =>
+                {
+                    RaisePropertyChanged(nameof(IsCanSaveChanges));
+                };
+            }
+
             LoadGendersAsync()
                 .ContinueWith(t =>
                 {
@@ -99,9 +130,7 @@ namespace KindergartenDesktopApp.ViewModels
             }
         }
 
-        public bool IsCanSaveChanges => !string.IsNullOrWhiteSpace(Child.FullName)
-                                        && Child.Group != null
-                                        && Child.Gender != null;
+        public bool IsCanSaveChanges => string.IsNullOrWhiteSpace(Child.Error);
 
         private void SaveChanges()
         {
@@ -164,12 +193,42 @@ namespace KindergartenDesktopApp.ViewModels
                     DocumentsService.Open(Child.ChildDocuments);
                     if (DocumentsService.IsShouldSynchronize())
                     {
-                        ICollection<ChildDocument> newDocuments = new Collection<ChildDocument>();
-                        foreach (var document in DocumentsService.GetSynchronizedDocuments())
+                        var synchronizedDocuments = DocumentsService.GetSynchronizedDocuments();
+                        foreach (var document in Child.ChildDocuments)
                         {
-                            newDocuments.Add(document);
+                            if (!synchronizedDocuments.Any(d =>
+                            {
+                                return d.FileName == document.FileName && Enumerable.SequenceEqual(d.FileBytes, document.FileBytes);
+                            }))
+                            {
+                                Child.ChildDocuments.First(d =>
+                                {
+                                    return d.FileName == document.FileName && Enumerable.SequenceEqual(d.FileBytes, document.FileBytes);
+                                }).IsDeleted = true;
+                            }
+                            else
+                            {
+                                if (synchronizedDocuments.FirstOrDefault(d => d.FileName == document.FileName) is ChildDocument foundDocument)
+                                {
+                                    if (!Enumerable.SequenceEqual(document.FileBytes, foundDocument.FileBytes))
+                                    {
+                                        document.FileBytes = foundDocument.FileBytes;
+                                        document.IsModified = true;
+                                    }
+                                }
+                            }
                         }
-                        Child.ChildDocuments = newDocuments;
+                        foreach (var document in synchronizedDocuments)
+                        {
+                            if (!Child.ChildDocuments.Any(d =>
+                            {
+                                return d.FileName == document.FileName && Enumerable.SequenceEqual(d.FileBytes, document.FileBytes);
+                            }))
+                            {
+                                document.IsAdded = true;
+                                Child.ChildDocuments.Add(document);
+                            }
+                        }
                     }
                     DocumentsService.Close();
                 }
@@ -217,25 +276,29 @@ namespace KindergartenDesktopApp.ViewModels
                     }
                     else
                     {
-                        Child existingChild = context.Children
-                            .Include(c => c.ChildDocuments)
-                            .First(c => c.Id == Child.Id);
-                        existingChild.ChildDocuments
-                            .ToList()
-                            .ForEach(d => context.Entry(d).State = EntityState.Deleted);
-                        await context.SaveChangesAsync();
-                        existingChild.ChildDocuments.Clear();
+                        foreach (var relative in Child.ChildRelatives)
+                        {
+                            if (relative.Id != 0)
+                            {
+                                context.Entry(relative).State = EntityState.Modified;
+                            }
+                        }
                         foreach (var document in Child.ChildDocuments)
                         {
-                            existingChild.ChildDocuments.Add(new ChildDocument
+                            if (document.IsDeleted)
                             {
-                                FileName = document.FileName,
-                                FileBytes = document.FileBytes,
-                            });
+                                context.Entry(document).State = EntityState.Deleted;
+                            }
+                            else if (document.IsModified)
+                            {
+                                context.Entry(document).State = EntityState.Modified;
+                            }
+                            else if (document.IsAdded)
+                            {
+                                context.Entry(document).State = EntityState.Added;
+                            }
                         }
-                        context
-                            .Entry(existingChild).CurrentValues
-                            .SetValues(Child);
+                        context.Entry(Child).State = EntityState.Modified;
                     }
                     IsAskControlOpened = false;
                     await context.SaveChangesAsync();

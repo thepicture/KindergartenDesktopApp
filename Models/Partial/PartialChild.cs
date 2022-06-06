@@ -1,5 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
 
 namespace KindergartenDesktopApp.Models.Entities
 {
@@ -10,25 +14,56 @@ namespace KindergartenDesktopApp.Models.Entities
             get
             {
                 if (columnName == nameof(FullName) && string.IsNullOrWhiteSpace(FullName))
-                {
-                    return "Введите ФИО";
-                }
-                if (columnName == nameof(Group) && Group == null)
-                {
-                    return "Выберите группу";
-                }
+                    return nameof(FullName);
                 if (columnName == nameof(Gender) && Gender == null)
-                {
-                    return "Выберите пол";
-                }
+                    return nameof(Gender);
+                if (columnName == nameof(Group) && Group == null)
+                    return nameof(Group);
+                if (columnName == nameof(Year))
+                    if (!Year.HasValue
+                        || Year.Value < DateTime.Now.Year - 10
+                        || Year.Value >= DateTime.Now.Year)
+                        return nameof(Year);
+                if (columnName == nameof(Citizenship) && string.IsNullOrWhiteSpace(Citizenship))
+                    return nameof(Citizenship);
+                if (columnName == nameof(Nationality) && string.IsNullOrWhiteSpace(Nationality))
+                    return nameof(Nationality);
+                if (columnName == nameof(Address) && string.IsNullOrWhiteSpace(Address))
+                    return nameof(Address);
+                if (columnName == nameof(HealthPolicyNumber))
+                    if (string.IsNullOrWhiteSpace(HealthPolicyNumber)
+                        || HealthPolicyNumber.Count(n => char.IsDigit(n)) != 16)
+                        return nameof(HealthPolicyNumber);
+                if (columnName == nameof(FamilyStatus) && string.IsNullOrWhiteSpace(FamilyStatus))
+                    return nameof(FamilyStatus);
                 return null;
             }
         }
 
-        /// <summary>
-        /// Do not use, use this[string columnName] instead. 
-        /// Will throw not implemented exception.
-        /// </summary>
-        public string Error => throw new System.NotImplementedException();
+        public string Error
+        {
+            get
+            {
+                StringBuilder errorsBuilder = new StringBuilder();
+                foreach (var property in GetType()
+                    .GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
+                {
+                    if (this[property.Name] != null)
+                    {
+                        errorsBuilder.AppendLine(property.Name + ": " + this[property.Name]);
+                    }
+                }
+                foreach (var relative in ChildRelatives)
+                {
+                    if (!string.IsNullOrWhiteSpace(relative.Error))
+                    {
+                        errorsBuilder.AppendLine(relative.FullName + ": " + relative.Error);
+                    }
+                }
+                return errorsBuilder.ToString();
+            }
+        }
+
+        public List<ChildRelative> RelativeList => ChildRelatives?.ToList();
     }
 }

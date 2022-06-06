@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:KindergartenDesktopApp.Views.Pages"
              xmlns:viewmodels="clr-namespace:KindergartenDesktopApp.ViewModels"
              xmlns:controls="clr-namespace:KindergartenDesktopApp.Controls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              d:DataContext="{d:DesignInstance Type=viewmodels:AddEditChildViewModel}"
+             d:DesignWidth="1600"
              mc:Ignorable="d">
     <Grid Background="{StaticResource PrimaryBackgroundColor}">
         <Grid.RowDefinitions>
@@ -17,7 +19,7 @@
                          HorizontalAlignment="Left" />
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="4*" />
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
@@ -30,70 +32,189 @@
                            HorizontalAlignment="Left"
                            Width="200"
                            Style="{StaticResource CommonBlock}" />
-                <Grid Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="ФИО:"
-                               Width="auto"
-                               Style="{StaticResource CommonBlock}" />
-                    <TextBox Text="{Binding Child.FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                             Width="auto"
-                             Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
-                             Grid.Column="1" />
-                    <TextBlock Text="Группа:"
-                               Width="auto"
-                               Style="{StaticResource CommonBlock}"
-                               Grid.Row="1" />
-                    <ComboBox ItemsSource="{Binding Groups}"
-                              SelectedItem="{Binding Child.Group, ValidatesOnDataErrors=True}"
-                              Validation.ErrorTemplate="{StaticResource ComboBoxErrorTemplate}"
-                              DisplayMemberPath="Title"
-                              Width="auto"
-                              Grid.Row="1"
-                              Grid.Column="1" />
-                    <TextBlock Text="Пол:"
-                               Width="auto"
-                               Style="{StaticResource CommonBlock}"
-                               Grid.Row="2" />
-                    <ComboBox ItemsSource="{Binding Genders}"
-                              SelectedItem="{Binding Child.Gender, ValidatesOnDataErrors=True}"
-                              Validation.ErrorTemplate="{StaticResource ComboBoxErrorTemplate}"
-                              DisplayMemberPath="Title"
-                              Width="auto"
-                              Grid.Row="2"
-                              Grid.Column="1" />
-                    <TextBlock Text="Папа:"
-                               Width="auto"
-                               Style="{StaticResource CommonBlock}"
-                               Grid.Row="3" />
-                    <TextBox Text="{Binding Child.FatherFullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                             Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
-                             Width="auto"
-                             Grid.Row="3"
-                             Grid.Column="1" />
-                    <TextBlock Text="Мама:"
-                               Width="auto"
-                               Style="{StaticResource CommonBlock}"
-                               Grid.Row="4" />
-                    <TextBox Text="{Binding Child.MotherFullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                             Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
-                             Width="auto"
-                             Grid.Row="4"
-                             Grid.Column="4" />
-                    <Image Width="100"
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Visible"
+                              Grid.Row="1">
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="ФИО:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}" />
+                        <TextBox Text="{Binding Child.FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Width="auto"
+                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Пол:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="1" />
+                        <ComboBox ItemsSource="{Binding Genders}"
+                                  SelectedItem="{Binding Child.Gender, ValidatesOnDataErrors=True}"
+                                  Validation.ErrorTemplate="{StaticResource ComboBoxErrorTemplate}"
+                                  DisplayMemberPath="Title"
+                                  Width="auto"
+                                  Grid.Row="1"
+                                  Grid.Column="1" />
+                        <TextBlock Text="Группа:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="2" />
+                        <ComboBox ItemsSource="{Binding Groups}"
+                                  SelectedItem="{Binding Child.Group, ValidatesOnDataErrors=True}"
+                                  Validation.ErrorTemplate="{StaticResource ComboBoxErrorTemplate}"
+                                  DisplayMemberPath="Title"
+                                  Width="auto"
+                                  Grid.Row="2"
+                                  Grid.Column="1" />
+                        <TextBlock Text="Год рождения:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="3" />
+                        <TextBox Text="{Binding Child.Year, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Width="auto"
+                                 Grid.Row="3"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Гражданство:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="4" />
+                        <TextBox Text="{Binding Child.Citizenship, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Width="auto"
+                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Grid.Row="4"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Национальность:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="5" />
+                        <TextBox Text="{Binding Child.Nationality, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Width="auto"
+                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Grid.Row="5"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Место жительства:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="6" />
+                        <TextBox Text="{Binding Child.Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Width="auto"
+                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Grid.Row="6"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Мед полис:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="7" />
+                        <xctk:MaskedTextBox Text="{Binding Child.HealthPolicyNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                            Mask="#### #### #### ####"
+                                            Width="auto"
+                                            Grid.Row="7"
+                                            Grid.Column="1" />
+                        <TextBlock Text="Инвалидность:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="8" />
+                        <CheckBox IsChecked="{Binding Child.IsDisabled}"
+                                  Content="Имеется"
+                                  Grid.Row="8"
+                                  Grid.Column="1" />
+                        <TextBlock Text="Статус полноценности семей:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="9" />
+                        <TextBox Text="{Binding Child.FamilyStatus, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Width="auto"
+                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Grid.Row="9"
+                                 Grid.Column="1" />
+                        <TextBlock Text="ФИО матери:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="10" />
+                        <TextBox Text="{Binding Child.RelativeList[0].FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
+                                 Width="auto"
+                                 Grid.Row="10"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Год:"
+                                   Width="auto"
+                                   Margin="40,5,5,5"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="11" />
+                        <TextBox Text="{Binding Child.RelativeList[0].Year, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Width="auto"
+                                 Grid.Row="11"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Телефон:"
+                                   Width="auto"
+                                   Margin="40,5,5,5"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="12" />
+                        <xctk:MaskedTextBox Text="{Binding Child.RelativeList[0].PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                            Mask="+7 (###) ###-##-##"
+                                            Width="auto"
+                                            Grid.Row="12"
+                                            Grid.Column="1" />
+                        <TextBlock Text="ФИО отца:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="13" />
+                        <TextBox Text="{Binding Child.RelativeList[1].FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
+                                 Width="auto"
+                                 Grid.Row="13"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Год:"
+                                   Width="auto"
+                                   Margin="40,5,5,5"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="14" />
+                        <TextBox Text="{Binding Child.RelativeList[1].Year, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Width="auto"
+                                 Grid.Row="14"
+                                 Grid.Column="1" />
+                        <TextBlock Text="Телефон:"
+                                   Width="auto"
+                                   Margin="40,5,5,5"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="15" />
+                        <xctk:MaskedTextBox Text="{Binding Child.RelativeList[1].PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                            Mask="+7 (###) ###-##-##"
+                                            Width="auto"
+                                            Grid.Row="15"
+                                            Grid.Column="1" />
+                        <!--<Image Width="100"
                            Grid.ColumnSpan="2"
                            Height="100"
                            Margin="10"
@@ -111,19 +232,19 @@
                             Content="Добавить фото"
                             IsDefault="True"
                             Grid.Row="6"
-                            Grid.ColumnSpan="2" />
-                    <Button Command="{Binding SaveChangesCommand}"
-                            IsEnabled="{Binding IsCanSaveChanges}"
-                            Content="Сохранить"
-                            IsDefault="True"
-                            Margin="5"
-                            Grid.Row="7"
-                            Grid.ColumnSpan="2" />
-                    <Button Command="{Binding GoBackCommand}"
-                            Content="Назад"
-                            Grid.Row="8"
-                            Grid.ColumnSpan="2" />
-                </Grid>
+                            Grid.ColumnSpan="2" />-->
+                        <Button Command="{Binding SaveChangesCommand}"
+                                IsEnabled="{Binding IsCanSaveChanges}"
+                                Content="Сохранить"
+                                IsDefault="True"
+                                Grid.Row="98"
+                                Grid.ColumnSpan="2" />
+                        <!--<Button Command="{Binding GoBackCommand}"
+                                Content="Назад"
+                                Grid.Row="99"
+                                Grid.ColumnSpan="2" />-->
+                    </Grid>
+                </ScrollViewer>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>

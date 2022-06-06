@@ -68,7 +68,7 @@ namespace KindergartenDesktopApp.Services
                 {
                     var searchedDocument = _synchronizedDocuments.FirstOrDefault(d =>
                     {
-                        return Enumerable.SequenceEqual(oldDocument.FileBytes, d.FileBytes) && d.FileName == d.FileName;
+                        return Enumerable.SequenceEqual(oldDocument.FileBytes, d.FileBytes) && d.FileName == oldDocument.FileName;
                     });
                     if (searchedDocument == null)
                     {

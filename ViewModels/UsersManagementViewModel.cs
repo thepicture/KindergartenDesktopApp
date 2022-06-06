@@ -67,7 +67,7 @@ namespace KindergartenDesktopApp.ViewModels
             using (var context = ContextFactory.GetInstance())
             {
                 IEnumerable<User> currentEmployees = await context.Users
-                    .Include(u => u.Group)
+                    .Include(u => u.Groups)
                     .Include(u => u.Gender)
                     .Where(u => u.RoleId == UserRoles.EmployeeId)
                     .ToListAsync();
@@ -85,7 +85,10 @@ namespace KindergartenDesktopApp.ViewModels
                 }
                 if (SelectedGroup is Group group && group.Id > 0)
                 {
-                    currentEmployees = currentEmployees.Where(e => e.GroupId == group.Id);
+                    currentEmployees = currentEmployees.Where(e =>
+                    {
+                        return e.Groups.ElementAt(0).Id == group.Id;
+                    });
                 }
                 if (int.TryParse(Age, out int parsedAge))
                 {

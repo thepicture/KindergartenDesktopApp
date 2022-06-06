@@ -12,29 +12,17 @@ namespace KindergartenDesktopApp.Models.Entities
             get
             {
                 if (columnName == nameof(FullName) && string.IsNullOrWhiteSpace(FullName))
-                {
                     return "Введите ФИО";
-                }
                 if (columnName == nameof(Age) && Age <= 18)
-                {
                     return "Введите корректный возраст от 18 лет";
-                }
-                if (RoleId == UserRoles.EmployeeId && columnName == nameof(Group) && Group == null)
-                {
+                if (RoleId == UserRoles.EmployeeId && columnName == nameof(Groups) && Groups == null)
                     return "Выберите группу";
-                }
                 if (columnName == nameof(Gender) && Gender == null)
-                {
                     return "Выберите пол";
-                }
                 if (columnName == nameof(Login) && string.IsNullOrWhiteSpace(Login))
-                {
                     return "Введите логин";
-                }
                 if (columnName == nameof(Password) && string.IsNullOrWhiteSpace(Password))
-                {
                     return "Введите пароль";
-                }
                 return null;
             }
         }

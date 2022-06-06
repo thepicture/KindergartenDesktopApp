@@ -12,20 +12,16 @@ namespace KindergartenDesktopApp.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Group
+    public partial class ChildRelative
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Group()
-        {
-            this.Children = new HashSet<Child>();
-        }
-    
         public int Id { get; set; }
-        public string Title { get; set; }
-        public int UpbringerId { get; set; }
+        public string FullName { get; set; }
+        public string PhoneNumber { get; set; }
+        public Nullable<int> Year { get; set; }
+        public int ChildId { get; set; }
+        public int RelativeRoleId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Child> Children { get; set; }
-        public virtual User User { get; set; }
+        public virtual Child Child { get; set; }
+        public virtual RelativeRole RelativeRole { get; set; }
     }
 }

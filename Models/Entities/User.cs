@@ -14,18 +14,28 @@ namespace KindergartenDesktopApp.Models.Entities
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Groups = new HashSet<Group>();
+        }
+    
         public int Id { get; set; }
         public string FullName { get; set; }
-        public Nullable<int> GroupId { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public int RoleId { get; set; }
         public byte[] Image { get; set; }
-        public Nullable<int> GenderId { get; set; }
+        public int GenderId { get; set; }
         public int Age { get; set; }
+        public string Passport { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+        public System.DateTime WorkStartDate { get; set; }
     
         public virtual Gender Gender { get; set; }
-        public virtual Group Group { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Group> Groups { get; set; }
         public virtual UserRole UserRole { get; set; }
     }
 }

@@ -12,12 +12,18 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="GenderId" Type="int" Nullable="false" />
-          <Property Name="GroupId" Type="int" Nullable="false" />
-          <Property Name="FatherFullName" Type="nvarchar" MaxLength="128" />
-          <Property Name="MotherFullName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Citizenship" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Nationality" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="HealthPolicyNumber" Type="nvarchar" MaxLength="19" Nullable="false" />
+          <Property Name="IsDisabled" Type="bit" Nullable="false" />
+          <Property Name="FamilyStatus" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="BirthDate" Type="date" />
+          <Property Name="Year" Type="int" />
           <Property Name="Image" Type="image" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeleteReason" Type="nvarchar" MaxLength="1024" />
         </EntityType>
         <EntityType Name="ChildDocument">
           <Key>
@@ -27,6 +33,17 @@
           <Property Name="FileName" Type="nvarchar" MaxLength="1024" Nullable="false" />
           <Property Name="FileBytes" Type="varbinary(max)" Nullable="false" />
           <Property Name="ChildId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChildRelative">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="18" Nullable="false" />
+          <Property Name="Year" Type="int" />
+          <Property Name="ChildId" Type="int" Nullable="false" />
+          <Property Name="RelativeRoleId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Gender">
           <Key>
@@ -41,20 +58,31 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="UpbringerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RelativeRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar" MaxLength="128" />
-          <Property Name="GroupId" Type="int" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Login" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="Image" Type="image" />
-          <Property Name="GenderId" Type="int" />
-          <Property Name="Age" Type="int" />
+          <Property Name="GenderId" Type="int" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Passport" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="18" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="WorkStartDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -101,8 +129,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ChildRelative_Child">
+          <End Role="Child" Type="Self.Child" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ChildRelative" Type="Self.ChildRelative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Child">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChildRelative">
+              <PropertyRef Name="ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChildRelative_RelativeRole">
+          <End Role="RelativeRole" Type="Self.RelativeRole" Multiplicity="1" />
+          <End Role="ChildRelative" Type="Self.ChildRelative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelativeRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChildRelative">
+              <PropertyRef Name="RelativeRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="UpbringerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Gender">
-          <End Role="Gender" Type="Self.Gender" Multiplicity="0..1" />
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Gender">
@@ -110,18 +176,6 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="GenderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_Group">
-          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Group">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="GroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -140,8 +194,10 @@
         <EntityContainer Name="KindergartenBaseModelStoreContainer">
           <EntitySet Name="Child" EntityType="Self.Child" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChildDocument" EntityType="Self.ChildDocument" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChildRelative" EntityType="Self.ChildRelative" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RelativeRole" EntityType="Self.RelativeRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Child_Gender" Association="Self.FK_Child_Gender">
@@ -156,12 +212,20 @@
             <End Role="Child" EntitySet="Child" />
             <End Role="ChildDocument" EntitySet="ChildDocument" />
           </AssociationSet>
+          <AssociationSet Name="FK_ChildRelative_Child" Association="Self.FK_ChildRelative_Child">
+            <End Role="Child" EntitySet="Child" />
+            <End Role="ChildRelative" EntitySet="ChildRelative" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChildRelative_RelativeRole" Association="Self.FK_ChildRelative_RelativeRole">
+            <End Role="RelativeRole" EntitySet="RelativeRole" />
+            <End Role="ChildRelative" EntitySet="ChildRelative" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_User1" Association="Self.FK_Group_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Group" EntitySet="Group" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_Gender" Association="Self.FK_User_Gender">
             <End Role="Gender" EntitySet="Gender" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Group" Association="Self.FK_User_Group">
-            <End Role="Group" EntitySet="Group" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK_User_UserRole" Association="Self.FK_User_UserRole">
@@ -176,8 +240,10 @@
         <EntityContainer Name="KindergartenBaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Children" EntityType="KindergartenBaseModel.Child" />
           <EntitySet Name="ChildDocuments" EntityType="KindergartenBaseModel.ChildDocument" />
+          <EntitySet Name="ChildRelatives" EntityType="KindergartenBaseModel.ChildRelative" />
           <EntitySet Name="Genders" EntityType="KindergartenBaseModel.Gender" />
           <EntitySet Name="Groups" EntityType="KindergartenBaseModel.Group" />
+          <EntitySet Name="RelativeRoles" EntityType="KindergartenBaseModel.RelativeRole" />
           <EntitySet Name="Users" EntityType="KindergartenBaseModel.User" />
           <EntitySet Name="UserRoles" EntityType="KindergartenBaseModel.UserRole" />
           <AssociationSet Name="FK_Child_Gender" Association="KindergartenBaseModel.FK_Child_Gender">
@@ -192,13 +258,21 @@
             <End Role="Child" EntitySet="Children" />
             <End Role="ChildDocument" EntitySet="ChildDocuments" />
           </AssociationSet>
+          <AssociationSet Name="FK_ChildRelative_Child" Association="KindergartenBaseModel.FK_ChildRelative_Child">
+            <End Role="Child" EntitySet="Children" />
+            <End Role="ChildRelative" EntitySet="ChildRelatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChildRelative_RelativeRole" Association="KindergartenBaseModel.FK_ChildRelative_RelativeRole">
+            <End Role="RelativeRole" EntitySet="RelativeRoles" />
+            <End Role="ChildRelative" EntitySet="ChildRelatives" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_Gender" Association="KindergartenBaseModel.FK_User_Gender">
             <End Role="Gender" EntitySet="Genders" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_User_Group" Association="KindergartenBaseModel.FK_User_Group">
-            <End Role="Group" EntitySet="Groups" />
+          <AssociationSet Name="FK_Group_User1" Association="KindergartenBaseModel.FK_Group_User1">
             <End Role="User" EntitySet="Users" />
+            <End Role="Group" EntitySet="Groups" />
           </AssociationSet>
           <AssociationSet Name="FK_User_UserRole" Association="KindergartenBaseModel.FK_User_UserRole">
             <End Role="UserRole" EntitySet="UserRoles" />
@@ -212,15 +286,22 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FullName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="GenderId" Type="Int32" Nullable="false" />
-          <Property Name="GroupId" Type="Int32" Nullable="false" />
-          <Property Name="FatherFullName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="MotherFullName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Citizenship" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Nationality" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="HealthPolicyNumber" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="true" />
+          <Property Name="IsDisabled" Type="Boolean" Nullable="false" />
+          <Property Name="FamilyStatus" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="Year" Type="Int32" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeleteReason" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Gender" Relationship="KindergartenBaseModel.FK_Child_Gender" FromRole="Child" ToRole="Gender" />
           <NavigationProperty Name="Group" Relationship="KindergartenBaseModel.FK_Child_Group" FromRole="Child" ToRole="Group" />
           <NavigationProperty Name="ChildDocuments" Relationship="KindergartenBaseModel.FK_ChildDocument_Child" FromRole="Child" ToRole="ChildDocument" />
+          <NavigationProperty Name="ChildRelatives" Relationship="KindergartenBaseModel.FK_ChildRelative_Child" FromRole="Child" ToRole="ChildRelative" />
         </EntityType>
         <EntityType Name="ChildDocument">
           <Key>
@@ -231,6 +312,19 @@
           <Property Name="FileBytes" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="ChildId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Child" Relationship="KindergartenBaseModel.FK_ChildDocument_Child" FromRole="ChildDocument" ToRole="Child" />
+        </EntityType>
+        <EntityType Name="ChildRelative">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="ChildId" Type="Int32" Nullable="false" />
+          <Property Name="RelativeRoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Child" Relationship="KindergartenBaseModel.FK_ChildRelative_Child" FromRole="ChildRelative" ToRole="Child" />
+          <NavigationProperty Name="RelativeRole" Relationship="KindergartenBaseModel.FK_ChildRelative_RelativeRole" FromRole="ChildRelative" ToRole="RelativeRole" />
         </EntityType>
         <EntityType Name="Gender">
           <Key>
@@ -247,24 +341,36 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="UpbringerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Children" Relationship="KindergartenBaseModel.FK_Child_Group" FromRole="Group" ToRole="Child" />
-          <NavigationProperty Name="Users" Relationship="KindergartenBaseModel.FK_User_Group" FromRole="Group" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="KindergartenBaseModel.FK_Group_User1" FromRole="Group" ToRole="User" />
+        </EntityType>
+        <EntityType Name="RelativeRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ChildRelatives" Relationship="KindergartenBaseModel.FK_ChildRelative_RelativeRole" FromRole="RelativeRole" ToRole="ChildRelative" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FullName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="GroupId" Type="Int32" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Login" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="GenderId" Type="Int32" />
+          <Property Name="GenderId" Type="Int32" Nullable="false" />
           <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Passport" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="WorkStartDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Gender" Relationship="KindergartenBaseModel.FK_User_Gender" FromRole="User" ToRole="Gender" />
-          <NavigationProperty Name="Group" Relationship="KindergartenBaseModel.FK_User_Group" FromRole="User" ToRole="Group" />
+          <NavigationProperty Name="Groups" Relationship="KindergartenBaseModel.FK_Group_User1" FromRole="User" ToRole="Group" />
           <NavigationProperty Name="UserRole" Relationship="KindergartenBaseModel.FK_User_UserRole" FromRole="User" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="UserRole">
@@ -313,8 +419,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ChildRelative_Child">
+          <End Type="KindergartenBaseModel.Child" Role="Child" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="KindergartenBaseModel.ChildRelative" Role="ChildRelative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Child">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChildRelative">
+              <PropertyRef Name="ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChildRelative_RelativeRole">
+          <End Type="KindergartenBaseModel.RelativeRole" Role="RelativeRole" Multiplicity="1" />
+          <End Type="KindergartenBaseModel.ChildRelative" Role="ChildRelative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelativeRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChildRelative">
+              <PropertyRef Name="RelativeRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Gender">
-          <End Type="KindergartenBaseModel.Gender" Role="Gender" Multiplicity="0..1" />
+          <End Type="KindergartenBaseModel.Gender" Role="Gender" Multiplicity="1" />
           <End Type="KindergartenBaseModel.User" Role="User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Gender">
@@ -325,15 +457,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_User_Group">
-          <End Type="KindergartenBaseModel.Group" Role="Group" Multiplicity="0..1" />
-          <End Type="KindergartenBaseModel.User" Role="User" Multiplicity="*" />
+        <Association Name="FK_Group_User1">
+          <End Type="KindergartenBaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="KindergartenBaseModel.Group" Role="Group" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Group">
+            <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="GroupId" />
+            <Dependent Role="Group">
+              <PropertyRef Name="UpbringerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -358,12 +490,18 @@
           <EntitySetMapping Name="Children">
             <EntityTypeMapping TypeName="KindergartenBaseModel.Child">
               <MappingFragment StoreEntitySet="Child">
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="MotherFullName" ColumnName="MotherFullName" />
-                <ScalarProperty Name="FatherFullName" ColumnName="FatherFullName" />
+                <ScalarProperty Name="DeleteReason" ColumnName="DeleteReason" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="FamilyStatus" ColumnName="FamilyStatus" />
+                <ScalarProperty Name="IsDisabled" ColumnName="IsDisabled" />
+                <ScalarProperty Name="HealthPolicyNumber" ColumnName="HealthPolicyNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
                 <ScalarProperty Name="GenderId" ColumnName="GenderId" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -380,6 +518,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ChildRelatives">
+            <EntityTypeMapping TypeName="KindergartenBaseModel.ChildRelative">
+              <MappingFragment StoreEntitySet="ChildRelative">
+                <ScalarProperty Name="RelativeRoleId" ColumnName="RelativeRoleId" />
+                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Genders">
             <EntityTypeMapping TypeName="KindergartenBaseModel.Gender">
               <MappingFragment StoreEntitySet="Gender">
@@ -391,6 +541,15 @@
           <EntitySetMapping Name="Groups">
             <EntityTypeMapping TypeName="KindergartenBaseModel.Group">
               <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="UpbringerId" ColumnName="UpbringerId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RelativeRoles">
+            <EntityTypeMapping TypeName="KindergartenBaseModel.RelativeRole">
+              <MappingFragment StoreEntitySet="RelativeRole">
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -399,13 +558,16 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="KindergartenBaseModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="WorkStartDate" ColumnName="WorkStartDate" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Passport" ColumnName="Passport" />
                 <ScalarProperty Name="Age" ColumnName="Age" />
                 <ScalarProperty Name="GenderId" ColumnName="GenderId" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

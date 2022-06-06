@@ -54,7 +54,7 @@ namespace KindergartenDesktopApp.ViewModels
             }
         }
 
-        private const int MaxAgeDifference = 5;
+        private const int MaxAgeDifference = 0;
 
         private async Task LoadChildrenAsync()
         {
@@ -62,6 +62,9 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 IEnumerable<Child> currentChildren = await context.Children
                     .Include(u => u.Group)
+                    .Include(u => u.ChildRelatives)
+                    .Include(u =>
+                        u.ChildRelatives.Select(r => r.RelativeRole))
                     .Include(u => u.ChildDocuments)
                     .Include(u => u.Gender)
                     .ToListAsync();
@@ -85,14 +88,7 @@ namespace KindergartenDesktopApp.ViewModels
                 {
                     currentChildren = currentChildren.Where(e =>
                     {
-                        if (e.BirthDate.HasValue)
-                        {
-                            return Math.Abs(parsedAge - (DateTime.Now.Year - e.BirthDate.Value.Year)) < MaxAgeDifference;
-                        }
-                        else
-                        {
-                            return false;
-                        }
+                        return Math.Abs(parsedAge - (DateTime.Now.Year - e.Year.Value)) < MaxAgeDifference;
                     });
                 }
                 Children = new ObservableCollection<Child>(currentChildren);

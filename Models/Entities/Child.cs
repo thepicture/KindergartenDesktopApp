@@ -18,21 +18,30 @@ namespace KindergartenDesktopApp.Models.Entities
         public Child()
         {
             this.ChildDocuments = new HashSet<ChildDocument>();
+            this.ChildRelatives = new HashSet<ChildRelative>();
         }
     
         public int Id { get; set; }
         public string FullName { get; set; }
         public int GenderId { get; set; }
-        public int GroupId { get; set; }
-        public string FatherFullName { get; set; }
-        public string MotherFullName { get; set; }
+        public string Citizenship { get; set; }
+        public string Nationality { get; set; }
+        public string Address { get; set; }
+        public string HealthPolicyNumber { get; set; }
+        public bool IsDisabled { get; set; }
+        public string FamilyStatus { get; set; }
         public string Notes { get; set; }
-        public Nullable<System.DateTime> BirthDate { get; set; }
+        public Nullable<int> Year { get; set; }
         public byte[] Image { get; set; }
+        public int GroupId { get; set; }
+        public bool IsDeleted { get; set; }
+        public string DeleteReason { get; set; }
     
         public virtual Gender Gender { get; set; }
         public virtual Group Group { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChildDocument> ChildDocuments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChildRelative> ChildRelatives { get; set; }
     }
 }

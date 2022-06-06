@@ -48,6 +48,7 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 if (await context.Users
                         .Include(u => u.Gender)
+                        .Include(u => u.Groups)
                         .FirstOrDefaultAsync(u =>
                             u.Login == User.Login && u.Password == User.Password)
                         is User loggedInUser)

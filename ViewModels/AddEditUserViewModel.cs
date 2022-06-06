@@ -60,7 +60,10 @@ namespace KindergartenDesktopApp.ViewModels
                 }
                 else
                 {
-                    User.Group = Groups.First(g => g.Id == User.GroupId);
+                    SelectedGroup = Groups.First(g =>
+                    {
+                        return g.Id == User.Groups.ElementAt(0).Id;
+                    });
                 }
             }
         }
@@ -85,7 +88,7 @@ namespace KindergartenDesktopApp.ViewModels
         public bool IsCanSaveChanges => !string.IsNullOrWhiteSpace(User.FullName)
                                         && !string.IsNullOrWhiteSpace(User.Login)
                                         && !string.IsNullOrWhiteSpace(User.Password)
-                                        && User.Group != null;
+                                        && SelectedGroup != null;
 
         private void SaveChanges()
         {
@@ -139,11 +142,8 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 using (var context = ContextFactory.GetInstance())
                 {
-                    if (User.Group != null)
-                    {
-                        User.GroupId = User.Group.Id;
-                        User.Group = null;
-                    }
+                    User.Groups.Clear();
+                    User.Groups.Add(SelectedGroup);
                     if (User.IsNew())
                     {
                         context.Users.Add(User);
