@@ -6,12 +6,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace KindergartenDesktopApp.ViewModels
 {
     public class AddEditUserViewModel : KindergartenViewModelBase
     {
+        private const int DaysInYear = 365;
+
         public void OnAppearing()
         {
 
@@ -25,14 +28,28 @@ namespace KindergartenDesktopApp.ViewModels
             QuestionText = "Добавить сотрудника";
             User = new User
             {
-                RoleId = UserRoles.EmployeeId
+                RoleId = UserRoles.EmployeeId,
+                Groups = new List<Group>(),
+                WorkStartDate = DateTime.Now.AddDays(-DaysInYear),
+                IsEmployeeValidating = true
             };
             User.PropertyChanged += (_, __) =>
             {
+                User.Groups.Clear();
+                User.Groups.Add(new Group
+                {
+                    Title = SelectedGroup.Title,
+                    UpbringerId = User.Id
+                });
+                User.GenderId = SelectedGender?.Id ?? 0;
                 RaisePropertyChanged(
                     nameof(IsCanSaveChanges));
             };
-            LoadGroupsAsync();
+            LoadGroupsAsync()
+                .ContinueWith(t =>
+                {
+                    LoadGendersAsync();
+                });
         }
 
         public AddEditUserViewModel(User inputEmployee)
@@ -40,15 +57,48 @@ namespace KindergartenDesktopApp.ViewModels
             Title = "Редактировать пользователя";
             QuestionText = "Редактировать сотрудника";
             User = inputEmployee;
+            User.IsEmployeeValidating = true;
             User.PropertyChanged += (_, __) =>
             {
+                User.Groups.Clear();
+                User.Groups.Add(new Group
+                {
+                    Title = SelectedGroup.Title,
+                    UpbringerId = User.Id
+                });
+                User.GenderId = SelectedGender?.Id ?? 0;
+                User.Groups.Clear();
                 RaisePropertyChanged(
                     nameof(IsCanSaveChanges));
             };
-            LoadGroupsAsync();
+            LoadGroupsAsync()
+                .ContinueWith(t =>
+                {
+                    LoadGendersAsync();
+                }); ;
         }
 
-        private async void LoadGroupsAsync()
+        private async void LoadGendersAsync()
+        {
+            using (var context = ContextFactory.GetInstance())
+            {
+                List<Gender> currentGenders = await context.Genders.ToListAsync();
+                Genders = new ObservableCollection<Gender>(currentGenders);
+                if (User.IsNew())
+                {
+                    SelectedGender = Genders.First();
+                }
+                else
+                {
+                    SelectedGender = Genders.First(g =>
+                    {
+                        return g.Id == User.GenderId;
+                    });
+                }
+            }
+        }
+
+        private async Task LoadGroupsAsync()
         {
             using (var context = ContextFactory.GetInstance())
             {
@@ -85,10 +135,7 @@ namespace KindergartenDesktopApp.ViewModels
             }
         }
 
-        public bool IsCanSaveChanges => !string.IsNullOrWhiteSpace(User.FullName)
-                                        && !string.IsNullOrWhiteSpace(User.Login)
-                                        && !string.IsNullOrWhiteSpace(User.Password)
-                                        && SelectedGroup != null;
+        public bool IsCanSaveChanges => string.IsNullOrWhiteSpace(User.Error);
 
         private void SaveChanges()
         {
@@ -142,14 +189,22 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 using (var context = ContextFactory.GetInstance())
                 {
-                    User.Groups.Clear();
-                    User.Groups.Add(SelectedGroup);
+
+                    User.GenderId = SelectedGender.Id;
                     if (User.IsNew())
                     {
                         context.Users.Add(User);
                     }
                     else
                     {
+                        User.Groups.Clear();
+
+                        User.Groups.Add(new Group
+                        {
+                            Title = SelectedGroup.Title,
+                            UpbringerId = User.Id
+                        });
+
                         User existingEmployee = context.Users.Find(User.Id);
                         context
                             .Entry(existingEmployee).CurrentValues
@@ -167,5 +222,7 @@ namespace KindergartenDesktopApp.ViewModels
         }
         public bool IsAskControlOpened { get; set; }
         public string QuestionText { get; set; }
+        public ObservableCollection<Gender> Genders { get; set; }
+        public Gender SelectedGender { get; set; }
     }
 }

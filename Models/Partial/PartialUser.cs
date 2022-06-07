@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,11 @@ namespace KindergartenDesktopApp.Models.Entities
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public partial class User : ObservableObject, IDataErrorInfo
     {
+        private const int DaysToYearsModifier = 365;
+        private const int CompanyTotalLiveYears = 32;
+
+        public bool IsEmployeeValidating { get; set; }
+
         public string this[string columnName]
         {
             get
@@ -27,7 +33,7 @@ namespace KindergartenDesktopApp.Models.Entities
                     if (string.IsNullOrWhiteSpace(Address))
                         return nameof(Address);
                 if (columnName == nameof(Gender))
-                    if (Gender == null)
+                    if (Gender == null && GenderId == 0)
                         return "Выберите пол";
                 if (columnName == nameof(FullName) && string.IsNullOrWhiteSpace(FullName))
                     return "Введите ФИО";
@@ -35,6 +41,19 @@ namespace KindergartenDesktopApp.Models.Entities
                     return "Введите логин";
                 if (columnName == nameof(Password) && string.IsNullOrWhiteSpace(Password))
                     return "Введите пароль";
+                if (IsEmployeeValidating)
+                {
+                    if (columnName == nameof(WorkStartDate))
+                        if (DateTime.Now <= WorkStartDate
+                            || (DateTime.Now - WorkStartDate).TotalDays / DaysToYearsModifier > CompanyTotalLiveYears)
+                            return nameof(WorkStartDate);
+                    if (columnName == nameof(Age))
+                        if (Age < 18)
+                            return nameof(Age);
+                    if (columnName == nameof(Groups))
+                        if (Groups == null || Groups.Count == 0)
+                            return "Выберите группу";
+                }
                 return null;
             }
         }
