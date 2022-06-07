@@ -77,5 +77,15 @@ namespace KindergartenDesktopApp.Models.Entities
                 return errorsBuilder.ToString();
             }
         }
+
+
+
+        public Group Group
+        {
+            get
+            {
+                return Groups?.FirstOrDefault();
+            }
+        }
     }
 }

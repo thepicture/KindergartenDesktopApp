@@ -163,7 +163,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UpbringerOfGroup_Group">
-          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UpbringerOfGroup" Type="Self.UpbringerOfGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Group">
@@ -175,7 +177,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UpbringerOfGroup_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UpbringerOfGroup" Type="Self.UpbringerOfGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">

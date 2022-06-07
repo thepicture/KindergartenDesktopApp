@@ -18,7 +18,9 @@
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Visible"
                       Grid.Row="1">
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -41,6 +43,9 @@
                         </Grid.ColumnDefinitions>
                         <Image Grid.ColumnSpan="2"
                                Margin="10"
+                               Width="100"
+                               HorizontalAlignment="Left"
+                               Height="100"
                                Stretch="UniformToFill"
                                Grid.Row="0">
                             <Image.Source>
@@ -54,7 +59,9 @@
                         <TextBlock Text="ФИО:"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
-                                   Grid.Row="1" />
+                                   Grid.Row="1"
+                                   Margin="5,0,5,5"
+                                   VerticalAlignment="Bottom" />
                         <TextBlock Text="{Binding Employee.FullName}"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
@@ -73,7 +80,7 @@
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="3" />
-                        <TextBlock Text="{Binding Employee.Age, FallbackValue=Не указан}"
+                        <TextBlock Text="{Binding Employee.Age}"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="3"
@@ -82,7 +89,7 @@
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="4" />
-                        <TextBlock Text="{Binding Employee.Gender.Title, FallbackValue=Не указан}"
+                        <TextBlock Text="{Binding Employee.Gender.Title}"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="4"
@@ -98,6 +105,7 @@
                                    Grid.Column="2" />
                         <Button Command="{Binding GoBackCommand}"
                                 Content="Назад"
+                                HorizontalAlignment="Left"
                                 Grid.Row="6"
                                 Grid.ColumnSpan="2" />
                     </Grid>
