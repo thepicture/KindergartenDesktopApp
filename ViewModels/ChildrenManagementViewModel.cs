@@ -91,30 +91,30 @@ namespace KindergartenDesktopApp.ViewModels
                     .ToListAsync();
                 if (!string.IsNullOrWhiteSpace(ChildrenSearchText))
                 {
-                    currentChildren = currentChildren.Where(e =>
+                    currentChildren = currentChildren.Where(c =>
                     {
-                        return e.FullName.IndexOf(ChildrenSearchText,
+                        return c.FullName.IndexOf(ChildrenSearchText,
                                                   StringComparison.OrdinalIgnoreCase) != -1;
                     });
                 }
                 if (SelectedGender is Gender gender && gender.Id > 0)
                 {
-                    currentChildren = currentChildren.Where(e => e.GenderId == gender.Id);
+                    currentChildren = currentChildren.Where(c => c.GenderId == gender.Id);
                 }
                 if (SelectedGroup is Group group && group.Id > 0)
                 {
-                    currentChildren = currentChildren.Where(e => e.GroupId == group.Id);
+                    currentChildren = currentChildren.Where(c => c.GroupId == group.Id);
                 }
                 if (SelectedUpbringer is User upbringer && upbringer.Id > -0)
                 {
-                    currentChildren = currentChildren.Where(e => e.Group.UpbringerId == upbringer.Id);
+                    currentChildren = currentChildren.Where(c => c.Group.Users.First().Id == upbringer.Id);
                 }
                 currentChildren = currentChildren.Where(e => e.IsDisabled == IsHasDisability);
                 if (int.TryParse(Year, out int parsedAge))
                 {
-                    currentChildren = currentChildren.Where(e =>
+                    currentChildren = currentChildren.Where(c =>
                     {
-                        return Math.Abs(parsedAge - (DateTime.Now.Year - e.Year.Value)) < MaxAgeDifference;
+                        return Math.Abs(parsedAge - (DateTime.Now.Year - c.Year.Value)) < MaxAgeDifference;
                     });
                 }
                 Children = new ObservableCollection<Child>(currentChildren);

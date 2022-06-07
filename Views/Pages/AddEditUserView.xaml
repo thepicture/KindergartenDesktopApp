@@ -141,7 +141,7 @@
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="10" />
                         <ComboBox ItemsSource="{Binding Groups}"
-                                  SelectedItem="{Binding SelectedGroup, ValidatesOnDataErrors=True}"
+                                  SelectedItem="{Binding SelectedGroup, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                   Validation.ErrorTemplate="{StaticResource ComboBoxErrorTemplate}"
                                   DisplayMemberPath="Title"
                                   Width="200"

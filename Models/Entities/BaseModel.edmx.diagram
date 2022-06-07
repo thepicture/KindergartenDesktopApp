@@ -9,7 +9,7 @@
         <EntityTypeShape EntityType="KindergartenBaseModel.ChildDocument" Width="1.5" PointX="8.25" PointY="8.625" />
         <EntityTypeShape EntityType="KindergartenBaseModel.ChildRelative" Width="1.5" PointX="8.25" PointY="5" />
         <EntityTypeShape EntityType="KindergartenBaseModel.Gender" Width="1.5" PointX="0.75" PointY="5.375" />
-        <EntityTypeShape EntityType="KindergartenBaseModel.Group" Width="1.5" PointX="5.25" PointY="10.25" />
+        <EntityTypeShape EntityType="KindergartenBaseModel.Group" Width="1.5" PointX="3.75" PointY="1.375" />
         <EntityTypeShape EntityType="KindergartenBaseModel.RelativeRole" Width="1.5" PointX="6" PointY="1.5" />
         <EntityTypeShape EntityType="KindergartenBaseModel.User" Width="1.5" PointX="3" PointY="4.375" />
         <EntityTypeShape EntityType="KindergartenBaseModel.UserRole" Width="1.5" PointX="0.75" PointY="2.5" />
@@ -19,8 +19,8 @@
         <AssociationConnector Association="KindergartenBaseModel.FK_ChildRelative_Child" />
         <AssociationConnector Association="KindergartenBaseModel.FK_ChildRelative_RelativeRole" />
         <AssociationConnector Association="KindergartenBaseModel.FK_User_Gender" />
-        <AssociationConnector Association="KindergartenBaseModel.FK_Group_User1" />
         <AssociationConnector Association="KindergartenBaseModel.FK_User_UserRole" />
+        <AssociationConnector Association="KindergartenBaseModel.UpbringerOfGroup" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

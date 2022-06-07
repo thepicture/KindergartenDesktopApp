@@ -35,12 +35,6 @@ namespace KindergartenDesktopApp.ViewModels
             };
             User.PropertyChanged += (_, __) =>
             {
-                User.Groups.Clear();
-                User.Groups.Add(new Group
-                {
-                    Title = SelectedGroup.Title,
-                    UpbringerId = User.Id
-                });
                 User.GenderId = SelectedGender?.Id ?? 0;
                 RaisePropertyChanged(
                     nameof(IsCanSaveChanges));
@@ -60,14 +54,7 @@ namespace KindergartenDesktopApp.ViewModels
             User.IsEmployeeValidating = true;
             User.PropertyChanged += (_, __) =>
             {
-                User.Groups.Clear();
-                User.Groups.Add(new Group
-                {
-                    Title = SelectedGroup.Title,
-                    UpbringerId = User.Id
-                });
                 User.GenderId = SelectedGender?.Id ?? 0;
-                User.Groups.Clear();
                 RaisePropertyChanged(
                     nameof(IsCanSaveChanges));
             };
@@ -102,7 +89,8 @@ namespace KindergartenDesktopApp.ViewModels
         {
             using (var context = ContextFactory.GetInstance())
             {
-                List<Group> currentGroups = await context.Groups.ToListAsync();
+                List<Group> currentGroups = await context.Groups
+                    .ToListAsync();
                 Groups = new ObservableCollection<Group>(currentGroups);
                 if (User.IsNew())
                 {
@@ -112,7 +100,7 @@ namespace KindergartenDesktopApp.ViewModels
                 {
                     SelectedGroup = Groups.First(g =>
                     {
-                        return g.Id == User.Groups.ElementAt(0).Id;
+                        return g.Id == User.Groups.First().Id;
                     });
                 }
             }
@@ -158,7 +146,20 @@ namespace KindergartenDesktopApp.ViewModels
         }
 
         public ObservableCollection<Group> Groups { get; set; }
-        public Group SelectedGroup { get; set; }
+        public Group SelectedGroup
+        {
+            get => selectedGroup;
+            set
+            {
+                if(Set(ref selectedGroup, value))
+                {
+                    User.Groups.Clear();
+                    User.Groups?.Add(value);
+                    RaisePropertyChanged(
+                        nameof(IsCanSaveChanges));
+                }
+            }
+        }
 
         private void AddImage()
         {
@@ -169,6 +170,7 @@ namespace KindergartenDesktopApp.ViewModels
         }
 
         private RelayCommand confirmAddEmployeeCommand;
+        private Group selectedGroup;
 
         public ICommand ConfirmAddEmployeeCommand
         {
@@ -197,18 +199,14 @@ namespace KindergartenDesktopApp.ViewModels
                     }
                     else
                     {
-                        User.Groups.Clear();
-
-                        User.Groups.Add(new Group
-                        {
-                            Title = SelectedGroup.Title,
-                            UpbringerId = User.Id
-                        });
-
                         User existingEmployee = context.Users.Find(User.Id);
                         context
                             .Entry(existingEmployee).CurrentValues
                             .SetValues(User);
+                        existingEmployee.Groups.Clear();
+                        existingEmployee.Groups.Add(
+                            context.Groups.Find(
+                                User.Groups.First().Id));
                     }
                     IsAskControlOpened = false;
                     await context.SaveChangesAsync();

@@ -3,6 +3,8 @@ using KindergartenDesktopApp.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace KindergartenDesktopApp
 {
@@ -85,6 +87,7 @@ namespace KindergartenDesktopApp
         {
             if (((FrameworkElement)sender).DataContext != null)
             {
+                ((UserControl)sender).FontFamily = new FontFamily("Microsoft JhengHei");
                 ((dynamic)sender).DataContext.OnAppearing();
             }
         }

@@ -58,7 +58,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="120" Nullable="false" />
-          <Property Name="UpbringerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RelativeRole">
           <Key>
@@ -66,6 +65,14 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UpbringerOfGroup">
+          <Key>
+            <PropertyRef Name="UpbringerId" />
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="UpbringerId" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -155,14 +162,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Group_User1">
+        <Association Name="FK_UpbringerOfGroup_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="UpbringerOfGroup" Type="Self.UpbringerOfGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UpbringerOfGroup">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UpbringerOfGroup_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Group" Type="Self.Group" Multiplicity="*" />
+          <End Role="UpbringerOfGroup" Type="Self.UpbringerOfGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Group">
+            <Dependent Role="UpbringerOfGroup">
               <PropertyRef Name="UpbringerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -198,6 +217,7 @@
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RelativeRole" EntityType="Self.RelativeRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UpbringerOfGroup" EntityType="Self.UpbringerOfGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Child_Gender" Association="Self.FK_Child_Gender">
@@ -220,9 +240,13 @@
             <End Role="RelativeRole" EntitySet="RelativeRole" />
             <End Role="ChildRelative" EntitySet="ChildRelative" />
           </AssociationSet>
-          <AssociationSet Name="FK_Group_User1" Association="Self.FK_Group_User1">
-            <End Role="User" EntitySet="User" />
+          <AssociationSet Name="FK_UpbringerOfGroup_Group" Association="Self.FK_UpbringerOfGroup_Group">
             <End Role="Group" EntitySet="Group" />
+            <End Role="UpbringerOfGroup" EntitySet="UpbringerOfGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UpbringerOfGroup_User" Association="Self.FK_UpbringerOfGroup_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UpbringerOfGroup" EntitySet="UpbringerOfGroup" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Gender" Association="Self.FK_User_Gender">
             <End Role="Gender" EntitySet="Gender" />
@@ -270,12 +294,12 @@
             <End Role="Gender" EntitySet="Genders" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_Group_User1" Association="KindergartenBaseModel.FK_Group_User1">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Group" EntitySet="Groups" />
-          </AssociationSet>
           <AssociationSet Name="FK_User_UserRole" Association="KindergartenBaseModel.FK_User_UserRole">
             <End Role="UserRole" EntitySet="UserRoles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="UpbringerOfGroup" Association="KindergartenBaseModel.UpbringerOfGroup">
+            <End Role="Group" EntitySet="Groups" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
@@ -341,9 +365,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
-          <Property Name="UpbringerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Children" Relationship="KindergartenBaseModel.FK_Child_Group" FromRole="Group" ToRole="Child" />
-          <NavigationProperty Name="User" Relationship="KindergartenBaseModel.FK_Group_User1" FromRole="Group" ToRole="User" />
+          <NavigationProperty Name="Users" Relationship="KindergartenBaseModel.UpbringerOfGroup" FromRole="Group" ToRole="User" />
         </EntityType>
         <EntityType Name="RelativeRole">
           <Key>
@@ -370,8 +393,8 @@
           <Property Name="Address" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
           <Property Name="WorkStartDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Gender" Relationship="KindergartenBaseModel.FK_User_Gender" FromRole="User" ToRole="Gender" />
-          <NavigationProperty Name="Groups" Relationship="KindergartenBaseModel.FK_Group_User1" FromRole="User" ToRole="Group" />
           <NavigationProperty Name="UserRole" Relationship="KindergartenBaseModel.FK_User_UserRole" FromRole="User" ToRole="UserRole" />
+          <NavigationProperty Name="Groups" Relationship="KindergartenBaseModel.UpbringerOfGroup" FromRole="User" ToRole="Group" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -457,18 +480,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Group_User1">
-          <End Type="KindergartenBaseModel.User" Role="User" Multiplicity="1" />
-          <End Type="KindergartenBaseModel.Group" Role="Group" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Group">
-              <PropertyRef Name="UpbringerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_User_UserRole">
           <End Type="KindergartenBaseModel.UserRole" Role="UserRole" Multiplicity="1" />
           <End Type="KindergartenBaseModel.User" Role="User" Multiplicity="*" />
@@ -480,6 +491,10 @@
               <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="UpbringerOfGroup">
+          <End Type="KindergartenBaseModel.Group" Role="Group" Multiplicity="*" />
+          <End Type="KindergartenBaseModel.User" Role="User" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -541,7 +556,6 @@
           <EntitySetMapping Name="Groups">
             <EntityTypeMapping TypeName="KindergartenBaseModel.Group">
               <MappingFragment StoreEntitySet="Group">
-                <ScalarProperty Name="UpbringerId" ColumnName="UpbringerId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -581,6 +595,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="UpbringerOfGroup" TypeName="KindergartenBaseModel.UpbringerOfGroup" StoreEntitySet="UpbringerOfGroup">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="UpbringerId" />
+            </EndProperty>
+            <EndProperty Name="Group">
+              <ScalarProperty Name="Id" ColumnName="GroupId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
