@@ -84,6 +84,7 @@ namespace KindergartenDesktopApp.ViewModels
                 IEnumerable<Child> currentChildren = await context.Children
                     .Where(c => !c.IsDeleted)
                     .Include(u => u.Group)
+                    .Include(u => u.Group.Users)
                     .Include(u => u.ChildRelatives)
                     .Include(u =>
                         u.ChildRelatives.Select(r => r.RelativeRole))

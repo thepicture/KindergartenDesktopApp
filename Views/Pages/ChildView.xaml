@@ -63,6 +63,8 @@
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
@@ -526,33 +528,51 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+
+                        <TextBlock Text="Группа:"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="24" />
+                        <TextBlock Text="{Binding Child.Group.Title}"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="24"
+                                   Grid.Column="1" />
+                        <TextBlock Text="Воспитатель:"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="25" />
+                        <TextBlock Text="{Binding Child.Upbringer.FullName, FallbackValue=Не указан}"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="25"
+                                   Grid.Column="1" />
+
                         <TextBlock Text="Введите причину перемещения в архив:"
                                    Visibility="{Binding IsChildNotArchivedAndNotDeleted, Converter={StaticResource BooleanToVisibility}}"
                                    Style="{StaticResource CommonBlock}"
                                    HorizontalAlignment="Left"
                                    Width="200"
                                    TextWrapping="Wrap"
-                                   Grid.Row="24" />
+                                   Grid.Row="26" />
                         <TextBox Text="{Binding DeleteReason, UpdateSourceTrigger=PropertyChanged}"
                                  Visibility="{Binding IsChildNotArchivedAndNotDeleted, Converter={StaticResource BooleanToVisibility}}"
-                                 Grid.Row="24"
+                                 Grid.Row="26"
                                  Width="auto"
                                  Grid.Column="1" />
                         <Button Command="{Binding MoveChildToArchiveCommand}"
                                 Visibility="{Binding IsChildNotArchived, Converter={StaticResource BooleanToVisibility}}"
                                 Content="Поместить в архив"
                                 Background="Red"
-                                Grid.Row="25"
+                                Grid.Row="27"
                                 Grid.ColumnSpan="2" />
                         <Button Command="{Binding DeleteChildCommand}"
                                 Visibility="{Binding IsChildNotArchivedAndNotDeleted, Converter={StaticResource BooleanToVisibility}}"
                                 Content="Удалить"
                                 Background="Red"
-                                Grid.Row="25"
+                                Grid.Row="28"
                                 Grid.ColumnSpan="2" />
                         <Button Command="{Binding GoBackCommand}"
                                 Content="Назад"
-                                Grid.Row="26"
+                                Grid.Row="29"
                                 Grid.ColumnSpan="2" />
                     </Grid>
                 </Grid>

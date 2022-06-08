@@ -139,5 +139,20 @@ namespace KindergartenDesktopApp.Models.Entities
                 }
             }
         }
+
+        public User Upbringer
+        {
+            get
+            {
+                if (Group == null || Group.Users == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return Group.Users.FirstOrDefault();
+                }
+            }
+        }
     }
 }
