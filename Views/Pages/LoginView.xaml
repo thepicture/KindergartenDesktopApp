@@ -9,28 +9,45 @@
              d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
              mc:Ignorable="d">
     <Grid Background="{StaticResource PrimaryBackgroundColor}">
-        <StackPanel HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+        <Grid MaxWidth="500"
+              VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <controls:Header Text="Авторизация" />
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Логин"
-                           Style="{StaticResource CommonBlock}" />
-                <controls:BindablePasswordBox BindableText="{Binding User.Login, UpdateSourceTrigger=PropertyChanged}"
-                                              IsShouldFocus="True" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Пароль"
-                           Style="{StaticResource CommonBlock}" />
-                <controls:BindablePasswordBox BindableText="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}" />
-            </StackPanel>
+            <TextBlock Text="Логин"
+                       Style="{StaticResource CommonBlock}"
+                       Grid.Row="1" />
+            <controls:BindablePasswordBox BindableText="{Binding User.Login, UpdateSourceTrigger=PropertyChanged}"
+                                          IsShouldFocus="True"
+                                          Grid.Row="1"
+                                          Grid.Column="1" />
+            <TextBlock Text="Пароль"
+                       Style="{StaticResource CommonBlock}"
+                       Grid.Row="2" />
+            <controls:BindablePasswordBox BindableText="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}"
+                                          Grid.Row="2"
+                                          Grid.Column="2" />
             <controls:ValidationMessage ValidationText="Неверный логин или пароль"
                                         IsHasError="{Binding IsIncorrectLoginOrPassword}"
-                                        HorizontalAlignment="Center" />
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        Margin="5"/>
             <Button Command="{Binding LoginCommand}"
                     Content="Войти"
                     IsDefault="True"
                     HorizontalAlignment="Right"
-                    Margin="5,20,5,5" />
-        </StackPanel>
+                    Margin="5,10,5,5"
+                    Grid.Row="4"
+                    Grid.Column="1" />
+        </Grid>
     </Grid>
 </UserControl>

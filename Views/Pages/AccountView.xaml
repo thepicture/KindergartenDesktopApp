@@ -119,6 +119,7 @@
                                  Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
                                  Grid.Row="7"
                                  HorizontalAlignment="Left"
+                                 Width="200"
                                  Grid.Column="1" />
                         <TextBlock Text="Пароль:"
                                    Width="auto"
@@ -127,6 +128,7 @@
                         <controls:BindablePasswordBox BindableText="{Binding Me.Password, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                       Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
                                                       HorizontalAlignment="Left"
+                                                      Width="210"
                                                       Grid.Row="8"
                                                       Grid.Column="1" />
                         <Image Grid.ColumnSpan="2"

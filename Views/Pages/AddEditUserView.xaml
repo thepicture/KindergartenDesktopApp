@@ -109,12 +109,12 @@
                                     Grid.Row="6"
                                     Grid.Column="1" />
                         <TextBlock Text="Логин:"
-                                   Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="7" />
                         <TextBox Text="{Binding User.Login, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
                                  Grid.Row="7"
+                                 Width="200"
                                  HorizontalAlignment="Left"
                                  Grid.Column="1" />
                         <TextBlock Text="Пароль:"
@@ -125,7 +125,8 @@
                                                       Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
                                                       HorizontalAlignment="Left"
                                                       Grid.Row="8"
-                                                      Grid.Column="1" />
+                                                      Grid.Column="1"
+                                                      Width="210"/>
                         <TextBlock Text="Возраст:"
                                    Width="auto"
                                    HorizontalAlignment="Left"

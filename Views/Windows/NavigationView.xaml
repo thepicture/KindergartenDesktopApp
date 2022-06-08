@@ -8,10 +8,10 @@
         d:DataContext="{d:DesignInstance Type=viewmodels:NavigationViewModel}"
         mc:Ignorable="d"
         Title="{Binding Content.Title, ElementName=NavigationFrame}"
-        Height="850"
-        Width="1600"
-        MinHeight="850"
-        MinWidth="1600"
+        Height="450"
+        Width="910"
+        MinHeight="450"
+        MinWidth="910"
         WindowStartupLocation="CenterScreen"
         Icon="/Resources/logo.png">
     <Window.DataContext>

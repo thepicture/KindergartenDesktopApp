@@ -54,14 +54,39 @@ namespace KindergartenDesktopApp.Models.Entities
         {
             get
             {
-                using (var context = Ioc.Instance.GetService<IContextFactoryService>().GetInstance())
+                if (RelativeRoleId > 0)
                 {
-                    var roles = context.RelativeRoles.ToList();
-                    if (RelativeRoleId > 0)
+                    if (RelativeRoleId != RelativeRoles.Mother && RelativeRoleId != RelativeRoles.Father)
                     {
-                        RelativeRole = roles.First(r => r.Id == RelativeRoleId);
+                        using (var context = Ioc.Instance.GetService<IContextFactoryService>().GetInstance())
+                        {
+                            var roles = context.RelativeRoles
+                                .Where(r => r.Id != RelativeRoles.Mother && r.Id != RelativeRoles.Father)
+                                .ToList();
+                            RelativeRole = roles.First(r => r.Id == RelativeRoleId);
+                            return new ObservableCollection<RelativeRole>(roles);
+                        }
                     }
-                    return new ObservableCollection<RelativeRole>(roles);
+                    else
+                    {
+                        using (var context = Ioc.Instance.GetService<IContextFactoryService>().GetInstance())
+                        {
+                            var roles = context.RelativeRoles.ToList();
+                            RelativeRole = roles.First(r => r.Id == RelativeRoleId);
+                            return new ObservableCollection<RelativeRole>(roles);
+                        }
+                    }
+                }
+                else
+                {
+                    using (var context = Ioc.Instance.GetService<IContextFactoryService>().GetInstance())
+                    {
+                        var roles = context.RelativeRoles
+                            .Where(r => r.Id != RelativeRoles.Mother && r.Id != RelativeRoles.Father)
+                            .ToList();
+                        RelativeRole = roles.First(r => r.Id == RelativeRoleId);
+                        return new ObservableCollection<RelativeRole>(roles);
+                    }
                 }
             }
         }

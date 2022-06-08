@@ -1,7 +1,9 @@
-﻿using KindergartenDesktopApp.Services;
+﻿using KindergartenDesktopApp.Properties;
+using KindergartenDesktopApp.Services;
 using KindergartenDesktopApp.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -18,6 +20,16 @@ namespace KindergartenDesktopApp
             base.OnStartup(e);
             ConfigureDependencies();
             ConfigureTemplates();
+
+            Settings.Default.SettingsSaving += async (_, __) =>
+            {
+                Ioc.Instance.GetService<INavigationService>()
+                    .Back();
+                await Task.Delay(100);
+                Ioc.Instance.GetService<INavigationService>()
+                    .Go<SettingsViewModel>();
+            };
+
             OpenNavigationView<LoginViewModel>();
         }
 
@@ -88,6 +100,11 @@ namespace KindergartenDesktopApp
             if (((FrameworkElement)sender).DataContext != null)
             {
                 ((UserControl)sender).FontFamily = new FontFamily("Microsoft JhengHei");
+                if (Settings.Default.IsAccessibleMode)
+                {
+                    ((UserControl)sender).FontSize = 25;
+                    ((UserControl)sender).FontWeight = FontWeights.Bold;
+                }
                 ((dynamic)sender).DataContext.OnAppearing();
             }
         }

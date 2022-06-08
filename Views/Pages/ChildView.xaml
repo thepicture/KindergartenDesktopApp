@@ -83,7 +83,6 @@
                             </Image.Source>
                         </Image>
                         <TextBlock Text="ФИО ребёнка:"
-                                   Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="1" />
                         <TextBlock Text="{Binding Child.FullName}"

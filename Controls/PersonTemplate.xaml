@@ -10,11 +10,12 @@
              Name="Control"
              Margin="5">
     <Grid>
-        <Border Width="400"
+        <Border MinWidth="400"
                 Height="350"
                 Background="{StaticResource SecondaryBackgroundColor}"
                 CornerRadius="50" />
-        <Border Width="395"
+        <Border MinWidth="395"
+                Margin="2"
                 Height="345"
                 Background="White"
                 CornerRadius="50" />

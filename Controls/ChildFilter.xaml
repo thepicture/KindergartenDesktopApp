@@ -15,33 +15,37 @@
                 <local:Header Text="Фильтр" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Группа:"
-                               Width="80"
+                               Width="150"
                                Style="{StaticResource CommonBlock}" />
                     <ComboBox ItemsSource="{Binding ElementName=Control, Path=Groups}"
                               SelectedItem="{Binding ElementName=Control, Path=SelectedGroup}"
-                              DisplayMemberPath="Title" />
+                              DisplayMemberPath="Title" 
+                              Width="200"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Год:"
-                               Width="80"
+                               Width="150"
                                Style="{StaticResource CommonBlock}" />
-                    <TextBox Text="{Binding Year, ElementName=Control, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Text="{Binding Year, ElementName=Control, UpdateSourceTrigger=PropertyChanged}" 
+                             Width="200"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Воспитатель:"
-                               Width="80"
+                               Width="150"
                                Style="{StaticResource CommonBlock}" />
                     <ComboBox ItemsSource="{Binding ElementName=Control, Path=Upbringers}"
                               SelectedItem="{Binding ElementName=Control, Path=SelectedUpbringer}"
-                              DisplayMemberPath="FullName" />
+                              DisplayMemberPath="FullName" 
+                              Width="200"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Пол:"
-                               Width="80"
+                               Width="150"
                                Style="{StaticResource CommonBlock}" />
                     <ComboBox  ItemsSource="{Binding ElementName=Control, Path=Genders}"
                                SelectedItem="{Binding ElementName=Control, Path=SelectedGender}"
-                               DisplayMemberPath="Title" />
+                               DisplayMemberPath="Title" 
+                               Width="200"/>
                 </StackPanel>
                 <CheckBox IsChecked="{Binding ElementName=Control, Path=IsHasDisability}"
                           Content="Только с инвалидностью" />

@@ -121,6 +121,7 @@ namespace KindergartenDesktopApp.ViewModels
 
         private void GoToSettings()
         {
+            Navigator.Go<SettingsViewModel>();
         }
 
         private RelayCommand goToContactsCommand;
