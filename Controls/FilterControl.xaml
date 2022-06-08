@@ -15,29 +15,29 @@
                 <local:Header Text="Фильтр" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Возраст:"
-                               Width="50"
+                               Width="100"
                                Style="{StaticResource CommonBlock}" />
                     <TextBox Text="{Binding Age, ElementName=Control, UpdateSourceTrigger=PropertyChanged}"
                              Width="200" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Группа:"
-                               Width="50"
+                               Width="100"
                                Style="{StaticResource CommonBlock}" />
                     <ComboBox Text="Выберите группу"
                               ItemsSource="{Binding ElementName=Control, Path=Groups}"
                               SelectedItem="{Binding ElementName=Control, Path=SelectedGroup}"
-                              DisplayMemberPath="Title" 
-                              Width="200"/>
+                              DisplayMemberPath="Title"
+                              Width="200" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Пол:"
-                               Width="50"
+                               Width="100"
                                Style="{StaticResource CommonBlock}" />
                     <ComboBox  ItemsSource="{Binding ElementName=Control, Path=Genders}"
                                SelectedItem="{Binding ElementName=Control, Path=SelectedGender}"
-                               DisplayMemberPath="Title" 
-                               Width="200"/>
+                               DisplayMemberPath="Title"
+                               Width="200" />
                 </StackPanel>
                 <Button Command="{Binding FilterCollectionCommand, ElementName=Control}"
                         Content="Применить"
