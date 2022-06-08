@@ -65,7 +65,7 @@
               Background="{StaticResource SecondaryBackgroundColor}">
             <controls:VerticalMenuItemControl Command="{Binding GoToAccountCommand}"
                                               Text="Личный кабинет" />
-            <controls:VerticalMenuItemControl Command="{Binding GoToMessagesCommand}"
+            <controls:VerticalMenuItemControl Command="{Binding GoToContactsCommand}"
                                               Text="Сообщения" />
             <controls:VerticalMenuItemControl Command="{Binding GoToSettingsCommand}"
                                               Text="Настройки" />

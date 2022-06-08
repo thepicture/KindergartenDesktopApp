@@ -30,6 +30,7 @@ namespace KindergartenDesktopApp.Models.Entities
         public virtual DbSet<ChildRelative> ChildRelatives { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<RelativeRole> RelativeRoles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }

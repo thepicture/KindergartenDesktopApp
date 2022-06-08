@@ -316,6 +316,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\ContactsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -401,6 +405,9 @@
     <Compile Include="Models\Entities\Group.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Message.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\RelativeRole.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
@@ -413,6 +420,7 @@
     <Compile Include="Models\Enums\RelativeRoles.cs" />
     <Compile Include="Models\Enums\UserRoles.cs" />
     <Compile Include="Models\Partial\PartialChild.cs" />
+    <Compile Include="Models\Partial\PartialMessage.cs" />
     <Compile Include="Models\Partial\PartialUser.cs" />
     <Compile Include="Models\Partial\ParticalChildRelative.cs" />
     <Compile Include="Services\ContextFactoryService.cs" />
@@ -435,6 +443,7 @@
     <Compile Include="ViewModels\AddEditUserViewModel.cs" />
     <Compile Include="ViewModels\ChildrenManagementViewModel.cs" />
     <Compile Include="ViewModels\ChildViewModel.cs" />
+    <Compile Include="ViewModels\ContactsViewModel.cs" />
     <Compile Include="ViewModels\KindergartenViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
@@ -454,6 +463,9 @@
     </Compile>
     <Compile Include="Views\Pages\ChildView.xaml.cs">
       <DependentUpon>ChildView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\ContactsView.xaml.cs">
+      <DependentUpon>ContactsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>

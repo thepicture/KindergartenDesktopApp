@@ -101,5 +101,44 @@ namespace KindergartenDesktopApp.ViewModels
         {
             Navigator.Go<AccountViewModel>();
         }
+
+
+
+        private RelayCommand goToSettingsCommand;
+
+        public ICommand GoToSettingsCommand
+        {
+            get
+            {
+                if (goToSettingsCommand == null)
+                {
+                    goToSettingsCommand = new RelayCommand(GoToSettings);
+                }
+
+                return goToSettingsCommand;
+            }
+        }
+
+        private void GoToSettings()
+        {
+        }
+
+        private RelayCommand goToContactsCommand;
+
+        public ICommand GoToContactsCommand
+        {
+            get
+            {
+                if (goToContactsCommand == null)
+                    goToContactsCommand = new RelayCommand(GoToContacts);
+
+                return goToContactsCommand;
+            }
+        }
+
+        private void GoToContacts()
+        {
+            Navigator.Go<ContactsViewModel>();
+        }
     }
 }

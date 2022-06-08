@@ -286,43 +286,5 @@ namespace KindergartenDesktopApp.ViewModels
         {
             Navigator.Go<UserViewModel, User>(employee);
         }
-
-        private RelayCommand goToMessagesCommand;
-
-        public ICommand GoToMessagesCommand
-        {
-            get
-            {
-                if (goToMessagesCommand == null)
-                {
-                    goToMessagesCommand = new RelayCommand(GoToMessages);
-                }
-
-                return goToMessagesCommand;
-            }
-        }
-
-        private void GoToMessages()
-        {
-        }
-
-        private RelayCommand goToSettingsCommand;
-
-        public ICommand GoToSettingsCommand
-        {
-            get
-            {
-                if (goToSettingsCommand == null)
-                {
-                    goToSettingsCommand = new RelayCommand(GoToSettings);
-                }
-
-                return goToSettingsCommand;
-            }
-        }
-
-        private void GoToSettings()
-        {
-        }
     }
 }

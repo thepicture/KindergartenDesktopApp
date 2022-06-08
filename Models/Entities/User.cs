@@ -17,6 +17,8 @@ namespace KindergartenDesktopApp.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            this.Messages = new HashSet<Message>();
+            this.Messages1 = new HashSet<Message>();
             this.Groups = new HashSet<Group>();
         }
     
@@ -34,6 +36,10 @@ namespace KindergartenDesktopApp.Models.Entities
         public System.DateTime WorkStartDate { get; set; }
     
         public virtual Gender Gender { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Message> Messages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Message> Messages1 { get; set; }
         public virtual UserRole UserRole { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Group> Groups { get; set; }

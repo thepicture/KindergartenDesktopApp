@@ -60,6 +60,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="120" Nullable="false" />
         </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderId" Type="int" Nullable="false" />
+          <Property Name="ReceiverId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="PublicationDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="RelativeRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -163,6 +173,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Message_Receiver">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="ReceiverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Sender">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UpbringerOfGroup_Group">
           <End Role="Group" Type="Self.Group" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -221,6 +255,7 @@
           <EntitySet Name="ChildRelative" EntityType="Self.ChildRelative" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RelativeRole" EntityType="Self.RelativeRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UpbringerOfGroup" EntityType="Self.UpbringerOfGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -244,6 +279,14 @@
           <AssociationSet Name="FK_ChildRelative_RelativeRole" Association="Self.FK_ChildRelative_RelativeRole">
             <End Role="RelativeRole" EntitySet="RelativeRole" />
             <End Role="ChildRelative" EntitySet="ChildRelative" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Receiver" Association="Self.FK_Message_Receiver">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Sender" Association="Self.FK_Message_Sender">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
           </AssociationSet>
           <AssociationSet Name="FK_UpbringerOfGroup_Group" Association="Self.FK_UpbringerOfGroup_Group">
             <End Role="Group" EntitySet="Group" />
@@ -272,6 +315,7 @@
           <EntitySet Name="ChildRelatives" EntityType="KindergartenBaseModel.ChildRelative" />
           <EntitySet Name="Genders" EntityType="KindergartenBaseModel.Gender" />
           <EntitySet Name="Groups" EntityType="KindergartenBaseModel.Group" />
+          <EntitySet Name="Messages" EntityType="KindergartenBaseModel.Message" />
           <EntitySet Name="RelativeRoles" EntityType="KindergartenBaseModel.RelativeRole" />
           <EntitySet Name="Users" EntityType="KindergartenBaseModel.User" />
           <EntitySet Name="UserRoles" EntityType="KindergartenBaseModel.UserRole" />
@@ -298,6 +342,14 @@
           <AssociationSet Name="FK_User_Gender" Association="KindergartenBaseModel.FK_User_Gender">
             <End Role="Gender" EntitySet="Genders" />
             <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Receiver" Association="KindergartenBaseModel.FK_Message_Receiver">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Sender" Association="KindergartenBaseModel.FK_Message_Sender">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_User_UserRole" Association="KindergartenBaseModel.FK_User_UserRole">
             <End Role="UserRole" EntitySet="UserRoles" />
@@ -374,6 +426,18 @@
           <NavigationProperty Name="Children" Relationship="KindergartenBaseModel.FK_Child_Group" FromRole="Group" ToRole="Child" />
           <NavigationProperty Name="Users" Relationship="KindergartenBaseModel.UpbringerOfGroup" FromRole="Group" ToRole="User" />
         </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderId" Type="Int32" Nullable="false" />
+          <Property Name="ReceiverId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="PublicationDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="KindergartenBaseModel.FK_Message_Receiver" FromRole="Message" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="KindergartenBaseModel.FK_Message_Sender" FromRole="Message" ToRole="User" />
+        </EntityType>
         <EntityType Name="RelativeRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -399,6 +463,8 @@
           <Property Name="Address" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
           <Property Name="WorkStartDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Gender" Relationship="KindergartenBaseModel.FK_User_Gender" FromRole="User" ToRole="Gender" />
+          <NavigationProperty Name="Messages" Relationship="KindergartenBaseModel.FK_Message_Receiver" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Messages1" Relationship="KindergartenBaseModel.FK_Message_Sender" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="UserRole" Relationship="KindergartenBaseModel.FK_User_UserRole" FromRole="User" ToRole="UserRole" />
           <NavigationProperty Name="Groups" Relationship="KindergartenBaseModel.UpbringerOfGroup" FromRole="User" ToRole="Group" />
         </EntityType>
@@ -486,6 +552,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Message_Receiver">
+          <End Type="KindergartenBaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="KindergartenBaseModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="ReceiverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Sender">
+          <End Type="KindergartenBaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="KindergartenBaseModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_UserRole">
           <End Type="KindergartenBaseModel.UserRole" Role="UserRole" Multiplicity="1" />
           <End Type="KindergartenBaseModel.User" Role="User" Multiplicity="*" />
@@ -564,6 +654,17 @@
             <EntityTypeMapping TypeName="KindergartenBaseModel.Group">
               <MappingFragment StoreEntitySet="Group">
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="KindergartenBaseModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="PublicationDateTime" ColumnName="PublicationDateTime" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ReceiverId" ColumnName="ReceiverId" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
