@@ -82,6 +82,7 @@ namespace KindergartenDesktopApp.ViewModels
             using (var context = ContextFactory.GetInstance())
             {
                 IEnumerable<Child> currentChildren = await context.Children
+                    .Where(c => !c.IsDeleted)
                     .Include(u => u.Group)
                     .Include(u => u.ChildRelatives)
                     .Include(u =>
@@ -105,11 +106,15 @@ namespace KindergartenDesktopApp.ViewModels
                 {
                     currentChildren = currentChildren.Where(c => c.GroupId == group.Id);
                 }
-                if (SelectedUpbringer is User upbringer && upbringer.Id > -0)
+                if (SelectedUpbringer is User upbringer && upbringer.Id > 0)
                 {
                     currentChildren = currentChildren.Where(c => c.Group.Users.First().Id == upbringer.Id);
                 }
-                currentChildren = currentChildren.Where(e => e.IsDisabled == IsHasDisability);
+                if (IsHasDisability)
+                {
+                    currentChildren = currentChildren.Where(e => e.IsDisabled == IsHasDisability);
+                }
+                currentChildren = currentChildren.Where(e => e.IsArchived == IsOnlyArchived);
                 if (int.TryParse(Year, out int parsedAge))
                 {
                     currentChildren = currentChildren.Where(c =>
@@ -236,30 +241,18 @@ namespace KindergartenDesktopApp.ViewModels
             {
                 if (deleteChildCommand == null)
                 {
-                    deleteChildCommand = new RelayCommand(DeleteChildAsync);
+                    deleteChildCommand = new RelayCommand(ShowActionsToDeleteChild);
                 }
 
                 return deleteChildCommand;
             }
         }
 
-        private async void DeleteChildAsync()
+        private void ShowActionsToDeleteChild()
         {
-            try
-            {
-                using (var context = ContextFactory.GetInstance())
-                {
-                    var childToDelete = await context.Children.FindAsync(SelectedChild.Id);
-                    context.Children.Remove(childToDelete);
-                    await context.SaveChangesAsync();
-                    IsAskControlOpened = false;
-                    await LoadChildrenAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionInformerService.Inform(ex);
-            }
+            MessageBox.Warn("Для удаления профиля " +
+                "ребёнка вы должны поместить его в архив " +
+                "в окне обзора");
         }
 
         public bool IsAskControlOpened { get; set; }
@@ -310,5 +303,7 @@ namespace KindergartenDesktopApp.ViewModels
         }
 
         public bool IsHasDisability { get; set; }
+
+        public bool IsOnlyArchived { get; set; }
     }
 }

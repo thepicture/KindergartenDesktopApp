@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -77,6 +78,66 @@ namespace KindergartenDesktopApp.Models.Entities
                 return relativeList;
             }
             set => relativeList = value;
+        }
+
+        public IEnumerable<ChildRelative> Brothers
+        {
+            get
+            {
+                if (RelativeList == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return RelativeList.Where(r => r.RelativeRoleId == RelativeRoles.Brother);
+                }
+            }
+        }
+
+        public IEnumerable<ChildRelative> Sisters
+        {
+            get
+            {
+                if (RelativeList == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return RelativeList.Where(r => r.RelativeRoleId == RelativeRoles.Sister);
+                }
+            }
+        }
+
+        public IEnumerable<ChildRelative> Grandfathers
+        {
+            get
+            {
+                if (RelativeList == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return RelativeList.Where(r => r.RelativeRoleId == RelativeRoles.Grandfather);
+                }
+            }
+        }
+
+        public IEnumerable<ChildRelative> Grandmothers
+        {
+            get
+            {
+                if (RelativeList == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return RelativeList.Where(r => r.RelativeRoleId == RelativeRoles.Grandmother);
+                }
+            }
         }
     }
 }

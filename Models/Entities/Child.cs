@@ -34,8 +34,9 @@ namespace KindergartenDesktopApp.Models.Entities
         public Nullable<int> Year { get; set; }
         public byte[] Image { get; set; }
         public int GroupId { get; set; }
+        public bool IsArchived { get; set; }
         public bool IsDeleted { get; set; }
-        public string DeleteReason { get; set; }
+        public string ArchiveReason { get; set; }
     
         public virtual Gender Gender { get; set; }
         public virtual Group Group { get; set; }

@@ -22,8 +22,9 @@
           <Property Name="Year" Type="int" />
           <Property Name="Image" Type="image" />
           <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="IsArchived" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
-          <Property Name="DeleteReason" Type="nvarchar" MaxLength="1024" />
+          <Property Name="ArchiveReason" Type="nvarchar" MaxLength="1024" />
         </EntityType>
         <EntityType Name="ChildDocument">
           <Key>
@@ -324,8 +325,9 @@
           <Property Name="Year" Type="Int32" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="IsArchived" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="DeleteReason" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="ArchiveReason" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Gender" Relationship="KindergartenBaseModel.FK_Child_Gender" FromRole="Child" ToRole="Gender" />
           <NavigationProperty Name="Group" Relationship="KindergartenBaseModel.FK_Child_Group" FromRole="Child" ToRole="Group" />
           <NavigationProperty Name="ChildDocuments" Relationship="KindergartenBaseModel.FK_ChildDocument_Child" FromRole="Child" ToRole="ChildDocument" />
@@ -509,8 +511,9 @@
           <EntitySetMapping Name="Children">
             <EntityTypeMapping TypeName="KindergartenBaseModel.Child">
               <MappingFragment StoreEntitySet="Child">
-                <ScalarProperty Name="DeleteReason" ColumnName="DeleteReason" />
+                <ScalarProperty Name="ArchiveReason" ColumnName="ArchiveReason" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsArchived" ColumnName="IsArchived" />
                 <ScalarProperty Name="GroupId" ColumnName="GroupId" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Year" ColumnName="Year" />

@@ -12,6 +12,25 @@
               SelectedItem="{Binding ElementName=Control, Path=SelectedChild}"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
               Background="Transparent">
+        <ListView.Style>
+            <Style TargetType="ItemsControl">
+                <Style.Triggers>
+                    <Trigger Property="HasItems"
+                             Value="false">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <TextBlock Text="Ничего не найдено"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontSize="30"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ListView.Style>
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
                 <WrapPanel HorizontalAlignment="Center"

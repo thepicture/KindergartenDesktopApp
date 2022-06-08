@@ -43,13 +43,10 @@
                                SelectedItem="{Binding ElementName=Control, Path=SelectedGender}"
                                DisplayMemberPath="Title" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Инвалидность:"
-                               Width="80"
-                               Style="{StaticResource CommonBlock}" />
-                    <CheckBox IsChecked="{Binding ElementName=Control, Path=IsHasDisability}"
-                              Content="Есть" />
-                </StackPanel>
+                <CheckBox IsChecked="{Binding ElementName=Control, Path=IsHasDisability}"
+                          Content="Только с инвалидностью" />
+                <CheckBox IsChecked="{Binding ElementName=Control, Path=IsOnlyArchived}"
+                          Content="Только из архива" />
                 <Button Command="{Binding FilterCollectionCommand, ElementName=Control}"
                         Content="Применить"
                         IsDefault="True"

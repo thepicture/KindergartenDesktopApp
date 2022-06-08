@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Windows.Input;
 
 namespace KindergartenDesktopApp.ViewModels
@@ -98,6 +99,91 @@ namespace KindergartenDesktopApp.ViewModels
                                         samplesZipFilePath);
             DocumentsService.Close();
             Process.Start(samplesZipFilePath);
+        }
+
+        private RelayCommand moveChildToArchiveCommand;
+
+        public ICommand MoveChildToArchiveCommand
+        {
+            get
+            {
+                if (moveChildToArchiveCommand == null)
+                    moveChildToArchiveCommand = new RelayCommand(MoveChildToArchive);
+
+                return moveChildToArchiveCommand;
+            }
+        }
+
+        public string DeleteReason { get; set; }
+
+        public bool IsChildNotArchived => !Child.IsArchived;
+        public bool IsChildNotArchivedAndNotDeleted => !IsChildNotArchived && !Child.IsDeleted;
+
+        private void MoveChildToArchive()
+        {
+            if (!MessageBox.Ask("Вы действительно хотите поместить профиль ребёнка в архив?"))
+            {
+                return;
+            }
+            try
+            {
+                using (var context = ContextFactory.GetInstance())
+                {
+                    var childFromDb = context.Children.First(c => c.Id == Child.Id);
+                    childFromDb.IsArchived = true;
+                    context.SaveChanges();
+                }
+                Navigator.Back();
+                MessageBox.Warn("Профиль ребёнка перемещён в архив. "
+                    + "Для дальнейшего удаления "
+                    + "зайдите в архив");
+            }
+            catch (Exception ex)
+            {
+                ExceptionInformerService.Inform(ex);
+            }
+        }
+
+        private RelayCommand deleteChildCommand;
+
+        public ICommand DeleteChildCommand
+        {
+            get
+            {
+                if (deleteChildCommand == null)
+                    deleteChildCommand = new RelayCommand(DeleteChild);
+
+                return deleteChildCommand;
+            }
+        }
+
+        private void DeleteChild()
+        {
+            if (string.IsNullOrWhiteSpace(DeleteReason))
+            {
+                MessageBox.Warn("Укажите причину удаления профиля ребёнка");
+            }
+            else
+            {
+                try
+                {
+                    using (var context = ContextFactory.GetInstance())
+                    {
+                        var childFromDb = context.Children.First(c => c.Id == Child.Id);
+                        childFromDb.IsDeleted = true;
+                        childFromDb.ArchiveReason = DeleteReason;
+                        context.SaveChanges();
+                    }
+                    Navigator.Back();
+                    MessageBox.Warn("Профиль ребёнка удалён. "
+                                    + "Для восстановления обратитесь к "
+                                    + "администратору базы данных");
+                }
+                catch (Exception ex)
+                {
+                    ExceptionInformerService.Inform(ex);
+                }
+            }
         }
     }
 }

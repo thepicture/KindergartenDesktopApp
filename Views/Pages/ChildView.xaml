@@ -43,6 +43,26 @@
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
@@ -50,6 +70,8 @@
                         </Grid.ColumnDefinitions>
                         <Image Grid.ColumnSpan="2"
                                Margin="10"
+                               Width="500"
+                               Height="500"
                                Stretch="UniformToFill"
                                Grid.Row="0">
                             <Image.Source>
@@ -60,7 +82,7 @@
                                 </Binding>
                             </Image.Source>
                         </Image>
-                        <TextBlock Text="ФИО:"
+                        <TextBlock Text="ФИО ребёнка:"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="1" />
@@ -69,81 +91,469 @@
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="1"
                                    Grid.Column="1" />
-                        <TextBlock Text="Год:"
+                        <TextBlock Text="Пол:"
                                    Width="auto"
+                                   Margin="20,5,5,5"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="2" />
-                        <TextBlock Text="{Binding Child.BirthDate.Year, FallbackValue=Не указан}"
+                        <TextBlock Text="{Binding Child.Gender.Title}"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="2"
-                                   Grid.Column="2" />
-                        <TextBlock Text="День:"
+                                   Grid.Column="1" />
+                        <TextBlock Text="Год рождения:"
                                    Width="auto"
+                                   Margin="20,5,5,5"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="3" />
-                        <TextBlock Text="{Binding Child.BirthDate.Year, FallbackValue=Не указан}"
+                        <TextBlock Text="{Binding Child.Year}"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="3"
                                    Grid.Column="2" />
-                        <TextBlock Text="Месяц:"
+                        <TextBlock Text="Гражданство:"
                                    Width="auto"
+                                   Margin="20,5,5,5"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="4" />
-                        <TextBlock Text="{Binding Child.BirthDate.Month, FallbackValue=Не указан}"
+                        <TextBlock Text="{Binding Child.Citizenship}"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="4"
                                    Grid.Column="2" />
-                        <TextBlock Text="Отец:"
+                        <TextBlock Text="Национальность:"
                                    Width="auto"
+                                   Margin="20,5,5,5"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="5" />
-                        <TextBlock Text="{Binding Child.FatherFullName, FallbackValue=Не указан}"
+                        <TextBlock Text="{Binding Child.Nationality}"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="5"
                                    Grid.Column="2" />
-                        <TextBlock Text="Мать:"
+                        <TextBlock Text="Место жительства:"
                                    Width="auto"
+                                   Margin="20,5,5,5"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="6" />
-                        <TextBlock Text="{Binding Child.MotherFullName, FallbackValue=Не указан}"
+                        <TextBlock Text="{Binding Child.Address}"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="6"
                                    Grid.Column="2" />
-                        <TextBlock Text="Пол:"
+                        <TextBlock Text="Мед. полис:"
                                    Width="auto"
+                                   Margin="20,5,5,5"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="7" />
-                        <TextBlock Text="{Binding Child.Gender.Title}"
+                        <TextBlock Text="{Binding Child.HealthPolicyNumber}"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="7"
                                    Grid.Column="2" />
-                        <TextBlock Text="Группа:"
+                        <TextBlock Text="Инвалидность:"
                                    Width="auto"
+                                   Margin="20,5,5,5"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="8" />
-                        <TextBlock Text="{Binding Child.Group.Title}"
-                                   Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                        <TextBlock Width="auto"
                                    Grid.Row="8"
-                                   Grid.Column="2" />
-                        <TextBlock Text="Документов (шт.):"
+                                   Grid.Column="2">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock"
+                                       BasedOn="{StaticResource CommonBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Child.IsDisabled}"
+                                                     Value="True">
+                                            <Setter Property="Text"
+                                                    Value="Имеется" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Child.IsDisabled}"
+                                                     Value="False">
+                                            <Setter Property="Text"
+                                                    Value="Отсутствует" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Text="Статус полноценности семей:"
                                    Width="auto"
+                                   Margin="20,5,5,5"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="9" />
-                        <TextBlock Text="{Binding Child.ChildDocuments.Count}"
+                        <TextBlock Text="{Binding Child.FamilyStatus}"
                                    Width="auto"
                                    Style="{StaticResource CommonBlock}"
                                    Grid.Row="9"
                                    Grid.Column="2" />
+
+                        <TextBlock Text="ФИО матери:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="10" />
+                        <TextBlock Text="{Binding Child.RelativeList[0].FullName}"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="10"
+                                   Grid.Column="2" />
+                        <TextBlock Text="Год:"
+                                   Width="auto"
+                                   Margin="20,5,5,5"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="11" />
+                        <TextBlock Text="{Binding Child.RelativeList[0].Year}"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="11"
+                                   Grid.Column="2" />
+                        <TextBlock Text="Телефон:"
+                                   Width="auto"
+                                   Margin="20,5,5,5"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="12" />
+                        <TextBlock Text="{Binding Child.RelativeList[0].PhoneNumber}"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="12"
+                                   Grid.Column="2" />
+
+                        <TextBlock Text="ФИО отца:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="13" />
+                        <TextBlock Text="{Binding Child.RelativeList[1].FullName}"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="13"
+                                   Grid.Column="2" />
+                        <TextBlock Text="Год:"
+                                   Width="auto"
+                                   Margin="20,5,5,5"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="14" />
+                        <TextBlock Text="{Binding Child.RelativeList[1].Year}"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="14"
+                                   Grid.Column="2" />
+                        <TextBlock Text="Телефон:"
+                                   Width="auto"
+                                   Margin="20,5,5,5"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="15" />
+                        <TextBlock Text="{Binding Child.RelativeList[1].PhoneNumber}"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="15"
+                                   Grid.Column="2" />
+
+                        <TextBlock Text="Братья:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="16" />
+                        <ItemsControl ItemsSource="{Binding Child.Brothers}"
+                                      Grid.Row="17"
+                                      Margin="5">
+                            <ItemsControl.Style>
+                                <Style TargetType="ItemsControl">
+                                    <Style.Triggers>
+                                        <Trigger Property="HasItems"
+                                                 Value="false">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <TextBlock Text="Братьев нет"
+                                                                   FontStyle="Italic" />
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="ФИО брата:"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="0" />
+                                        <TextBlock Text="{Binding FullName}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="0"
+                                                   Grid.Column="2" />
+                                        <TextBlock Text="Год:"
+                                                   Width="auto"
+                                                   Margin="20,5,5,5"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="1" />
+                                        <TextBlock Text="{Binding Year}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="1"
+                                                   Grid.Column="2" />
+                                        <TextBlock Text="Телефон:"
+                                                   Width="auto"
+                                                   Margin="20,5,5,5"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="2" />
+                                        <TextBlock Text="{Binding PhoneNumber}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="2"
+                                                   Grid.Column="2" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock Text="Сёстры:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="18" />
+                        <ItemsControl ItemsSource="{Binding Child.Sisters}"
+                                      Grid.Row="19"
+                                      Margin="5">
+                            <ItemsControl.Style>
+                                <Style TargetType="ItemsControl">
+                                    <Style.Triggers>
+                                        <Trigger Property="HasItems"
+                                                 Value="false">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <TextBlock Text="Сестёр нет"
+                                                                   FontStyle="Italic" />
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="ФИО сестры:"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="0" />
+                                        <TextBlock Text="{Binding FullName}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="0"
+                                                   Grid.Column="2" />
+                                        <TextBlock Text="Год:"
+                                                   Width="auto"
+                                                   Margin="20,5,5,5"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="1" />
+                                        <TextBlock Text="{Binding Year}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="1"
+                                                   Grid.Column="2" />
+                                        <TextBlock Text="Телефон:"
+                                                   Width="auto"
+                                                   Margin="20,5,5,5"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="2" />
+                                        <TextBlock Text="{Binding PhoneNumber}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="2"
+                                                   Grid.Column="2" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock Text="Деды:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="20" />
+                        <ItemsControl ItemsSource="{Binding Child.Grandfathers}"
+                                      Grid.Row="21"
+                                      Margin="5">
+                            <ItemsControl.Style>
+                                <Style TargetType="ItemsControl">
+                                    <Style.Triggers>
+                                        <Trigger Property="HasItems"
+                                                 Value="false">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <TextBlock Text="Дедов нет"
+                                                                   FontStyle="Italic" />
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="ФИО деда:"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="0" />
+                                        <TextBlock Text="{Binding FullName}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="0"
+                                                   Grid.Column="2" />
+                                        <TextBlock Text="Год:"
+                                                   Width="auto"
+                                                   Margin="20,5,5,5"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="1" />
+                                        <TextBlock Text="{Binding Year}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="1"
+                                                   Grid.Column="2" />
+                                        <TextBlock Text="Телефон:"
+                                                   Width="auto"
+                                                   Margin="20,5,5,5"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="2" />
+                                        <TextBlock Text="{Binding PhoneNumber}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="2"
+                                                   Grid.Column="2" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock Text="Бабушки:"
+                                   Width="auto"
+                                   Style="{StaticResource CommonBlock}"
+                                   Grid.Row="22" />
+                        <ItemsControl ItemsSource="{Binding Child.Grandmothers}"
+                                      Grid.Row="23"
+                                      Margin="5">
+                            <ItemsControl.Style>
+                                <Style TargetType="ItemsControl">
+                                    <Style.Triggers>
+                                        <Trigger Property="HasItems"
+                                                 Value="false">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <TextBlock Text="Бабушек нет"
+                                                                   FontStyle="Italic" />
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="ФИО бабушки:"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="0" />
+                                        <TextBlock Text="{Binding FullName}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="0"
+                                                   Grid.Column="2" />
+                                        <TextBlock Text="Год:"
+                                                   Width="auto"
+                                                   Margin="20,5,5,5"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="1" />
+                                        <TextBlock Text="{Binding Year}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="1"
+                                                   Grid.Column="2" />
+                                        <TextBlock Text="Телефон:"
+                                                   Width="auto"
+                                                   Margin="20,5,5,5"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="2" />
+                                        <TextBlock Text="{Binding PhoneNumber}"
+                                                   Width="auto"
+                                                   Style="{StaticResource CommonBlock}"
+                                                   Grid.Row="2"
+                                                   Grid.Column="2" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="Введите причину перемещения в архив:"
+                                   Visibility="{Binding IsChildNotArchivedAndNotDeleted, Converter={StaticResource BooleanToVisibility}}"
+                                   Style="{StaticResource CommonBlock}"
+                                   HorizontalAlignment="Left"
+                                   Width="200"
+                                   TextWrapping="Wrap"
+                                   Grid.Row="24" />
+                        <TextBox Text="{Binding DeleteReason, UpdateSourceTrigger=PropertyChanged}"
+                                 Visibility="{Binding IsChildNotArchivedAndNotDeleted, Converter={StaticResource BooleanToVisibility}}"
+                                 Grid.Row="24"
+                                 Width="auto"
+                                 Grid.Column="1" />
+                        <Button Command="{Binding MoveChildToArchiveCommand}"
+                                Visibility="{Binding IsChildNotArchived, Converter={StaticResource BooleanToVisibility}}"
+                                Content="Поместить в архив"
+                                Background="Red"
+                                Grid.Row="25"
+                                Grid.ColumnSpan="2" />
+                        <Button Command="{Binding DeleteChildCommand}"
+                                Visibility="{Binding IsChildNotArchivedAndNotDeleted, Converter={StaticResource BooleanToVisibility}}"
+                                Content="Удалить"
+                                Background="Red"
+                                Grid.Row="25"
+                                Grid.ColumnSpan="2" />
                         <Button Command="{Binding GoBackCommand}"
                                 Content="Назад"
-                                Grid.Row="10"
+                                Grid.Row="26"
                                 Grid.ColumnSpan="2" />
                     </Grid>
                 </Grid>

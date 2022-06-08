@@ -35,6 +35,7 @@
                               Upbringers="{Binding Upbringers}"
                               SelectedUpbringer="{Binding SelectedUpbringer}"
                               IsHasDisability="{Binding IsHasDisability}"
+                              IsOnlyArchived="{Binding IsOnlyArchived}"
                               FilterCollectionCommand="{Binding FilterCollectionCommand}"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"

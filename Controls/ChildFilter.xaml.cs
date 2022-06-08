@@ -21,6 +21,20 @@ namespace KindergartenDesktopApp.Controls
 
 
 
+        public bool IsOnlyArchived
+        {
+            get { return (bool)GetValue(IsOnlyArchivedProperty); }
+            set { SetValue(IsOnlyArchivedProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsOnlyArchivedProperty =
+            DependencyProperty.Register("IsOnlyArchived",
+                                        typeof(bool),
+                                        typeof(ChildFilter),
+                                        new FrameworkPropertyMetadata(default(bool),
+                                                                      FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+
         public string Year
         {
             get { return (string)GetValue(YearProperty); }
