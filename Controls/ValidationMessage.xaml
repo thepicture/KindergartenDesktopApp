@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              Name="Control">
     <TextBlock Text="{Binding ValidationText, ElementName=Control, FallbackValue=ValidationMessage}"
-               Foreground="{StaticResource ValidationMessageColor}"
+               Foreground="{DynamicResource ValidationMessageColor}"
                FontWeight="Bold"
                Opacity="{Binding IsHasError, ElementName=Control}" />
 </UserControl>

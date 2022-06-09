@@ -10,7 +10,7 @@
              xmlns:controls="clr-namespace:KindergartenDesktopApp.Controls"
              d:DataContext="{d:DesignInstance Type=viewmodels:UsersManagementViewModel}"
              mc:Ignorable="d">
-    <Grid Background="{StaticResource PrimaryBackgroundColor}">
+    <Grid Background="{DynamicResource PrimaryBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
@@ -62,7 +62,7 @@
         <StackPanel HorizontalAlignment="Right"
               Width="{Binding MenuDesiredWidth}"
               Grid.Row="1"
-              Background="{StaticResource SecondaryBackgroundColor}">
+              Background="{DynamicResource SecondaryBackgroundColor}">
             <controls:VerticalMenuItemControl Command="{Binding GoToAccountCommand}"
                                               Text="Личный кабинет" />
             <controls:VerticalMenuItemControl Command="{Binding GoToContactsCommand}"

@@ -11,7 +11,7 @@
              d:DesignWidth="1600"
              mc:Ignorable="d"
              Name="Control">
-    <Grid Background="{StaticResource PrimaryBackgroundColor}">
+    <Grid Background="{DynamicResource PrimaryBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
@@ -32,7 +32,7 @@
                 <TextBlock Text="Основная информация:"
                            HorizontalAlignment="Left"
                            Width="200"
-                           Style="{StaticResource CommonBlock}" />
+                           Style="{DynamicResource CommonBlock}" />
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                               VerticalScrollBarVisibility="Visible"
                               Grid.Row="1">
@@ -66,36 +66,36 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="ФИО:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}" />
+                                   Style="{DynamicResource CommonBlock}" />
                         <TextBox Text="{Binding Child.FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  Width="auto"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Grid.Column="1" />
                         <TextBlock Text="Пол:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="1" />
                         <ComboBox ItemsSource="{Binding Genders}"
                                   SelectedItem="{Binding Child.Gender, ValidatesOnDataErrors=True}"
-                                  Validation.ErrorTemplate="{StaticResource ComboBoxErrorTemplate}"
+                                  Validation.ErrorTemplate="{DynamicResource ComboBoxErrorTemplate}"
                                   DisplayMemberPath="Title"
                                   Width="auto"
                                   Grid.Row="1"
                                   Grid.Column="1" />
                         <TextBlock Text="Группа:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="2" />
                         <ComboBox ItemsSource="{Binding Groups}"
                                   SelectedItem="{Binding Child.Group, ValidatesOnDataErrors=True}"
-                                  Validation.ErrorTemplate="{StaticResource ComboBoxErrorTemplate}"
+                                  Validation.ErrorTemplate="{DynamicResource ComboBoxErrorTemplate}"
                                   DisplayMemberPath="Title"
                                   Width="auto"
                                   Grid.Row="2"
                                   Grid.Column="1" />
                         <TextBlock Text="Год рождения:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="3" />
                         <TextBox Text="{Binding Child.Year, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  Width="auto"
@@ -103,34 +103,34 @@
                                  Grid.Column="1" />
                         <TextBlock Text="Гражданство:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="4" />
                         <TextBox Text="{Binding Child.Citizenship, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  Width="auto"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Grid.Row="4"
                                  Grid.Column="1" />
                         <TextBlock Text="Национальность:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="5" />
                         <TextBox Text="{Binding Child.Nationality, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  Width="auto"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Grid.Row="5"
                                  Grid.Column="1" />
                         <TextBlock Text="Место жительства:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="6" />
                         <TextBox Text="{Binding Child.Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  Width="auto"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Grid.Row="6"
                                  Grid.Column="1" />
                         <TextBlock Text="Мед полис:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="7" />
                         <xctk:MaskedTextBox Text="{Binding Child.HealthPolicyNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                             Mask="#### #### #### ####"
@@ -139,7 +139,7 @@
                                             Grid.Column="1" />
                         <TextBlock Text="Инвалидность:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="8" />
                         <CheckBox IsChecked="{Binding Child.IsDisabled}"
                                   Content="Имеется"
@@ -147,11 +147,11 @@
                                   Grid.Column="1" />
                         <TextBlock Text="Статус полноценности семей:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="9" />
                         <TextBox Text="{Binding Child.FamilyStatus, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  Width="auto"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Grid.Row="9"
                                  Grid.Column="1" />
                         <Grid Grid.Row="16"
@@ -171,7 +171,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ФИО"
                                                         Binding="{Binding FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}" />
+                                                        Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}" />
                                     <DataGridTextColumn Header="Год"
                                                         Binding="{Binding Year, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                     <DataGridTemplateColumn Header="Тел.">
@@ -243,11 +243,11 @@
                 <TextBlock Text="Примечание:"
                            HorizontalAlignment="Left"
                            Width="200"
-                           Style="{StaticResource CommonBlock}" />
+                           Style="{DynamicResource CommonBlock}" />
                 <TextBox Text="{Binding Child.Notes, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                          Width="auto"
                          VerticalContentAlignment="Top"
-                         Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
+                         Validation.ErrorTemplate="{DynamicResource PasswordBoxErrorTemplate}"
                          TextWrapping="Wrap"
                          Grid.Row="1" />
             </Grid>
@@ -259,7 +259,7 @@
                 <TextBlock Text="Документы:"
                            HorizontalAlignment="Left"
                            Width="200"
-                           Style="{StaticResource CommonBlock}" />
+                           Style="{DynamicResource CommonBlock}" />
                 <Button Command="{Binding OpenDocumentsCommand}"
                         Background="Transparent"
                         VerticalAlignment="Top"

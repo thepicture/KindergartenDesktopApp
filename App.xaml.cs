@@ -99,11 +99,16 @@ namespace KindergartenDesktopApp
         {
             if (((FrameworkElement)sender).DataContext != null)
             {
-                ((UserControl)sender).FontFamily = new FontFamily("Microsoft JhengHei");
                 if (Settings.Default.IsAccessibleMode)
                 {
                     ((UserControl)sender).FontSize = 25;
                     ((UserControl)sender).FontWeight = FontWeights.Bold;
+                    Resources["PrimaryBackgroundColor"] = new SolidColorBrush(Colors.White);
+                }
+                else
+                {
+                    ((UserControl)sender).FontFamily = new FontFamily("Microsoft JhengHei");
+                    Resources["PrimaryBackgroundColor"] = new SolidColorBrush(new Color() { R = 218, G = 224, B = 230, A = 255 });
                 }
                 ((dynamic)sender).DataContext.OnAppearing();
             }

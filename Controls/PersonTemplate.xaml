@@ -12,7 +12,7 @@
     <Grid>
         <Border MinWidth="400"
                 Height="350"
-                Background="{StaticResource SecondaryBackgroundColor}"
+                Background="{DynamicResource SecondaryBackgroundColor}"
                 CornerRadius="50" />
         <Border MinWidth="395"
                 Margin="2"

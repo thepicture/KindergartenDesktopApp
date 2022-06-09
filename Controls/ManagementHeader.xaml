@@ -8,7 +8,7 @@
              xmlns:iconpacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              Name="Control">
-    <Grid Background="{StaticResource SecondaryBackgroundColor}">
+    <Grid Background="{DynamicResource SecondaryBackgroundColor}">
         <StackPanel Orientation="Horizontal">
             <TextBox Text="{Binding SearchText, ElementName=Control, UpdateSourceTrigger=PropertyChanged}"
                      Width="200"

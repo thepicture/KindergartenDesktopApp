@@ -8,9 +8,9 @@
     <Style TargetType="Button"
            BasedOn="{StaticResource {x:Type FrameworkElement}}">
         <Setter Property="Background"
-                Value="{StaticResource AccentColor}" />
+                Value="{DynamicResource AccentColor}" />
         <Setter Property="Foreground"
-                Value="{StaticResource ButtonContentColor}" />
+                Value="{DynamicResource ButtonContentColor}" />
         <Setter Property="BorderBrush"
                 Value="Transparent" />
         <Setter Property="Padding"

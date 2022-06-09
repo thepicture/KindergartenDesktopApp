@@ -8,7 +8,7 @@
              xmlns:controls="clr-namespace:KindergartenDesktopApp.Controls"
              d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
              mc:Ignorable="d">
-    <Grid Background="{StaticResource PrimaryBackgroundColor}">
+    <Grid Background="{DynamicResource PrimaryBackgroundColor}">
         <Grid MaxWidth="500"
               VerticalAlignment="Center">
             <Grid.RowDefinitions>
@@ -24,14 +24,14 @@
             </Grid.ColumnDefinitions>
             <controls:Header Text="Авторизация" />
             <TextBlock Text="Логин"
-                       Style="{StaticResource CommonBlock}"
+                       Style="{DynamicResource CommonBlock}"
                        Grid.Row="1" />
             <controls:BindablePasswordBox BindableText="{Binding User.Login, UpdateSourceTrigger=PropertyChanged}"
                                           IsShouldFocus="True"
                                           Grid.Row="1"
                                           Grid.Column="1" />
             <TextBlock Text="Пароль"
-                       Style="{StaticResource CommonBlock}"
+                       Style="{DynamicResource CommonBlock}"
                        Grid.Row="2" />
             <controls:BindablePasswordBox BindableText="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}"
                                           Grid.Row="2"

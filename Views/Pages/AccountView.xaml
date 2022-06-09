@@ -10,7 +10,7 @@
              d:DataContext="{d:DesignInstance Type=viewmodels:AccountViewModel}"
              mc:Ignorable="d"
              d:DesignWidth="800">
-    <Grid Background="{StaticResource PrimaryBackgroundColor}">
+    <Grid Background="{DynamicResource PrimaryBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
@@ -49,7 +49,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Серия и номер паспорта:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="0" />
                         <xctk:MaskedTextBox Text="{Binding Me.Passport, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                             Mask="#### ######"
@@ -58,7 +58,7 @@
                                             Grid.Column="1" />
                         <TextBlock Text="Номер:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="1" />
                         <xctk:MaskedTextBox Text="{Binding Me.PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                             Mask="+7 (###) ###-##-##"
@@ -67,16 +67,16 @@
                                             Grid.Column="1" />
                         <TextBlock Text="Адрес:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="2" />
                         <TextBox Text="{Binding Me.Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Width="auto"
                                  Grid.Row="2"
                                  Grid.Column="1" />
                         <TextBlock Text="Пол:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="3" />
                         <ComboBox ItemsSource="{Binding Genders}"
                                   SelectedItem="{Binding Me.Gender, ValidatesOnDataErrors=True}"
@@ -86,16 +86,16 @@
                                   Grid.Column="1" />
                         <TextBlock Text="ФИО:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="4" />
                         <TextBox Text="{Binding Me.FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Width="auto"
                                  Grid.Row="4"
                                  Grid.Column="1" />
                         <TextBlock Text="Должность:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="5" />
                         <TextBox Text="{Binding Me.UserRole.Title, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  IsEnabled="False"
@@ -104,7 +104,7 @@
                                  Grid.Column="1" />
                         <TextBlock Text="Дата начала работы:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="6" />
                         <DatePicker SelectedDate="{Binding Me.WorkStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                     IsEnabled="False"
@@ -113,20 +113,20 @@
                                     Grid.Column="1" />
                         <TextBlock Text="Логин:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="7" />
                         <TextBox Text="{Binding Me.Login, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Grid.Row="7"
                                  HorizontalAlignment="Left"
                                  Width="200"
                                  Grid.Column="1" />
                         <TextBlock Text="Пароль:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="8" />
                         <controls:BindablePasswordBox BindableText="{Binding Me.Password, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                      Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
+                                                      Validation.ErrorTemplate="{DynamicResource PasswordBoxErrorTemplate}"
                                                       HorizontalAlignment="Left"
                                                       Width="210"
                                                       Grid.Row="8"

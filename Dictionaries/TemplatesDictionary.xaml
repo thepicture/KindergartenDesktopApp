@@ -3,7 +3,7 @@
     <ControlTemplate x:Key="TextBoxErrorTemplate">
         <Grid>
             <TextBlock Text="Данные не введены"
-                       Foreground="{StaticResource ValidationMessageColor}"
+                       Foreground="{DynamicResource ValidationMessageColor}"
                        Style="{StaticResource CommonBlock}"
                        Margin="10,5,5,5"
                        Width="auto"
@@ -15,7 +15,7 @@
     <ControlTemplate x:Key="ComboBoxErrorTemplate">
         <Grid>
             <TextBlock Text="Данные не указаны"
-                       Foreground="{StaticResource ValidationMessageColor}"
+                       Foreground="{DynamicResource ValidationMessageColor}"
                        Style="{StaticResource CommonBlock}"
                        Margin="10,5,5,5"
                        Width="auto"
@@ -27,7 +27,7 @@
     <ControlTemplate x:Key="PasswordBoxErrorTemplate">
         <Grid>
             <TextBlock Text="Данные не введены"
-                       Foreground="{StaticResource ValidationMessageColor}"
+                       Foreground="{DynamicResource ValidationMessageColor}"
                        Style="{StaticResource CommonBlock}"
                        Width="auto"
                        FontWeight="Bold"

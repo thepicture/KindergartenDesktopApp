@@ -9,7 +9,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              d:DataContext="{d:DesignInstance Type=viewmodels:AddEditUserViewModel}"
              mc:Ignorable="d">
-    <Grid Background="{StaticResource PrimaryBackgroundColor}">
+    <Grid Background="{DynamicResource PrimaryBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
@@ -49,7 +49,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Серия и номер паспорта:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="0" />
                         <xctk:MaskedTextBox Text="{Binding User.Passport, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                             Mask="#### ######"
@@ -59,7 +59,7 @@
                                             Grid.Column="1" />
                         <TextBlock Text="Номер:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="1" />
                         <xctk:MaskedTextBox Text="{Binding User.PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                             Mask="+7 (###) ###-##-##"
@@ -69,21 +69,21 @@
                                             Grid.Column="1" />
                         <TextBlock Text="Адрес:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="2" />
                         <TextBox Text="{Binding User.Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Width="auto"
                                  Grid.Row="2"
                                  Grid.Column="1" />
                         <TextBlock Text="Пол:"
                                    Width="auto"
                                    HorizontalAlignment="Left"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="3" />
                         <ComboBox ItemsSource="{Binding Genders}"
                                   SelectedItem="{Binding SelectedGender, ValidatesOnDataErrors=True}"
-                                  Validation.ErrorTemplate="{StaticResource ComboBoxErrorTemplate}"
+                                  Validation.ErrorTemplate="{DynamicResource ComboBoxErrorTemplate}"
                                   DisplayMemberPath="Title"
                                   Width="150"
                                   HorizontalAlignment="Left"
@@ -91,17 +91,17 @@
                                   Grid.Column="1" />
                         <TextBlock Text="ФИО:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="4" />
                         <TextBox Text="{Binding User.FullName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Width="300"
                                  HorizontalAlignment="Left"
                                  Grid.Row="4"
                                  Grid.Column="1" />
                         <TextBlock Text="Дата начала работы:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="6" />
                         <DatePicker SelectedDate="{Binding User.WorkStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                     Width="150"
@@ -109,20 +109,20 @@
                                     Grid.Row="6"
                                     Grid.Column="1" />
                         <TextBlock Text="Логин:"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="7" />
                         <TextBox Text="{Binding User.Login, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource TextBoxErrorTemplate}"
+                                 Validation.ErrorTemplate="{DynamicResource TextBoxErrorTemplate}"
                                  Grid.Row="7"
                                  Width="200"
                                  HorizontalAlignment="Left"
                                  Grid.Column="1" />
                         <TextBlock Text="Пароль:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="8" />
                         <controls:BindablePasswordBox BindableText="{Binding User.Password, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                      Validation.ErrorTemplate="{StaticResource PasswordBoxErrorTemplate}"
+                                                      Validation.ErrorTemplate="{DynamicResource PasswordBoxErrorTemplate}"
                                                       HorizontalAlignment="Left"
                                                       Grid.Row="8"
                                                       Grid.Column="1"
@@ -130,7 +130,7 @@
                         <TextBlock Text="Возраст:"
                                    Width="auto"
                                    HorizontalAlignment="Left"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="9" />
                         <TextBox Text="{Binding User.Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  Width="70"
@@ -139,11 +139,11 @@
                                  Grid.Column="1" />
                         <TextBlock Text="Группа:"
                                    Width="auto"
-                                   Style="{StaticResource CommonBlock}"
+                                   Style="{DynamicResource CommonBlock}"
                                    Grid.Row="10" />
                         <ComboBox ItemsSource="{Binding Groups}"
                                   SelectedItem="{Binding SelectedGroup, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                  Validation.ErrorTemplate="{StaticResource ComboBoxErrorTemplate}"
+                                  Validation.ErrorTemplate="{DynamicResource ComboBoxErrorTemplate}"
                                   DisplayMemberPath="Title"
                                   Width="200"
                                   HorizontalAlignment="Left"

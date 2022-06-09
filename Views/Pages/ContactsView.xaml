@@ -11,7 +11,7 @@
              d:DesignHeight="450"
              mc:Ignorable="d"
              x:Name="Control">
-    <Grid Background="{StaticResource PrimaryBackgroundColor}">
+    <Grid Background="{DynamicResource PrimaryBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
@@ -110,7 +110,7 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Grid.Style>
-                                    <Border Background="{StaticResource SecondaryBackgroundColor}"
+                                    <Border Background="{DynamicResource SecondaryBackgroundColor}"
                                             Opacity=".3"
                                             CornerRadius="15" />
                                     <TextBlock Text="{Binding Text}"
