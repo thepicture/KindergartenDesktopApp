@@ -40,7 +40,7 @@
                                         IsHasError="{Binding IsIncorrectLoginOrPassword}"
                                         Grid.Row="3"
                                         Grid.Column="1"
-                                        Margin="5"/>
+                                        Margin="3"/>
             <Button Command="{Binding LoginCommand}"
                     Content="Войти"
                     IsDefault="True"

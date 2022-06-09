@@ -104,6 +104,18 @@ namespace KindergartenDesktopApp
                     ((UserControl)sender).FontSize = 25;
                     ((UserControl)sender).FontWeight = FontWeights.Bold;
                     Resources["PrimaryBackgroundColor"] = new SolidColorBrush(Colors.White);
+                    TextBlock accessibleBlock = new TextBlock
+                    {
+                        Text = "Включён режим для слабовидящих",
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        IsHitTestVisible = false,
+                        Background= Brushes.White
+                    };
+                    accessibleBlock.SetValue(Panel.ZIndexProperty, 128);
+                    accessibleBlock.SetValue(Grid.RowSpanProperty, 128);
+                    accessibleBlock.SetValue(Grid.ColumnSpanProperty, 128);
+                    ((dynamic)sender).Content.Children.Add(accessibleBlock);
                 }
                 else
                 {
