@@ -103,6 +103,7 @@ namespace KindergartenDesktopApp
                 {
                     ((UserControl)sender).FontSize = 25;
                     ((UserControl)sender).FontWeight = FontWeights.Bold;
+                    Current.MainWindow.WindowState = WindowState.Maximized;
                     Resources["PrimaryBackgroundColor"] = new SolidColorBrush(Colors.White);
                     TextBlock accessibleBlock = new TextBlock
                     {
