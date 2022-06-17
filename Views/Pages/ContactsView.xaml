@@ -138,7 +138,8 @@
                          Grid.Row="1" />
                 <Button Content="Отправить"
                         Command="{Binding SendMessageCommand}"
-                        Grid.Row="2" />
+                        Grid.Row="2"
+                        IsDefault="True" />
             </Grid>
         </Grid>
     </Grid>

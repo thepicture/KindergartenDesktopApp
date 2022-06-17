@@ -107,7 +107,8 @@
                                 Content="Назад"
                                 HorizontalAlignment="Left"
                                 Grid.Row="6"
-                                Grid.ColumnSpan="2" />
+                                Grid.ColumnSpan="2"
+                                IsDefault="True" />
                     </Grid>
                 </Grid>
             </Grid>

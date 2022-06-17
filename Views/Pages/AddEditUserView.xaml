@@ -126,7 +126,7 @@
                                                       HorizontalAlignment="Left"
                                                       Grid.Row="8"
                                                       Grid.Column="1"
-                                                      Width="210"/>
+                                                      Width="210" />
                         <TextBlock Text="Возраст:"
                                    Width="auto"
                                    HorizontalAlignment="Left"
@@ -171,7 +171,8 @@
                                 IsEnabled="{Binding IsCanSaveChanges}"
                                 Content="Сохранить"
                                 Grid.Row="13"
-                                Grid.ColumnSpan="2" />
+                                Grid.ColumnSpan="2"
+                                IsDefault="true" />
                         <Button Command="{Binding GoBackCommand}"
                                 Content="Назад"
                                 Grid.Row="14"

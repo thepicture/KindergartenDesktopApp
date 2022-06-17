@@ -153,7 +153,8 @@
                                 IsEnabled="{Binding IsCanUpdateAccount}"
                                 Content="Обновить профиль"
                                 Grid.Row="11"
-                                Grid.ColumnSpan="2" />
+                                Grid.ColumnSpan="2" 
+                                IsDefault="True"/>
                         <Button Command="{Binding GoBackCommand}"
                                 Content="Назад"
                                 Grid.Row="12"

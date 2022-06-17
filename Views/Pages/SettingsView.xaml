@@ -15,12 +15,13 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:Header Text="Настройки" 
-                         Margin="0,20,0,0"/>
+        <controls:Header Text="Настройки"
+                         Margin="0,20,0,0" />
         <Button Content="Назад"
                 Command="{Binding GoBackCommand}"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Center" />
+                VerticalAlignment="Center"
+                IsDefault="True" />
         <CheckBox Content="Версия для слабовидящих"
                   IsChecked="{Binding IsAccessibleMode}"
                   Grid.Row="1"

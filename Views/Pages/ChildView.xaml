@@ -573,7 +573,8 @@
                         <Button Command="{Binding GoBackCommand}"
                                 Content="Назад"
                                 Grid.Row="29"
-                                Grid.ColumnSpan="2" />
+                                Grid.ColumnSpan="2" 
+                                IsDefault="True"/>
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="1">
