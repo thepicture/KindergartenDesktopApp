@@ -1,7 +1,10 @@
-﻿using KindergartenDesktopApp.Properties;
+﻿using KindergartenDesktopApp.Models.Entities;
+using KindergartenDesktopApp.Properties;
 using KindergartenDesktopApp.Services;
 using KindergartenDesktopApp.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,8 +18,17 @@ namespace KindergartenDesktopApp
     /// </summary>
     public partial class App : Application
     {
+        public readonly string DataSourcePath = "./../../DataSource.txt";
+
+        public static string Connection { get; private set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
+            if (!IsConnectionStringWorks())
+            {
+                Crash();
+            }
+
             base.OnStartup(e);
             ConfigureDependencies();
             ConfigureTemplates();
@@ -31,6 +43,55 @@ namespace KindergartenDesktopApp
             };
 
             OpenNavigationView<LoginViewModel>();
+        }
+
+        private bool IsConnectionStringWorks()
+        {
+            if (!File.Exists(DataSourcePath))
+            {
+                return false;
+            }
+            else
+            {
+                string connection = default;
+                try
+                {
+                    string source = File
+                        .ReadAllLines(DataSourcePath)
+                        .First();
+
+                    connection = $@"metadata=res://*/Models.Entities.BaseModel.csdl|res://*/Models.Entities.BaseModel.ssdl|res://*/Models.Entities.BaseModel.msl;
+                                    provider=System.Data.SqlClient;
+                                    provider connection string="";
+                                    data source={source};
+                                    initial catalog=KindergartenBase;
+                                    integrated security=True;
+                                    MultipleActiveResultSets=True;
+                                    App=EntityFramework""";
+                    using (KindergartenBaseEntities entities = new KindergartenBaseEntities(connection))
+                    {
+                        entities.Database.Connection.Open();
+                    }
+                    Connection = connection;
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine("Connection string "
+                                            + connection
+                                            + " is not working: "
+                                            + ex.ToString());
+                }
+
+                return false;
+            }
+        }
+
+        private void Crash()
+        {
+            MessageBox.Show("Работа программы невозможна. " +
+                "Проверьте источник данных по пути " + DataSourcePath);
+            Shutdown();
         }
 
         private void ConfigureDependencies()
@@ -111,7 +172,7 @@ namespace KindergartenDesktopApp
                         HorizontalAlignment = HorizontalAlignment.Right,
                         VerticalAlignment = VerticalAlignment.Bottom,
                         IsHitTestVisible = false,
-                        Background= Brushes.White
+                        Background = Brushes.White
                     };
                     accessibleBlock.SetValue(Panel.ZIndexProperty, 128);
                     accessibleBlock.SetValue(Grid.RowSpanProperty, 128);

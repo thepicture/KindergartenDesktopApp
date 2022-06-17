@@ -16,7 +16,7 @@ namespace KindergartenDesktopApp.Models.Entities
     public partial class KindergartenBaseEntities : DbContext
     {
         public KindergartenBaseEntities()
-            : base("name=KindergartenBaseEntities")
+            : base(App.Connection)
         {
         }
     
