@@ -7,6 +7,12 @@ namespace KindergartenDesktopApp.ViewModels
 {
     public abstract class KindergartenViewModelBase : ViewModelBase
     {
+        public bool IsBusy
+        {
+            get => isBusy;
+            set => Set(ref isBusy, value);
+        }
+
         public string Title { get; set; }
         public IContextFactoryService ContextFactory => Ioc.Instance.GetService<IContextFactoryService>();
         public ISessionService Session => Ioc.Instance.GetService<ISessionService>();
@@ -14,8 +20,6 @@ namespace KindergartenDesktopApp.ViewModels
         public IExceptionInformerService ExceptionInformerService => Ioc.Instance.GetService<IExceptionInformerService>();
         public IChildDocumentsService DocumentsService => Ioc.Instance.GetService<IChildDocumentsService>();
         public IMessageBoxService MessageBox => Ioc.Instance.GetService<IMessageBoxService>();
-
-
 
         private RelayCommand goBackCommand;
 
@@ -125,6 +129,7 @@ namespace KindergartenDesktopApp.ViewModels
         }
 
         private RelayCommand goToContactsCommand;
+        private bool isBusy;
 
         public ICommand GoToContactsCommand
         {

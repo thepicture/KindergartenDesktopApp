@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="KindergartenDesktopApp.Controls.LoadingBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:KindergartenDesktopApp.Controls"
+             mc:Ignorable="d">
+    <Grid Background="{StaticResource PrimaryBackgroundColor}">
+        <Grid RenderTransformOrigin=".5,.5">
+            <Grid.RenderTransform>
+                <RotateTransform x:Name="DoNotFreeze" />
+            </Grid.RenderTransform>
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation From="0"
+                                             To="360"
+                                             Storyboard.TargetProperty="RenderTransform.Angle"
+                                             Duration="0:0:1"
+                                             RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Grid.Triggers>
+            <Ellipse Width="150"
+                     Height="150"
+                     Fill="{StaticResource AccentColor}" />
+            <Ellipse Width="130"
+                     Height="130"
+                     Fill="{StaticResource PrimaryBackgroundColor}" />
+            <Rectangle Width="20"
+                       Height="150"
+                       Margin="0,-30,0,0"
+                       Fill="{StaticResource PrimaryBackgroundColor}" />
+        </Grid>
+    </Grid>
+</UserControl>

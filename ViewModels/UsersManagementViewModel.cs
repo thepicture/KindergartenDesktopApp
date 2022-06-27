@@ -64,6 +64,7 @@ namespace KindergartenDesktopApp.ViewModels
 
         private async Task LoadEmployeesAsync()
         {
+            IsBusy = true;
             using (var context = ContextFactory.GetInstance())
             {
                 IEnumerable<User> currentEmployees = await context.Users
@@ -99,6 +100,7 @@ namespace KindergartenDesktopApp.ViewModels
                 }
                 Employees = new ObservableCollection<User>(currentEmployees);
             }
+            IsBusy = false;
         }
 
         public ObservableCollection<User> Employees { get; set; }

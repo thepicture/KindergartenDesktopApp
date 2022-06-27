@@ -76,5 +76,8 @@
             <controls:VerticalMenuItemControl Command="{Binding ExitCommand}"
                                               Text="Выход" />
         </StackPanel>
+        <controls:LoadingBar Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibility}}"
+                             Grid.Row="1"
+                             IsHitTestVisible="False" />
     </Grid>
 </UserControl>
