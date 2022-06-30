@@ -89,16 +89,28 @@ namespace KindergartenDesktopApp.ViewModels
 
         private void LoadSamples()
         {
-            DocumentsService.CreateFolder(Child.ChildDocuments);
-            string samplesZipFilePath = Path.Combine(Environment.CurrentDirectory, "ОбразцыДокументов.zip");
-            if (File.Exists(samplesZipFilePath))
+            try
             {
-                File.Delete(samplesZipFilePath);
+                DocumentsService.CreateFolder(Child.ChildDocuments);
+                string samplesZipFilePath = Path.Combine(Environment.CurrentDirectory, "ОбразцыДокументов.zip");
+                if (File.Exists(samplesZipFilePath))
+                {
+                    File.Delete(samplesZipFilePath);
+                }
+                ZipFile.CreateFromDirectory(DocumentsService.GetFolderPath(),
+                                            samplesZipFilePath);
+                DocumentsService.Close();
+                Process.Start(samplesZipFilePath);
+
             }
-            ZipFile.CreateFromDirectory(DocumentsService.GetFolderPath(),
-                                        samplesZipFilePath);
-            DocumentsService.Close();
-            Process.Start(samplesZipFilePath);
+            catch (Exception ex)
+            {
+                ExceptionInformerService.Inform("Не удалось загрузить документы. "
+                                                + "Убедитесь, что у вас есть права на создание файлов "
+                                                + "и права на открытие файлов "
+                                                + "в системе посредством консоли. "
+                                                + ex);
+            }
         }
 
         private RelayCommand moveChildToArchiveCommand;
