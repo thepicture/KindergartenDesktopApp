@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Windows.Forms;
 
 namespace KindergartenDesktopApp.Services
@@ -88,6 +89,23 @@ namespace KindergartenDesktopApp.Services
                 InitialDirectory = _folder
             };
             openDocumentDialog.ShowDialog();
+
+            string[] directories = Directory.GetDirectories(_folder);
+            if (directories.Length > 0)
+            {
+                Ioc.Instance
+                    .GetService<IMessageBoxService>()
+                    .Warn("Вы попытались создать папку. "
+                          + "Хранение документов в созданных Вами папках не поддерживаются. "
+                          + "Файлы, находящиеся в папках, перенесены в корневую папку. "
+                          + "Используйте открытую папку для загрузки файлов, "
+                          + "не создавая папки самостоятельно");
+                foreach (string directoryPath in Directory.GetDirectories(_folder))
+                {
+                    MoveFilesToRootRecursive(directoryPath, _folder);
+                }
+            }
+
             foreach (var documentPath in Directory.GetFiles(_folder))
             {
                 _synchronizedDocuments.Add(new ChildDocument
@@ -95,6 +113,23 @@ namespace KindergartenDesktopApp.Services
                     FileBytes = File.ReadAllBytes(documentPath),
                     FileName = new FileInfo(documentPath).Name
                 });
+            }
+        }
+
+        [SecurityCritical]
+        private void MoveFilesToRootRecursive(string directoryPath, string folder)
+        {
+            foreach (var path in Directory.GetFiles(directoryPath).Concat(Directory.GetDirectories(directoryPath)))
+            {
+                FileAttributes attributes = File.GetAttributes(path);
+                if (attributes.HasFlag(FileAttributes.Directory))
+                {
+                    MoveFilesToRootRecursive(path, folder);
+                }
+                else
+                {
+                    File.Move(path, Path.Combine(folder, new FileInfo(path).Name));
+                }
             }
         }
     }
